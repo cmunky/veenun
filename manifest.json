@@ -1,6 +1,6 @@
 {
-	"name": "Foo",
-	"version": "0.0.0",
+	"name": "veenum",
+	"version": "1.0.0",
 	"manifest_version": 2,
   "permissions": ["tabs", "alarms", "storage",
     "http://localhost/", "http://wintermute/"  ],
@@ -17,6 +17,5 @@
     "data/template.html",
     "data/style.css"
   ],
-  "description": "Reload Foo"
-
+  "description": "Cross Platform VersionOne Browser Extension"
 }
