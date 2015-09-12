@@ -1,0 +1,22 @@
+{
+	"name": "Foo",
+	"version": "0.0.0",
+	"manifest_version": 2,
+  "permissions": ["tabs", "alarms", "storage",
+    "http://localhost/", "http://wintermute/"  ],
+  "background": { "scripts": ["./data/jquery.min.js", "background-webkit.js"] },
+  "content_scripts": [
+    {
+      "matches": ["https://www13.v1host.com/GettyImagesEnterprise/*"],
+      "css": ["./data/style.css"],
+      "js": [ "./data/jquery.min.js", "./data/common.js", "./data/page-chrome.js" ]
+    }
+  ],
+  "web_accessible_resources": [
+    "data/*.png",
+    "data/template.html",
+    "data/style.css"
+  ],
+  "description": "Reload Foo"
+
+}

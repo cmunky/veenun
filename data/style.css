@@ -1,0 +1,23 @@
+div#foo {
+  display: inline-block;
+  float: right;
+} 
+
+img.branch {
+  float: right;
+  height: 28px;
+  opacity: 0.5;
+}
+
+i.tag {
+  width: 60px;
+  display: inline-block;
+  padding: 6px 0 6px 0;
+  color: green;
+  border: green 1px dotted;
+  /*color: blueviolet;*/
+  /*border: blueviolet 1px dotted;*/
+  border-radius: 30px;
+  margin-right: 10px;
+  text-align: center;
+}
