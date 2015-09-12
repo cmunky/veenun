@@ -15,7 +15,13 @@ var service = (function () {
         console.log('template: ', file)
     },
 
-    onRequestComplete = function (response) {
+    onInitialized = function() {
+        console.log('[background] init handler: ');
+
+        events.sendMessage("initComplete")
+    },
+
+    onRemoteResponse = function(response) {
         console.log('[background] request: ' + response.text)
          
         for (var headerName in response.headers) {
@@ -23,43 +29,30 @@ var service = (function () {
         }
 
         events.sendMessage("remoteResponse", { data: response.text } )
-    },
 
-    getRequest = function(url) {
-        return Request({
-            url: url || options.remote, 
-            onComplete: onRequestComplete
-        })
-    },
-
-    onInit = function() {
-        console.log('[background] init handler: ');
-        
-        events.sendMessage("initComplete")
     },
 
     onTimeoutExpired = function() {
         console.log('[background] timeoutExpired handler: ');
         
-        // loadTemplates()
-        
         events.sendMessage("loadStories" )
+        
+        // loadTemplates()
 
-        // Inits a request and fetches data from the default URL... needs refactoring
-        
-        // getRequest().get()
-        
+        requestRemote(options.remote, onRemoteResponse)
+    },
+
+    requestRemote = function(url, callback) {
+        Request({ url: url, onComplete: callback }).get()
     },
 
     startListening = function(worker) {
         events.initialize(worker.port);
         events.addListener('timeoutExpired', onTimeoutExpired);
-        events.addListener('init', onInit);
+        events.addListener('init', onInitialized);
     },
 
-    init = function() {
-
-    };
+    init = function() { /* no-op */ };
 
     pageMod.PageMod({
         include: options.site,
@@ -70,11 +63,7 @@ var service = (function () {
         },
         onAttach: startListening
     });
-
     console.log('bound to: ', options.site);
 
-    return {
-        init: init
-    };
-
+    return { init: init };
 }());

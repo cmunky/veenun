@@ -13,14 +13,14 @@ var veeNone = (function ($, $events) {
     },
 
     onRemoteResponse = function(response) {
-        console.log("[obj] remoteResponse: " + JSON.stringify(response));
+        console.log("remoteResponse: " + JSON.stringify(response));
 
         // *** RELOAD PAGE ***
         //window.location.reload(); 
     },
 
     onInitComplete = function() {
-        console.log("[obj] onInitComplete")
+        console.log("onInitComplete")
 
         setAlarm((20 * 1000)) // 20 seconds (debug only)
 

@@ -65,7 +65,9 @@ var stories = (function () {
             feature = (title[0].startsWith('E-')) ? title[0] : undefined;
             _stories.push({ 'node': this, 'feature': feature, 'story': story, 'status': status, data: title })
             if (status.toLowerCase() != 'delivered') { 
-                console.log('[obj]', feature, story, status, title); 
+
+                console.log(feature, story, status, title);
+
             }
         });
 
