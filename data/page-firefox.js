@@ -6,9 +6,9 @@ var veeNone = (function ($, $events) {
 
     onLoadStories = function() {
 
-        stories.load()
+        // stories.load()
 
-        debugCreateElements()
+        // debugCreateElements()
 
     },
 
@@ -20,13 +20,12 @@ var veeNone = (function ($, $events) {
     },
 
     onInitComplete = function() {
-        console.log("onInitComplete")
 
         setAlarm((20 * 1000)) // 20 seconds (debug only)
 
-        onLoadStories()
+        stories.load()
 
-        // debugCreateElements()
+        debugCreateElements()
     },
 
     onTagClick = function(e) {
