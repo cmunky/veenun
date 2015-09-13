@@ -66,7 +66,7 @@ var stories = (function () {
             _stories.push({ 'node': this, 'feature': feature, 'story': story, 'status': status, data: title })
             if (status.toLowerCase() != 'delivered') { 
 
-                console.log(feature, story, status, title);
+                // console.log(feature, story, status, title);
 
             }
         });
@@ -107,6 +107,54 @@ var stories = (function () {
 };
 }());
 
+var config = (function () {
+    var _private,
+        _default = {
+            version: "1.0.0"
+        },
+        $ = undefined,
+
+    apply = function (config) {
+        for (var attribute in config) { this[attribute] = config[attribute]; }
+        var that = this
+
+        // *** webkit impl!!! not sure how mozilla does this
+        chrome.storage.local.get(['config'], function(result) {
+
+            if (Object.keys(result).length === 0) {
+                console.log('config.apply: no local storage config found')
+            } else {
+                var local = result.config
+                for (var attribute in local) { that[attribute] = local[attribute]; }
+
+                console.log(that)
+            }
+        });
+
+        console.log(this)
+    },
+
+    init = function(jq) {
+        $ = jq
+
+        // *** webkit impl!!! not sure how mozilla does this
+        chrome.storage.local.get(['config'], function(result) {
+
+            if (Object.keys(result).length === 0) {
+                chrome.storage.local.set({ config: _default });
+            } else {
+                // console.log('config.init: ', result.config)
+                console.log(result.config)
+            }
+        });
+    };
+
+    return {
+        apply: apply,
+        init: init
+    };
+}());
+
 var ui = (function () {
     var _private,
         $ = undefined,
@@ -128,10 +176,10 @@ var ui = (function () {
     },
 
     generateButtons = function(tags) {
-        var result = '', x = 0, c = ['red', 'blue', 'green', 'yellow', 'orange', 'brown'];
+        var result = '', x = 0;
         for (var i = 0; i < tags.length; i++) {
             if (tags[i].id.length < 8) {
-                result += '<i '.concat('class="tag" data-bg="', c[x], '">', tags[i].id.trim(), '</i>')
+                result += '<i '.concat('class="tag" data-bg="', config.colors[x], '">', tags[i].id.trim(), '</i>')
                 x++
             }
         };
