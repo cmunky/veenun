@@ -48,6 +48,10 @@ var stories = (function () {
         return (story.story === key);
     },
 
+    byString = function (story, key) {
+        return (story.data.join(' ').indexOf(key) != -1)
+    },
+
     getFilteredTags = function() {
         _tags = [] // !!!! Does this work the way I think it does???
         $(_stories).each(function() {
@@ -81,6 +85,9 @@ var stories = (function () {
             selectStory(byFeature, key)
             if (!_selected.length) {
                  selectStory(byStory, key)
+                if (!_selected.length) {
+                     selectStory(byString, key)
+                 }
             }
         }
         return (_selected.length == 0) ? null : _selected;

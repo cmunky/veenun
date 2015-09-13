@@ -1,4 +1,4 @@
-div#foo {
+div#veenun {
   display: inline-block;
   float: right;
 } 
@@ -9,14 +9,20 @@ img.branch {
   opacity: 0.5;
 }
 
+.tag.config {
+  background-repeat: no-repeat;
+  padding-top: 9px;
+  border: none;
+  opacity: .75;
+  width: 32px;
+}
+
 i.tag {
   width: 60px;
   display: inline-block;
   padding: 6px 0 6px 0;
   color: green;
   border: green 1px dotted;
-  /*color: blueviolet;*/
-  /*border: blueviolet 1px dotted;*/
   border-radius: 30px;
   margin-right: 10px;
   text-align: center;

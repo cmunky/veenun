@@ -3,16 +3,33 @@ var veeNone = (function ($, $app) {
     var _private,
 
     debugCreateElements = function () {
-        var html = '<div id="foo" class="tag-filter" >'.
-            concat(ui.tagButtons(stories.tags()), '</div>');
+        var url = chrome.extension.getURL(config.gearUrl),
+        //chrome-extension://__MSG_@@extension_id__/
+        gear = '<i '.concat('class="tag config" style="background-image: url(', url, ');">&nbsp;</i>');
+
+        var html = '<div id="veenun" class="tag-filter" >'.
+            concat(ui.tagButtons(stories.tags()), gear, '</div>');
 
         $('.project-bar').append(html);
-        $('.project-bar #foo .tag').on('click', onTagClick);
-    },
 
+        $('#veenun .tag').on('click', onTagClick);
+
+        $('#veenun .config').on('click', onConfigClick);
+    },
 
     onLoadStories = function() {
         stories.load();
+    },
+
+    onConfigClick = function (e) {
+        console.log('onConfigClick', e.target)
+        // select on arbitrary string
+        // ui.cardColor('blueviolet', stories.find('SRP'));
+
+        // Show menu with various choices
+
+        // Show a dialog with various choices
+
     },
 
     onTagClick = function (e) {
