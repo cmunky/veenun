@@ -3,10 +3,11 @@ var service = (function () {
 
     var _private,
         _lastTabId,
-        _options = {
-          remote: "http://wintermute:23230",
+        _config,
+        _urls = {
           site: chrome.runtime.getManifest().content_scripts[0]["matches"][0],
-          template: chrome.extension.getURL("./data/template.html")
+          template: chrome.extension.getURL("./data/template.html"),
+          config: chrome.extension.getURL("./data/config-webkit.json")
         },
 
     alarmListener = function(msg) {
@@ -16,13 +17,17 @@ var service = (function () {
 
         // loadTemplates()
 
-        requestRemote(_options.remote, onRemoteResponse)
+        requestRemote(_config.remote, onRemoteResponse)
     },
 
     backgroundListener = function(msg, _, sendResponse) {
       if (msg.setAlarm) {
           timeout = msg.timeout || 10; // minutes
           chrome.alarms.create( { delayInMinutes: timeout } );
+
+      } else if (msg.loadConfig) {
+
+          onLoadConfig()
 
       } else if (msg.init) {
 
@@ -33,8 +38,15 @@ var service = (function () {
       }
     },
 
+     onLoadConfig = function(callback) {
+        $.get(_urls.config, function(response) {
+              _config = JSON.parse(response);
+              sendMessage({ configLoaded: true, config: _config });
+        })
+    },
+
     loadTemplates = function() {
-        $.get(_options.template, function(response) {
+        $.get(_urls.template, function(response) {
 
             console.log(response)
 
@@ -45,7 +57,7 @@ var service = (function () {
         chrome.tabs.query( { active: true, currentWindow: true}, function(tabs) {
           if (tabs.length) {
             _lastTabId = tabs[0].id;
-            sendMessage({ status : 200, message: "Initialized" });
+            sendMessage({ initComplete: true, config: _config});
           }
         });
     },
@@ -73,7 +85,7 @@ var service = (function () {
 
     chrome.runtime.onMessage.addListener(backgroundListener);
     chrome.alarms.onAlarm.addListener(alarmListener);
-    console.log('bound to: ', _options.site)
+    console.log('bound to: ', _urls.site)
 
     return { init: init };
 }());
