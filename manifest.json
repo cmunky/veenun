@@ -1,5 +1,5 @@
 {
-	"name": "veenum",
+	"name": "veenun",
 	"version": "1.0.0",
 	"manifest_version": 2,
   "permissions": ["tabs", "alarms", "storage",
@@ -15,6 +15,7 @@
   "web_accessible_resources": [
     "data/*.png",
     "data/template.html",
+    "data/config-webkit.json",
     "data/style.css"
   ],
   "description": "Cross Platform VersionOne Browser Extension"
