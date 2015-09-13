@@ -1,77 +1,88 @@
 
 var veeNone = (function ($, $app) {
-  var _private,  
+    var _private,
 
-  onLoadStories = function() {
-    stories.load();
-  }, 
+    debugCreateElements = function () {
+        var html = '<div id="foo" class="tag-filter" >'.
+            concat(ui.tagButtons(stories.tags()), '</div>');
 
-  onTagClick = function (e) {
-    var t = $(e.target), txt = t.text(),
-    selected = t.attr('data-selected') == 'true',
-    color = (selected) ? 'white' : t.attr('data-bg');
+        $('.project-bar').append(html);
+        $('.project-bar #foo .tag').on('click', onTagClick);
+    },
 
-    ui.cardColor(color, stories.find(txt));
 
-    // ui.cardIcons(stories.list(), 
-      // chrome.extension.getURL("./data/branch-32.png"))
+    onLoadStories = function() {
+        stories.load();
+    },
 
-     if (selected) {
-      t.removeAttr('data-selected')      
-     } else {
-      t.attr('data-selected', true)
-     }
-  },
+    onTagClick = function (e) {
+        var t = $(e.target), txt = t.text(),
+        selected = t.attr('data-selected') == 'true',
+        color = (selected) ? 'white' : t.attr('data-bg');
+        t.css('background-color', (!selected) ? color : 'inherit')
+        ui.cardColor(color, stories.find(txt));
 
-  debugCreateElements = function () {
-    var html = '<div id="foo" class="tag-filter" >'.
-      concat(ui.tagButtons(stories.tags()), '</div>');
+        // ui.cardIcons(stories.list(),
+            // chrome.extension.getURL(config.branchUrl))
 
-      $('.project-bar').append(html);
-      $('.project-bar #foo .tag').on('click', onTagClick);
-  },
-  
-  pageListener = function (msg, _, sendResponse) {
-    if (msg.remoteResponse) {
-        console.log("remoteResponse: " + msg.data);
+        if (selected) {
+            t.removeAttr('data-selected')
+        } else {
+            t.attr('data-selected', true)
+        }
+    },
 
-        // *** RELOAD PAGE ***
-        //location.reload()
+    pageListener = function (msg, _, sendResponse) {
+        if (msg.remoteResponse) {
+            console.log("remoteResponse: " + msg.data);
 
-    } else if (msg.status == 200) {
-      
-        $app.sendMessage({ setAlarm: true, timeout: 0.2 }); // 20 seconds (debug only)    
-      
-        onLoadStories();
-    
-        debugCreateElements();
+            // *** RELOAD PAGE ***
+            //location.reload()
 
-    } else if (msg.loadStories) {
+        } else if (msg.configLoaded) {
 
-        // onLoadStories()
+            config.apply(msg.config);
 
-        // debugCreateElements()
-  
-    } else { // unknown messages
-      console.log("page-listener: " + JSON.stringify(msg), _, sendResponse);
-    }
-  },
+            console.log(config)
 
-  init = function() {
-    stories.init($);
-    ui.init($);
+            // The ui library relies on config for colors
+            debugCreateElements();
 
-    console.log($('html title').text());
-    console.log('veeNone init');
-    $app.sendMessage({ init: true });
+        } else if (msg.initComplete) {
 
-  };
+            $app.sendMessage({ loadConfig: true });
 
-  $app.onMessage.addListener(pageListener);
+            $app.sendMessage({ setAlarm: true, timeout: 0.2 }); // 20 seconds (debug only)
 
-  return {
-    init: init
-};
+            onLoadStories();
+
+            // debugCreateElements();
+
+        } else if (msg.loadStories) {
+
+            // onLoadStories()
+
+            // debugCreateElements()
+
+        } else { // unknown messages
+            console.log("page-listener: " + JSON.stringify(msg), _, sendResponse);
+        }
+    },
+
+    init = function() {
+        stories.init($);
+        ui.init($);
+        config.init($);
+
+        $app.sendMessage({ init: true });
+
+    };
+
+    $app.onMessage.addListener(pageListener);
+
+    return {
+        init: init
+    };
 
 }($, chrome.runtime));
 $(function() { veeNone.init(); });
