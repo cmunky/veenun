@@ -46,7 +46,6 @@ var veeNone = (function ($, $app) {
         ui.init($);
 
         $app.sendMessage({ init: true });
-
     };
 
     $app.onMessage.addListener(pageListener);

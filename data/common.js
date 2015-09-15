@@ -131,7 +131,7 @@ var platform = (function () {
         if (_webkit) {
             chrome.storage.local.set(value, function(result) {
                 // console.log(result)
-                callback(result)
+                if (callback) { callback(response) }
             });
         } else {
             var keys = Object.keys(value), len = keys.length,
@@ -146,7 +146,7 @@ var platform = (function () {
     storageGet = function (key, callback) {
         if (_webkit) {
             chrome.storage.local.get(key, function(result) {
-                callback(result)
+                if (callback) { callback(response) }
             });
         } else {
             var result = localStorage.getItem(key),
