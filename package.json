@@ -2,7 +2,7 @@
   "title": "veenun",
   "name": "veenun",
   "version": "1.0.0",
-  "description": "ross Platform VersionOne Browser Extension",
+  "description": "Cross Platform VersionOne Browser Extension",
   "main": "background-mozilla.js",
   "author": "cmunky",
   "engines": {
