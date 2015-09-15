@@ -8,7 +8,7 @@ var veeNone = (function ($, $events) {
 
         // stories.load()
 
-        // debugCreateElements()
+        // ui.createElements()
 
     },
 
@@ -25,40 +25,16 @@ var veeNone = (function ($, $events) {
 
         stories.load()
 
-        debugCreateElements()
-    },
+        config.apply({colors: self.options.colors})
 
-    onTagClick = function(e) {
-        var t = $(e.target), txt = t.text(),
-        selected = t.attr('data-selected') == 'true',
-        color = (selected) ? 'white' : t.attr('data-bg');
-
-        ui.cardColor(color, stories.find(txt))
-
-        // ui.cardIcons(stories.list(), self.options.branchUrl)
-
-        if (selected) {
-            t.removeAttr('data-selected')      
-        } else {
-            t.attr('data-selected', true)
-        }
-    },
-
-    debugCreateElements = function() {
-        var html = '<div id="foo" class="tag-filter" >'.
-            concat(ui.tagButtons(stories.tags()), '</div>')
-
-        $('.project-bar').append(html)
-        $('.project-bar #foo .tag').on('click', onTagClick)
+        ui.createElements()
     },
 
     init = function() {
-        
+        platform.init(self)
+        config.init($)
         stories.init($)
         ui.init($)
-
-        console.log($('title').text())
-        console.log('veeNone init')
 
         sendMessage('init');
     };

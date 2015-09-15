@@ -59,7 +59,9 @@ var service = (function () {
         contentStyleFile: ["./style.css"],
         contentScriptFile: ["./jquery.min.js", "./events.js", "./common.js", "./page-firefox.js" ],
         contentScriptOptions: {
-            branchUrl: resource.url("branch-32.png")
+            branchUrl: resource.url("branch-32.png"),
+            gearUrl: resource.url("gear-32.png"),
+            colors: [ "#fffacd", "#fff5ee", "#eee5de", "#cdc5bf", "#f0fff0", "#e0eee0", "#c1cdc1", "#f5fffa" ]
         },
         onAttach: startListening
     });

@@ -114,6 +114,72 @@ var stories = (function () {
 };
 }());
 
+var platform = (function () {
+    var _private,
+        _webkit,
+        _mozilla,
+
+    branchUrl = function () {
+        if (_webkit) {
+            return chrome.extension.getURL(config.branchUrl)
+        } else {
+            return self.options.branchUrl
+        }
+    },
+
+    storageSet = function (value, callback) {
+        if (_webkit) {
+            chrome.storage.local.set(value, function(result) {
+                // console.log(result)
+                callback(result)
+            });
+        } else {
+            var keys = Object.keys(value), len = keys.length,
+                key = keys[len - 1], json = JSON.stringify(value[key]);
+            // console.log(value, keys, len, key, json)
+            var result = localStorage.setItem(key, json),
+            response = (result === null) ? {} : result;
+            if (callback) { callback(response) }
+        }
+    },
+
+    storageGet = function (key, callback) {
+        if (_webkit) {
+            chrome.storage.local.get(key, function(result) {
+                callback(result)
+            });
+        } else {
+            var result = localStorage.getItem(key),
+            response = (result === null) ? {} : result;
+            if (callback) { callback(response) }
+        }
+    },
+
+    gearUrl = function () {
+        if (_webkit) {
+            return chrome.extension.getURL(config.gearUrl)
+        } else {
+            return self.options.gearUrl
+        }
+    },
+
+
+    init = function(platform) {
+        _webkit = platform.hasOwnProperty('sendMessage');
+        _mozilla = platform.hasOwnProperty('postMessage');
+        console.log('isWebkit: ', _webkit, 'isMozilla: ',  _mozilla);
+    };
+
+    return {
+        localStorage: localStorage,
+        storage: { set: storageSet,
+                   get: storageGet },
+        urls: { branch: branchUrl,
+                  gear: gearUrl },
+        init: init
+    };
+}());
+
 var config = (function () {
     var _private,
         _default = {
@@ -125,33 +191,27 @@ var config = (function () {
         for (var attribute in config) { this[attribute] = config[attribute]; }
         var that = this
 
-        // *** webkit impl!!! not sure how mozilla does this
-        chrome.storage.local.get(['config'], function(result) {
+        platform.storage.get('config', function(result) {
+            // console.log(result)
 
             if (Object.keys(result).length === 0) {
                 console.log('config.apply: no local storage config found')
             } else {
                 var local = result.config
                 for (var attribute in local) { that[attribute] = local[attribute]; }
-
-                console.log(that)
+                // console.log(that)
             }
         });
 
-        console.log(this)
+        // console.log(this)
     },
 
     init = function(jq) {
         $ = jq
-
-        // *** webkit impl!!! not sure how mozilla does this
-        chrome.storage.local.get(['config'], function(result) {
-
+        platform.storage.get('config', function(result) {
+            console.log(result)
             if (Object.keys(result).length === 0) {
-                chrome.storage.local.set({ config: _default });
-            } else {
-                // console.log('config.init: ', result.config)
-                console.log(result.config)
+                platform.storage.set({ config: _default });
             }
         });
     };
@@ -192,6 +252,48 @@ var ui = (function () {
         };
         return result;
     },
+    createElements = function () {
+        var gear = '<i '.concat('class="tag config" style="background-image: url(', platform.urls.gear(), ');">&nbsp;</i>');
+        // var gear = '<i '.concat('class="tag config" style="background-image: url(', platform.gearUrl(), ');">&nbsp;</i>');
+        //chrome-extension://__MSG_@@extension_id__/
+
+        var html = '<div id="veenun" class="tag-filter" >'.
+            concat(ui.tagButtons(stories.tags()), gear, '</div>');
+
+        $('.project-bar').append(html);
+
+        $('#veenun .tag').on('click', onTagClick);
+
+        $('#veenun .config').on('click', onConfigClick);
+    },
+
+    onConfigClick = function (e) {
+        console.log('onConfigClick', e.target)
+        // select on arbitrary string
+        // ui.cardColor('blueviolet', stories.find('SRP'));
+
+        // Show menu with various choices
+
+        // Show a dialog with various choices
+
+    },
+
+    onTagClick = function (e) {
+        var t = $(e.target), txt = t.text(),
+        selected = t.attr('data-selected') == 'true',
+        color = (selected) ? 'white' : t.attr('data-bg');
+        t.css('background-color', (!selected) ? color : 'inherit')
+        ui.cardColor(color, stories.find(txt));
+
+        // ui.cardIcons(stories.list(),
+            // platform.urls.branch()))
+
+        if (selected) {
+            t.removeAttr('data-selected')
+        } else {
+            t.attr('data-selected', true)
+        }
+    },
 
     init = function(jq) {
         $ = jq
@@ -200,6 +302,7 @@ var ui = (function () {
         cardColor: setCardColor,
         tagButtons: generateButtons,
         cardIcons: addCardIcons,
+        createElements: createElements,
         init: init
 };
 }());
