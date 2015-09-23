@@ -13,8 +13,6 @@ var veeNone = (function ($, $app) {
 
             config.apply(msg.config);
 
-            console.log(config)
-
             // The ui library relies on config for colors
             ui.createElements();
 

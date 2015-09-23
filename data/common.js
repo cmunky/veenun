@@ -60,13 +60,35 @@ var stories = (function () {
         return filterTags()
     },
 
+    extractBracketedTags = function(text) {
+        var rx = /\[([^\]]+)\]/g, result = [],
+        match = rx.exec(text);
+        while (match != null) {
+            result.push(match[1])
+            // matched text: match[0]
+            // match start: match.index
+            // capturing group n: match[n]
+            match = rx.exec(text);
+        }
+        return result;
+    },
+
     loadStories = function() {
         _stories = [] // !!!! Does this work the way I think it does???
         $('.story-card-container').each(function() {
+
+            // split on colon :
             var title = $.map($('.title', this).text().trim().split(':'), $.trim),
             story = $('.identity .number', this).text().trim(),
             status = $('.status', this).text().trim(),
-            feature = (title[0].startsWith('E-')) ? title[0] : undefined;
+            feature = (title[0].startsWith('E-')) ? title[0] : undefined,
+
+            // extract text from inside brackets []
+            tags = extractBracketedTags($('.title', this).text().trim())
+            if (tags.length) {
+                $(tags).each(function(i, v) { title.push(v); });
+            }
+
             _stories.push({ 'node': this, 'feature': feature, 'story': story, 'status': status, data: title })
             if (status.toLowerCase() != 'delivered') { 
 
@@ -267,8 +289,19 @@ var ui = (function () {
         $('#veenun .config').on('click', onConfigClick);
     },
 
+    showConfigMenu = function (e) {
+
+
+    },
+
     onConfigClick = function (e) {
         console.log('onConfigClick', e.target)
+
+        // show the drop down menu...
+
+        ui.showConfigMenu();
+
+
         // select on arbitrary string
         // ui.cardColor('blueviolet', stories.find('SRP'));
 
