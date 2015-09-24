@@ -287,20 +287,41 @@ var ui = (function () {
         $('#veenun .tag').on('click', onTagClick);
 
         $('#veenun .config').on('click', onConfigClick);
+
+        // show the drop down menu...
+        showConfigMenu();
+
     },
 
     showConfigMenu = function (e) {
+        var that = '', theother = '',
+            dropdown = '<div class="dropdown">'.concat(
+                '<div class="dropdown-toggle" data-toggle="dropdown" >',
+                    '<span class="caret"></span>',
+                '</div>',
+                '<ul class="dropdown-menu">',
+                    '<li><a href="#">Action</a></li>',
+                    '<li><a href="#">Another action</a></li>',
+                    '<li><a href="#">Something else here</a></li>',
+                    '<li><a href="#">Separated link</a></li>',
+                '</ul>',
+            '</div>');
+        var dialog = '<div id="v0-config" class="container bootstrap-scoped" >'.
+        concat(dropdown, that, theother, '</div>')
 
+        $('#veenun').append(dialog)
+        
+        // bind handlers to 'menu' events
 
     },
 
     onConfigClick = function (e) {
         console.log('onConfigClick', e.target)
 
-        // show the drop down menu...
-
-        ui.showConfigMenu();
-
+        $('.dropdown-toggle').dropdown();
+        // $('.dropdown-toggle').trigger('click');
+        // $('.dropdown-toggle').trigger('click.bs.dropdown');
+        // $('.dropdown-menu').trigger('click.bs.dropdown');
 
         // select on arbitrary string
         // ui.cardColor('blueviolet', stories.find('SRP'));
