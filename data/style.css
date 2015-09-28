@@ -20,6 +20,13 @@ img.branch {
   margin-top: -15px;
 }
 
+#color-select   {
+  display: none;
+  position: absolute;
+  margin-left: -56px;
+  margin-top: -42px;
+}
+
 .bootstrap-scoped .dropdown-menu {
   top: 42px!important;
 }

@@ -256,6 +256,7 @@ var config = (function () {
 var ui = (function () {
     var _private,
         _next_color,
+        _colorpicker,
         $ = undefined,
 
     setCardColor = function (color, stories) {
@@ -287,7 +288,7 @@ var ui = (function () {
     },
     createElements = function () {
         var html = '<div id="veenun" class="bootstrap-scoped container" >'.
-            concat(ui.tagButtons(stories.tags()), getConfigMenu(), '</div>');
+            concat(ui.tagButtons(stories.tags()), getConfigMenu(), getColorPicker(), '</div>');
 
         $('.project-bar').append(html);
 
@@ -297,6 +298,19 @@ var ui = (function () {
         $('.dropdown-menu li a').on('click', onConfigClick);
         $('#add-tag').on('click', onAddTag);
 
+        $("#flat").spectrum({ flat: true, change: onColorPickerSelect });
+    },
+
+    onColorPickerSelect = function(color) {
+        console.log(color.toHexString(), color.toHsvString(), color.toHslString(), color.toRgbString());
+    },
+
+    getColorPicker = function (e) {
+        return '<div id="color-select">'.concat(
+
+            '<input type="text" id="flat" />',
+
+            '</div>');
     },
 
     getConfigMenu = function (e) {
@@ -314,9 +328,9 @@ var ui = (function () {
                     '</div></li>',
                     '<li><a data-handler="onShowAllTags" href="#">Show All Tags</a>',
                         '<span class="toggle off"></span></li>',
+                    '<li><a data-handler="showColorSelect"  href="#">Select Colors</a></li>',
                     '<li><a data-handler="exposedFunctionName" href="#">Action</a></li>',
                     '<li><div class="menu-item">Menu Choice</div></li>',
-                    '<li><a href="#">Another action</a></li>',
                     '<li><a href="#">Something else here</a></li>',
                 '</ul>',
             '</div>');
@@ -339,6 +353,10 @@ var ui = (function () {
         $("#veenun i.tag").siblings(":last").prev().after(tag);
         $("#veenun i.tag").siblings(":last").prev().on('click', onTagClick);
         _next_color++;
+    },
+
+    showColorSelect = function (e) {
+        $('#color-select').css('display', 'block')
     },
 
     onConfigClick = function (e) {
@@ -384,6 +402,7 @@ var ui = (function () {
         $ = jq
     };
     return {
+        showColorSelect: showColorSelect,
         cardColor: setCardColor,
         tagButtons: generateButtons,
         cardIcons: addCardIcons,
