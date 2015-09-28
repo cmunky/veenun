@@ -350,8 +350,8 @@ var ui = (function () {
     onAddTag = function (e) {
         console.log('onAddTag', e.target, $('#tag-name').val())
         var tag = '<i '.concat('class="tag" data-bg="', config.colors[_next_color], '">',  $('#tag-name').val(), '</i>');
-        $("#veenun i.tag").siblings(":last").prev().after(tag);
-        $("#veenun i.tag").siblings(":last").prev().on('click', onTagClick);
+        $("#veenun i.tag").siblings(".config-menu").prev().after(tag);
+        $("#veenun i.tag").siblings(".config-menu").prev().on('click', onTagClick);
         _next_color++;
     },
 

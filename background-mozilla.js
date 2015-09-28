@@ -56,8 +56,8 @@ var service = (function () {
 
     pageMod.PageMod({
         include: options.site,
-        contentStyleFile: ["./style.css"],
-        contentScriptFile: ["./jquery.min.js", "./events.js", "./common.js", "./page-firefox.js" ],
+        contentStyleFile: ["./bootstrap-scoped.min.css", "./spectrum.css", "./style.css"],
+        contentScriptFile: ["./jquery.min.js", "./bootstrap.min.js", "./spectrum.js", "./events.js", "./common.js", "./page-firefox.js" ],
         contentScriptOptions: {
             branchUrl: resource.url("branch-32.png"),
             gearUrl: resource.url("gear-32.png"),
