@@ -9,12 +9,56 @@ img.branch {
   opacity: 0.5;
 }
 
-.tag.config {
+.config-menu {
   background-repeat: no-repeat;
-  padding-top: 9px;
   border: none;
-  opacity: .75;
   width: 32px;
+  height: 32px;
+
+  display: inline-block;
+  margin-left: -5px;
+  margin-top: -15px;
+}
+
+.bootstrap-scoped .dropdown-menu {
+  top: 42px!important;
+}
+
+.bootstrap-scoped .dropdown-menu .menu-item {
+    clear: both;
+    font-weight: 400;
+    color: rgb(51, 51, 51);
+    display: block;
+    padding: 3px 20px;
+    line-height: 1.42857;
+    white-space: nowrap;
+    cursor: pointer;
+
+}
+
+.bootstrap-scoped .dropdown-menu > li > div.menu-item:focus, 
+.bootstrap-scoped .dropdown-menu > li > div.menu-item:hover {
+    text-decoration: none;
+    color: rgb(38, 38, 38);
+    background-color: rgb(245, 245, 245);
+}
+
+#add-tag {
+  float: right;
+  width: 32px;
+  height: 32px;
+  zoom: 0.8;
+  opacity: 0.75;
+  cursor: pointer;
+}
+
+#dropdown-target {
+  width: 32px;
+  height: 32px;
+  float: left;
+  opacity: .75;
+  margin-top: 12px;
+  cursor: pointer;
 }
 
 i.tag {

@@ -185,6 +185,14 @@ var platform = (function () {
         }
     },
 
+    plusUrl = function () {
+        if (_webkit) {
+            return chrome.extension.getURL(config.plusUrl)
+        } else {
+            return self.options.plusUrl
+        }
+    },
+
 
     init = function(platform) {
         _webkit = platform.hasOwnProperty('sendMessage');
@@ -197,6 +205,7 @@ var platform = (function () {
         storage: { set: storageSet,
                    get: storageGet },
         urls: { branch: branchUrl,
+                  plus: plusUrl,
                   gear: gearUrl },
         init: init
     };
@@ -246,6 +255,7 @@ var config = (function () {
 
 var ui = (function () {
     var _private,
+        _next_color,
         $ = undefined,
 
     setCardColor = function (color, stories) {
@@ -268,60 +278,80 @@ var ui = (function () {
         var result = '', x = 0;
         for (var i = 0; i < tags.length; i++) {
             if (tags[i].id.length < 8) {
-                result += '<i '.concat('class="tag" data-bg="', config.colors[x], '">', tags[i].id.trim(), '</i>')
+                result += '<i '.concat('class="tag" data-bg="', config.colors[x], '">', tags[i].id.trim(), '</i>');
                 x++
             }
         };
+        _next_color = x;
         return result;
     },
     createElements = function () {
-        var gear = '<i '.concat('class="tag config" style="background-image: url(', platform.urls.gear(), ');">&nbsp;</i>');
-        // var gear = '<i '.concat('class="tag config" style="background-image: url(', platform.gearUrl(), ');">&nbsp;</i>');
-        //chrome-extension://__MSG_@@extension_id__/
-
-        var html = '<div id="veenun" class="tag-filter" >'.
-            concat(ui.tagButtons(stories.tags()), gear, '</div>');
+        var html = '<div id="veenun" class="bootstrap-scoped container" >'.
+            concat(ui.tagButtons(stories.tags()), getConfigMenu(), '</div>');
 
         $('.project-bar').append(html);
 
         $('#veenun .tag').on('click', onTagClick);
-
-        $('#veenun .config').on('click', onConfigClick);
-
-        // show the drop down menu...
-        showConfigMenu();
+        // bind handlers to 'menu' events
+        $('.dropdown-menu .menu-item').on('click', onConfigClick);
+        $('.dropdown-menu li a').on('click', onConfigClick);
+        $('#add-tag').on('click', onAddTag);
 
     },
 
-    showConfigMenu = function (e) {
-        var that = '', theother = '',
-            dropdown = '<div class="dropdown">'.concat(
-                '<div class="dropdown-toggle" data-toggle="dropdown" >',
-                    '<span class="caret"></span>',
-                '</div>',
-                '<ul class="dropdown-menu">',
-                    '<li><a href="#">Action</a></li>',
+    getConfigMenu = function (e) {
+        // show the drop down menu...
+        var dropdown = '<div class="dropdown">'.concat(
+                '<span id="dropdown-target" class="dropdown-toggle" ',
+                    'aria-haspopup="true" aria-expanded="false" data-toggle="dropdown" ',
+                    'style="background-image: url(', platform.urls.gear(), ');"></span>',
+                    //chrome-extension://__MSG_@@extension_id__/
+                    // '<span class="caret"></span>',
+                '<ul class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdown-target">',
+                    '<li><div class="menu-item" style="padding-right: 7px;">Add: ',
+                        '<input type="text" id="tag-name" name="tag-name" class="inline" size="8" maxlength="8"/>',
+                        '<span id="add-tag" style="background-image: url(', platform.urls.plus(), ');"></span>',
+                    '</div></li>',
+                    '<li><a data-handler="onShowAllTags" href="#">Show All Tags</a>',
+                        '<span class="toggle off"></span></li>',
+                    '<li><a data-handler="exposedFunctionName" href="#">Action</a></li>',
+                    '<li><div class="menu-item">Menu Choice</div></li>',
                     '<li><a href="#">Another action</a></li>',
                     '<li><a href="#">Something else here</a></li>',
-                    '<li><a href="#">Separated link</a></li>',
                 '</ul>',
             '</div>');
-        var dialog = '<div id="v0-config" class="container bootstrap-scoped" >'.
-        concat(dropdown, that, theother, '</div>')
+        var result = '<div class="config-menu">'.concat(dropdown, '</div>')
 
-        $('#veenun').append(dialog)
-        
-        // bind handlers to 'menu' events
+        return result;
+    },
 
+
+    hasAttr = function (e, name) {
+        var attr = $(e).attr(name);
+        // For some browsers, `attr` is undefined; for others,
+        // `attr` is false.  Check for both.
+        return (typeof attr !== typeof undefined && attr !== false);
+    },
+
+    onAddTag = function (e) {
+        console.log('onAddTag', e.target, $('#tag-name').val())
+        var tag = '<i '.concat('class="tag" data-bg="', config.colors[_next_color], '">',  $('#tag-name').val(), '</i>');
+        $("#veenun i.tag").siblings(":last").prev().after(tag);
+        $("#veenun i.tag").siblings(":last").prev().on('click', onTagClick);
+        _next_color++;
     },
 
     onConfigClick = function (e) {
         console.log('onConfigClick', e.target)
-
-        $('.dropdown-toggle').dropdown();
-        // $('.dropdown-toggle').trigger('click');
-        // $('.dropdown-toggle').trigger('click.bs.dropdown');
-        // $('.dropdown-menu').trigger('click.bs.dropdown');
+        
+        if (hasAttr(e.target, 'data-handler')) {
+            var handler = $(e.target).attr('data-handler'),
+            callback = ui[handler];
+            // TODO : Error handling for bad string, etc...
+            if (callback) {
+                callback();// exposed function name
+            }
+        }
 
         // select on arbitrary string
         // ui.cardColor('blueviolet', stories.find('SRP'));
@@ -330,6 +360,7 @@ var ui = (function () {
 
         // Show a dialog with various choices
 
+        // return false; // -- false causes dropdown to stay open !!
     },
 
     onTagClick = function (e) {
