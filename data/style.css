@@ -23,8 +23,19 @@ img.branch {
 #color-select   {
   display: none;
   position: absolute;
-  margin-left: -56px;
-  margin-top: -42px;
+  width: 200px;
+  z-index: 1;
+  margin-top: 4px;
+}
+
+.bootstrap-scoped .sp-container {
+  margin: 0!important;
+}
+
+.button-container {
+  display: block;
+  float: right;
+  margin-right: 6px;
 }
 
 .bootstrap-scoped .dropdown-menu {

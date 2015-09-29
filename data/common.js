@@ -255,8 +255,9 @@ var config = (function () {
 
 var ui = (function () {
     var _private,
-        _next_color,
-        _colorpicker,
+        _nextColor,
+        _tagColor,
+        _pickerOpen = false,
         $ = undefined,
 
     setCardColor = function (color, stories) {
@@ -283,7 +284,7 @@ var ui = (function () {
                 x++
             }
         };
-        _next_color = x;
+        _nextColor = x;
         return result;
     },
     createElements = function () {
@@ -293,23 +294,27 @@ var ui = (function () {
         $('.project-bar').append(html);
 
         $('#veenun .tag').on('click', onTagClick);
+
         // bind handlers to 'menu' events
         $('.dropdown-menu .menu-item').on('click', onConfigClick);
         $('.dropdown-menu li a').on('click', onConfigClick);
         $('#add-tag').on('click', onAddTag);
 
-        $("#flat").spectrum({ flat: true, change: onColorPickerSelect });
-    },
+        $("#color-input").spectrum({ flat: true, showButtons: false });
+        // bind handlers to 'color-picker' events
+        $('.color-cancel').on('click', onColorPickerCancel);
+        $('.color-select').on('click', onColorPickerSelect);
 
-    onColorPickerSelect = function(color) {
-        console.log(color.toHexString(), color.toHsvString(), color.toHslString(), color.toRgbString());
     },
 
     getColorPicker = function (e) {
         return '<div id="color-select">'.concat(
 
-            '<input type="text" id="flat" />',
-
+            '<input type="text" id="color-input" />',
+                "<div class='button-container'>",
+                    "<button type='button' class='color-cancel'>Cancel</button>",
+                    "<button type='button' class='color-select'>Select</button>",
+                "</div>",
             '</div>');
     },
 
@@ -339,7 +344,6 @@ var ui = (function () {
         return result;
     },
 
-
     hasAttr = function (e, name) {
         var attr = $(e).attr(name);
         // For some browsers, `attr` is undefined; for others,
@@ -349,14 +353,45 @@ var ui = (function () {
 
     onAddTag = function (e) {
         console.log('onAddTag', e.target, $('#tag-name').val())
-        var tag = '<i '.concat('class="tag" data-bg="', config.colors[_next_color], '">',  $('#tag-name').val(), '</i>');
+        var tag = '<i '.concat('class="tag" data-bg="', config.colors[_nextColor], '">',  $('#tag-name').val(), '</i>');
         $("#veenun i.tag").siblings(".config-menu").prev().after(tag);
         $("#veenun i.tag").siblings(".config-menu").prev().on('click', onTagClick);
-        _next_color++;
+        _nextColor++;
+    },
+
+    onColorPickerSelect = function() {
+        var color = $("#color-input").spectrum("get");
+        console.log('onColorPickerSelect', color.toHexString(), _tagColor);
+
+        // TODO: Update the color array and save the changes to local storage
+
+        onColorPickerCancel();
+    },
+
+    onColorPickerCancel = function (e) {
+        $("#veenun i.tag").css('background-color', 'inherit');
+        var tagLeft = $($('#veenun i.tag')[0]).position().left;
+        $("#color-select").css("left", tagLeft);
+
+        _pickerOpen = false;
+        $('#color-select').css('display', 'none');
     },
 
     showColorSelect = function (e) {
-        $('#color-select').css('display', 'block')
+        var firstTag = $($('#veenun i.tag')[0]);
+        _tagColor = firstTag.attr('data-bg');
+
+        $("#veenun i.tag[data-selected='true']").each(function() {
+            $(this).removeAttr('data-selected');
+            $(this).css('background-color', 'inherit');
+            ui.cardColor('white', stories.find($(this).text()));
+        })
+
+        firstTag.css('background-color', _tagColor);
+        $("#color-input").spectrum("set", _tagColor);
+        $('#color-select').css('display', 'block');
+
+        _pickerOpen = true;
     },
 
     onConfigClick = function (e) {
@@ -381,20 +416,41 @@ var ui = (function () {
         // return false; // -- false causes dropdown to stay open !!
     },
 
+    addStoryBranches = function (e) {
+        ui.cardIcons(stories.list(),
+            platform.urls.branch());
+    },
+
     onTagClick = function (e) {
-        var t = $(e.target), txt = t.text(),
-        selected = t.attr('data-selected') == 'true',
-        color = (selected) ? 'white' : t.attr('data-bg');
-        t.css('background-color', (!selected) ? color : 'inherit')
-        ui.cardColor(color, stories.find(txt));
+        var t = $(e.target);
 
-        // ui.cardIcons(stories.list(),
-            // platform.urls.branch()))
-
-        if (selected) {
-            t.removeAttr('data-selected')
+        if (_pickerOpen) {
+            var pickerLeft = function(t) {
+                var tagPos = t.position(), borderMargin = 12, 
+                pickerWidth = $("#color-select").width();
+                return (tagPos.left >= ($(document).width() - pickerWidth)) ? 
+                    tagPos.left + t.width() + borderMargin - pickerWidth :
+                    tagPos.left;
+            };
+            _tagColor = t.attr('data-bg');
+            $("i.tag").css('background-color', 'inherit');
+            $("#color-input").spectrum("set", _tagColor );
+            $("#color-select").css("left", pickerLeft(t));
+            t.css('background-color', _tagColor )
         } else {
-            t.attr('data-selected', true)
+            // TODO This should be refactored to a method...
+            var txt = t.text(),
+            selected = t.attr('data-selected') == 'true',
+            color = (selected) ? 'white' : t.attr('data-bg');
+
+            t.css('background-color', (!selected) ? color : 'inherit')
+            ui.cardColor(color, stories.find(txt));
+
+            if (selected) {
+                t.removeAttr('data-selected')
+            } else {
+                t.attr('data-selected', true)
+            }
         }
     },
 
