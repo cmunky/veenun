@@ -8,20 +8,28 @@ var stories = (function () {
 
     filterTags = function() {
         for (var i = _tags.length - 1; i >= 0; i--) {
-            if (_tags[i].count === 1) { _tags.splice(i, 1) }
+            if (_tags[i].count === 1) {
+                _tags.splice(i, 1)
+            }
         }
         return _tags
     },
 
     updateTags = function(story) {
         for (var i = story.data.length - 1; i >= 0; i--) {           
-            var tag = $.grep(_tags, function(e){ return e.id == story.data[i]; });
-            if (tag.length == 0) {
-                _tags.push({ 'id': story.data[i], 'count': 1})
-            } else if (tag.length == 1) {
-                tag[0].count += 1
+            var tag = $.grep(_tags, function(e){
+                return e.id == story.data[i];
+            });
+            if (tag.length === 0) {
+                if (story.data.length > 1 && i === 0) {
+                    _tags.push({ 'id': story.data[i], 'count': 1})
+                }
             } else {
-                console.log('multiple tag error - ' + tag[0])
+                if (tag.length > 1) {
+                    console.log('multiple tag error - ' + tag.join(', '));
+                } else {
+                    tag[0].count += 1
+                }
             }
         };
     },
@@ -57,7 +65,8 @@ var stories = (function () {
         $(_stories).each(function() {
             updateTags(this)
         })
-        return filterTags()
+        result = filterTags()
+        return result
     },
 
     extractBracketedTags = function(text) {
@@ -84,9 +93,15 @@ var stories = (function () {
             feature = (title[0].startsWith('E-')) ? title[0] : undefined,
 
             // extract text from inside brackets []
-            tags = extractBracketedTags($('.title', this).text().trim())
+            tags = extractBracketedTags($('.title', this).text().trim());
+
+            if (title.length > 1) {
+                console.log('B4 ', title.length, title.join(' | '))
+            }
             if (tags.length) {
-                $(tags).each(function(i, v) { title.push(v); });
+                $(tags).each(function(i, v) {
+                    title.unshift(v)
+                });
             }
 
             _stories.push({ 'node': this, 'feature': feature, 'story': story, 'status': status, data: title })
@@ -279,10 +294,14 @@ var ui = (function () {
     generateButtons = function(tags) {
         var result = '', x = 0;
         for (var i = 0; i < tags.length; i++) {
-            if (tags[i].id.length < 8) {
-                result += '<i '.concat('class="tag" data-bg="', config.colors[x], '">', tags[i].id.trim(), '</i>');
-                x++
-            }
+            var trim = tags[i].id.trim();
+            tagName = trim.indexOf(' ') > -1 ? trim.substr(0, trim.indexOf(' ')) : trim;
+            result += '<i '.concat('class="tag" data-bg="', config.colors[x], '">', tagName, '</i>');
+            x++
+            // if (tags[i].id.length < 8) {
+            //     result += '<i '.concat('class="tag" data-bg="', config.colors[x], '">', tags[i].id.trim(), '</i>');
+            //     x++
+            // }
         };
         _nextColor = x;
         return result;

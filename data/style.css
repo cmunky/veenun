@@ -79,9 +79,10 @@ img.branch {
 }
 
 i.tag {
-  width: 60px;
+  min-width: 60px;
   display: inline-block;
-  padding: 6px 0 6px 0;
+  padding: 6px;
+  /*padding: 6px 0 6px 0;*/
   color: green;
   border: green 1px dotted;
   border-radius: 30px;
