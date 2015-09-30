@@ -61,7 +61,7 @@ var service = (function () {
         contentScriptOptions: {
             branchUrl: resource.url("branch-32.png"),
             gearUrl: resource.url("gear-32.png"),
-            plusUrl: resource.url("plus-32.png"),
+            plusUrl: resource.url("plus-24.png"),
             // http://www.tayloredmktg.com/rgb/
             // colors: [ "#fffacd", "#fff5ee", "#eee5de", "#cdc5bf", "#f0fff0", "#e0eee0", "#c1cdc1", "#f5fffa" ]
             colors: [ "#ee82ee", "#f08080", "#f4a460", "#cd5c5c", "#eedd82", "#9acd32", "#40e0d0", "#d3d3d3", "#00bfff", "#fffacd" ],

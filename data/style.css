@@ -63,9 +63,8 @@ img.branch {
 
 #add-tag {
   float: right;
-  width: 32px;
-  height: 32px;
-  zoom: 0.8;
+  width: 24px;
+  height: 24px;
   opacity: 0.75;
   cursor: pointer;
 }

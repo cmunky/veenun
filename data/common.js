@@ -299,6 +299,11 @@ var ui = (function () {
         $('.dropdown-menu .menu-item').on('click', onConfigClick);
         $('.dropdown-menu li a').on('click', onConfigClick);
         $('#add-tag').on('click', onAddTag);
+        // key handlers for embedded input
+        $('#tag-name').on('keyup', function(e) {
+            if (e.keyCode === 27) { $('.dropdown-toggle').dropdown('toggle'); }
+            if (e.keyCode === 13) { onAddTag(e) }
+        });
 
         $("#color-input").spectrum({ flat: true, showButtons: false });
         // bind handlers to 'color-picker' events
@@ -356,6 +361,7 @@ var ui = (function () {
         var tag = '<i '.concat('class="tag" data-bg="', config.colors[_nextColor], '">',  $('#tag-name').val(), '</i>');
         $("#veenun i.tag").siblings(".config-menu").prev().after(tag);
         $("#veenun i.tag").siblings(".config-menu").prev().on('click', onTagClick);
+        $('#tag-name').val('');
         _nextColor++;
     },
 
