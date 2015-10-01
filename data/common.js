@@ -22,6 +22,8 @@ var stories = (function () {
             });
             if (tag.length === 0) {
                 if (story.data.length > 1 && i === 0) {
+                    // This only adds the first tag, potentially missing secondary groupings
+                    // TODO: How do we know a string is 'tag-like' or if it's simply story text
                     _tags.push({ 'id': story.data[i], 'count': 1})
                 }
             } else {
@@ -85,31 +87,25 @@ var stories = (function () {
     loadStories = function() {
         _stories = [] // !!!! Does this work the way I think it does???
         $('.story-card-container').each(function() {
-
+            var 
             // split on colon :
-            var title = $.map($('.title', this).text().trim().split(':'), $.trim),
+            title = $.map($('.title', this).text().trim().split(':'), $.trim),
+            // extract fields by class name
             story = $('.identity .number', this).text().trim(),
             status = $('.status', this).text().trim(),
+            // extract feature from title
+            // TODO: This logic only works for SEO, other teams are different !?!
             feature = (title[0].startsWith('E-')) ? title[0] : undefined,
-
             // extract text from inside brackets []
             tags = extractBracketedTags($('.title', this).text().trim());
-
-            if (title.length > 1) {
-                console.log('B4 ', title.length, title.join(' | '))
-            }
             if (tags.length) {
                 $(tags).each(function(i, v) {
-                    title.unshift(v)
+                    title.unshift(v) // insert the bracket tags are the start of the array
                 });
             }
 
             _stories.push({ 'node': this, 'feature': feature, 'story': story, 'status': status, data: title })
-            if (status.toLowerCase() != 'delivered') { 
 
-                // console.log(feature, story, status, title);
-
-            }
         });
 
     },
@@ -234,6 +230,7 @@ var config = (function () {
         $ = undefined,
 
     apply = function (config) {
+        config = config || {}
         for (var attribute in config) { this[attribute] = config[attribute]; }
         var that = this
 
@@ -244,12 +241,25 @@ var config = (function () {
                 console.log('config.apply: no local storage config found')
             } else {
                 var local = result.config
+                console.log(local)
+                
                 for (var attribute in local) { that[attribute] = local[attribute]; }
                 // console.log(that)
             }
         });
 
-        // console.log(this)
+        console.log('config.apply', this);
+    },
+
+    save = function() {
+        var proxy = {}, keys = Object.keys(this);
+        for (var i = keys.length - 1; i >= 0; i--) {
+            var attribute = keys[i];
+            if (typeof this[attribute] != "function") {
+                proxy[attribute] = this[attribute];
+            }
+        };
+        platform.storage.set({ config: proxy });
     },
 
     init = function(jq) {
@@ -264,6 +274,7 @@ var config = (function () {
 
     return {
         apply: apply,
+        save: save,
         init: init
     };
 }());
@@ -324,11 +335,14 @@ var ui = (function () {
             if (e.keyCode === 13) { onAddTag(e) }
         });
 
-        $("#color-input").spectrum({ flat: true, showButtons: false });
+        $("#color-input").spectrum({
+            flat: true, showButtons: false,
+            move: onColorChanged
+        });
         // bind handlers to 'color-picker' events
         $('.color-cancel').on('click', onColorPickerCancel);
         $('.color-select').on('click', onColorPickerSelect);
-
+        $(document).bind("keydown.spectrum", onColorPickerCancel);
     },
 
     getColorPicker = function (e) {
@@ -385,12 +399,30 @@ var ui = (function () {
     },
 
     onColorPickerSelect = function() {
-        var color = $("#color-input").spectrum("get");
-        console.log('onColorPickerSelect', color.toHexString(), _tagColor);
+        var color = $("#color-input").spectrum("get"),
+        prev = _tagColor,
+        selected = color.toHexString(),
+        all = config.colors,
+        found = all.indexOf(prev),
+        add = (found === -1), tagBg;
+        if (add) {
+            all.push(selected);
+        } else {
+            tagBg = $($('#veenun i.tag')[found]).attr('data-bg');
+            all[found] = selected;
+            $($('#veenun i.tag')[found]).attr('data-bg', selected);
+        }
 
+        console.log('onColorPickerSelect', selected, prev, all, found, add, tagBg);
+
+        config.save();
         // TODO: Update the color array and save the changes to local storage
 
         onColorPickerCancel();
+    },
+
+    onColorChanged = function (color) {
+
     },
 
     onColorPickerCancel = function (e) {
