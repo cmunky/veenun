@@ -11,6 +11,8 @@ var veeNone = (function ($, $app) {
 
         } else if (msg.configLoaded) {
 
+            config.defaultColors = msg.config.colors;
+
             config.apply(msg.config);
 
             // The ui library relies on config for colors

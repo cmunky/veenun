@@ -224,6 +224,7 @@ var platform = (function () {
 
 var config = (function () {
     var _private,
+        _defaultColors = [],
         _default = {
             version: "1.0.0"
         },
@@ -252,14 +253,15 @@ var config = (function () {
     },
 
     save = function() {
-        var proxy = {}, keys = Object.keys(this);
+        var that = {}, keys = Object.keys(this);
         for (var i = keys.length - 1; i >= 0; i--) {
             var attribute = keys[i];
             if (typeof this[attribute] != "function") {
-                proxy[attribute] = this[attribute];
+                that[attribute] = this[attribute];
             }
         };
-        platform.storage.set({ config: proxy });
+        var config = { config: that };
+        platform.storage.set(config);
     },
 
     init = function(jq) {
@@ -274,6 +276,7 @@ var config = (function () {
 
     return {
         apply: apply,
+        defaultColors: _defaultColors,
         save: save,
         init: init
     };
@@ -372,9 +375,12 @@ var ui = (function () {
                     '<li><a data-handler="onShowAllTags" href="#">Show All Tags</a>',
                         '<span class="toggle off"></span></li>',
                     '<li><a data-handler="showColorSelect"  href="#">Select Colors</a></li>',
-                    '<li><a data-handler="exposedFunctionName" href="#">Action</a></li>',
-                    '<li><div class="menu-item">Menu Choice</div></li>',
-                    '<li><a href="#">Something else here</a></li>',
+                    '<li><a data-handler="clearCustomColors" href="#">Clear Custom Colors</a></li>',
+                    '<li><a data-handler="clearCustomTags" href="#">Clear Custom Tags</a></li>',
+
+                    // '<li><a data-handler="exposedFunctionName" href="#">Action</a></li>',
+                    // '<li><div class="menu-item">Menu Choice</div></li>',
+                    // '<li><a href="#">Something else here</a></li>',
                 '</ul>',
             '</div>');
         var result = '<div class="config-menu">'.concat(dropdown, '</div>')
@@ -433,6 +439,16 @@ var ui = (function () {
         _pickerOpen = false;
         $('#color-select').css('display', 'none');
     },
+
+    clearCustomColors = function (e) {
+        config.colors = config.defaultColors
+    },
+
+    clearCustomTags = function (e) {
+        config.tags = []
+    },
+
+    moreUsefulEventHandlers = function (e) {},
 
     showColorSelect = function (e) {
         var firstTag = $($('#veenun i.tag')[0]);
@@ -516,6 +532,8 @@ var ui = (function () {
     };
     return {
         showColorSelect: showColorSelect,
+        clearCustomColors: clearCustomColors,
+        clearCustomTags: clearCustomTags,
         cardColor: setCardColor,
         tagButtons: generateButtons,
         cardIcons: addCardIcons,

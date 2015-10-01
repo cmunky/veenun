@@ -25,6 +25,8 @@ var veeNone = (function ($, $events) {
 
         stories.load()
 
+        config.defaultColors = self.options.colors;
+
         config.apply({colors: self.options.colors})
 
         ui.createElements()
