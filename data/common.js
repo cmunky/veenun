@@ -63,7 +63,7 @@ var stories = (function () {
     },
 
     getFilteredTags = function() {
-        _tags = [] // !!!! Does this work the way I think it does???
+        _tags = []
         $(_stories).each(function() {
             updateTags(this)
         })
@@ -85,7 +85,7 @@ var stories = (function () {
     },
 
     loadStories = function() {
-        _stories = [] // !!!! Does this work the way I think it does???
+        _stories = []
         $('.story-card-container').each(function() {
             var 
             // split on colon :
@@ -176,6 +176,15 @@ var platform = (function () {
         }
     },
 
+    storageClear = function (callback) {
+        if (_webkit) {
+            chrome.storage.local.clear();
+            } else {
+            localStorage.clear()
+        }
+        if (callback) { callback(response) }
+    },
+
     storageGet = function (key, callback) {
         if (_webkit) {
             chrome.storage.local.get(key, function(result) {
@@ -214,7 +223,8 @@ var platform = (function () {
     return {
         localStorage: localStorage,
         storage: { set: storageSet,
-                   get: storageGet },
+                   get: storageGet,
+                   clear: storageClear },
         urls: { branch: branchUrl,
                   plus: plusUrl,
                   gear: gearUrl },
@@ -230,7 +240,7 @@ var config = (function () {
         },
         $ = undefined,
 
-    apply = function (config) {
+    apply = function (config, callback) {
         config = config || {}
         for (var attribute in config) { this[attribute] = config[attribute]; }
         var that = this
@@ -242,17 +252,23 @@ var config = (function () {
                 console.log('config.apply: no local storage config found')
             } else {
                 var local = result.config
-                console.log(local)
+                console.log('config.found', local)
                 
-                for (var attribute in local) { that[attribute] = local[attribute]; }
-                // console.log(that)
+                for (var attribute in local) {
+                    if (local[attribute])
+                    that[attribute] = local[attribute];
+                }
             }
+            console.log('config.apply', that);
+            if (callback) { callback(); }
         });
-
-        console.log('config.apply', this);
     },
 
-    save = function() {
+    clear = function() {
+        platform.storage.clear()
+    },
+
+    save = function(callback) {
         var that = {}, keys = Object.keys(this);
         for (var i = keys.length - 1; i >= 0; i--) {
             var attribute = keys[i];
@@ -261,13 +277,13 @@ var config = (function () {
             }
         };
         var config = { config: that };
-        platform.storage.set(config);
+        platform.storage.set(config, callback);
     },
 
     init = function(jq) {
         $ = jq
         platform.storage.get('config', function(result) {
-            console.log(result)
+            console.log('config.init', result.config)
             if (Object.keys(result).length === 0) {
                 platform.storage.set({ config: _default });
             }
@@ -278,6 +294,7 @@ var config = (function () {
         apply: apply,
         defaultColors: _defaultColors,
         save: save,
+        clear: clear,
         init: init
     };
 }());
@@ -312,17 +329,20 @@ var ui = (function () {
             tagName = trim.indexOf(' ') > -1 ? trim.substr(0, trim.indexOf(' ')) : trim;
             result += '<i '.concat('class="tag" data-bg="', config.colors[x], '">', tagName, '</i>');
             x++
-            // if (tags[i].id.length < 8) {
-            //     result += '<i '.concat('class="tag" data-bg="', config.colors[x], '">', tags[i].id.trim(), '</i>');
-            //     x++
-            // }
         };
         _nextColor = x;
         return result;
     },
+    getAllTags = function () {
+        var result = []
+        $(config.tags).each(function() {
+            result.push({ id: this, count: -1 })
+        })
+        return stories.tags().concat(result);
+    },
     createElements = function () {
         var html = '<div id="veenun" class="bootstrap-scoped container" >'.
-            concat(ui.tagButtons(stories.tags()), getConfigMenu(), getColorPicker(), '</div>');
+            concat(ui.tagButtons(getAllTags()), getConfigMenu(), getColorPicker(), '</div>');
 
         $('.project-bar').append(html);
 
@@ -396,39 +416,48 @@ var ui = (function () {
     },
 
     onAddTag = function (e) {
-        console.log('onAddTag', e.target, $('#tag-name').val())
-        var tag = '<i '.concat('class="tag" data-bg="', config.colors[_nextColor], '">',  $('#tag-name').val(), '</i>');
-        $("#veenun i.tag").siblings(".config-menu").prev().after(tag);
-        $("#veenun i.tag").siblings(".config-menu").prev().on('click', onTagClick);
-        $('#tag-name').val('');
-        _nextColor++;
+        var tagName = $('#tag-name').val(),
+        lastTag = $("#veenun i.tag").siblings(".config-menu").prev(), 
+        tag = '<i '.concat('class="tag" data-bg="', config.colors[_nextColor], '">',  tagName, '</i>');
+        if (tagName != ''){
+            console.log('onAddTag', e.target, tagName)
+            lastTag.after(tag);
+            lastTag.on('click', onTagClick);
+            if (!config.tags) {config.tags = []}
+            config.tags.push(tagName)
+            config.save(function() {
+                $('#tag-name').val('');
+                _nextColor++;
+            })
+        }
     },
 
     onColorPickerSelect = function() {
         var color = $("#color-input").spectrum("get"),
-        prev = _tagColor,
         selected = color.toHexString(),
-        all = config.colors,
-        found = all.indexOf(prev),
-        add = (found === -1), tagBg;
-        if (add) {
-            all.push(selected);
+        index = config.colors.indexOf(_tagColor),
+        bgAttribute = $($('#veenun i.tag')[index]).attr('data-bg');
+        if (index === -1) {
+            // assumes the current tag is one past the end of the color array
+            config.colors.push(selected);
+            // How /when does the data-bg attr get updated?
         } else {
-            tagBg = $($('#veenun i.tag')[found]).attr('data-bg');
-            all[found] = selected;
-            $($('#veenun i.tag')[found]).attr('data-bg', selected);
+            config.colors[index] = selected;
+            $($('#veenun i.tag')[index]).attr('data-bg', selected);
         }
+        console.log('onColorPickerSelect', selected, _tagColor, config.colors, index, bgAttribute);
 
-        console.log('onColorPickerSelect', selected, prev, all, found, add, tagBg);
+        config.save(function() {
+            onColorPickerCancel();
+            console.log('saved!')
+        });
 
-        config.save();
-        // TODO: Update the color array and save the changes to local storage
-
-        onColorPickerCancel();
     },
 
     onColorChanged = function (color) {
-
+        var hex = color.toHexString(),
+        index = config.colors.indexOf(_tagColor);
+        $($('#veenun i.tag')[index]).css('background-color', hex)
     },
 
     onColorPickerCancel = function (e) {
@@ -442,13 +471,18 @@ var ui = (function () {
 
     clearCustomColors = function (e) {
         config.colors = config.defaultColors
+        config.save()
+    },
+
+    clearCustomAll = function (e) {
+        config.clear();
+        config.apply(); // ??
     },
 
     clearCustomTags = function (e) {
         config.tags = []
+        config.save()
     },
-
-    moreUsefulEventHandlers = function (e) {},
 
     showColorSelect = function (e) {
         var firstTag = $($('#veenun i.tag')[0]);
@@ -469,7 +503,10 @@ var ui = (function () {
 
     onConfigClick = function (e) {
         console.log('onConfigClick', e.target)
+        // select on arbitrary string
+        // ui.cardColor('blueviolet', stories.find('SRP'));
         
+        // maps markup attribute value to object method name
         if (hasAttr(e.target, 'data-handler')) {
             var handler = $(e.target).attr('data-handler'),
             callback = ui[handler];
@@ -478,14 +515,6 @@ var ui = (function () {
                 callback();// exposed function name
             }
         }
-
-        // select on arbitrary string
-        // ui.cardColor('blueviolet', stories.find('SRP'));
-
-        // Show menu with various choices
-
-        // Show a dialog with various choices
-
         // return false; // -- false causes dropdown to stay open !!
     },
 
@@ -539,5 +568,5 @@ var ui = (function () {
         cardIcons: addCardIcons,
         createElements: createElements,
         init: init
-};
+    };
 }());

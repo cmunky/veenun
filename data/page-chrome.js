@@ -13,10 +13,12 @@ var veeNone = (function ($, $app) {
 
             config.defaultColors = msg.config.colors;
 
-            config.apply(msg.config);
+            config.apply(msg.config, function() {
+                console.log('config applied!')
+                // The ui library relies on config for colors
+                ui.createElements();
+            });
 
-            // The ui library relies on config for colors
-            ui.createElements();
 
         } else if (msg.initComplete) {
 
