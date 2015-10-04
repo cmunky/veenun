@@ -171,7 +171,7 @@ var platform = (function () {
                 key = keys[len - 1], json = JSON.stringify(value[key]);
             // console.log(value, keys, len, key, json)
             var result = localStorage.setItem(key, json),
-            response = (result === null) ? {} : result;
+            response = (result === null) ? { config: {} } : { config: result };
             if (callback) { callback(response) }
         }
     },
@@ -192,7 +192,7 @@ var platform = (function () {
             });
         } else {
             var result = localStorage.getItem(key),
-            response = (result === null) ? {} : result;
+            response = (result === null) ? { config: {} } : { config: JSON.parse(result) };
             if (callback) { callback(response) }
         }
     },
@@ -246,8 +246,6 @@ var config = (function () {
         var that = this
 
         platform.storage.get('config', function(result) {
-            // console.log(result)
-
             if (Object.keys(result).length === 0) {
                 console.log('config.apply: no local storage config found')
             } else {
@@ -365,7 +363,11 @@ var ui = (function () {
         // bind handlers to 'color-picker' events
         $('.color-cancel').on('click', onColorPickerCancel);
         $('.color-select').on('click', onColorPickerSelect);
-        $(document).bind("keydown.spectrum", onColorPickerCancel);
+        $(document).bind("keydown.spectrum", function(e) {
+            if (_pickerOpen && e.keyCode === 27) {
+                onColorPickerCancel()
+            }
+        });
     },
 
     getColorPicker = function (e) {
@@ -417,12 +419,12 @@ var ui = (function () {
 
     onAddTag = function (e) {
         var tagName = $('#tag-name').val(),
-        lastTag = $("#veenun i.tag").siblings(".config-menu").prev(), 
+        lastTag = function () { return $("#veenun i.tag").siblings(".config-menu").prev(); }, 
         tag = '<i '.concat('class="tag" data-bg="', config.colors[_nextColor], '">',  tagName, '</i>');
         if (tagName != ''){
             console.log('onAddTag', e.target, tagName)
-            lastTag.after(tag);
-            lastTag.on('click', onTagClick);
+            lastTag().after(tag);
+            lastTag().on('click', onTagClick);
             if (!config.tags) {config.tags = []}
             config.tags.push(tagName)
             config.save(function() {
