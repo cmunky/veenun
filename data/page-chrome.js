@@ -17,6 +17,8 @@ var veeNone = (function ($, $app) {
                 console.log('config applied!')
                 // The ui library relies on config for colors
                 ui.createElements();
+
+                $app.sendMessage({ loadBranchLogs: true , branchNames: stories.names() });
             });
 
 

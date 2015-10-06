@@ -29,6 +29,10 @@ var service = (function () {
 
           onLoadConfig()
 
+      } else if (msg.loadBranchLogs) {
+
+          onLoadBranchLogs()
+
       } else if (msg.init) {
 
           onInitialize()
@@ -38,7 +42,14 @@ var service = (function () {
       }
     },
 
-     onLoadConfig = function(callback) {
+    onLoadBranchLogs = function(branchList, callback) {
+        console.log('onLoadBranchLogs', branchList)
+        // TODO: Iterate on the branchList, fetch remote logs,
+        //  fire event for each branchLog returned ?
+        //  build result set ?
+    },
+
+    onLoadConfig = function(callback) {
         $.get(_urls.config, function(response) {
               _config = JSON.parse(response);
               sendMessage({ configLoaded: true, config: _config });
