@@ -84,6 +84,15 @@ var stories = (function () {
         return result;
     },
 
+    getStoryNames = function() {
+        var result = $.map(_stories, function(n) { return n.story; });
+        return result.filter(function (n, i) {return result.indexOf(n) == i});
+    },
+    getFeatureNames = function() {
+        var result = $.map(_stories, function(n) { return n.feature; });
+        return result.filter(function (n, i) {return result.indexOf(n) == i});
+    },
+
     loadStories = function() {
         _stories = []
         $('.story-card-container').each(function() {
@@ -143,6 +152,8 @@ var stories = (function () {
         tags: getTags,
         list: getStories,
         load: loadStories,
+        names: getStoryNames,
+        features: getFeatureNames,
         init: init
 };
 }());
