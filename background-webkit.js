@@ -31,7 +31,7 @@ var service = (function () {
 
       } else if (msg.loadBranchLogs) {
 
-          onLoadBranchLogs()
+          onLoadBranchLogs(msg.branchNames, onBranchLogLoaded)
 
       } else if (msg.init) {
 
@@ -42,11 +42,37 @@ var service = (function () {
       }
     },
 
+    onBranchLogLoaded = function(logData) {
+
+        sendMessage({ branchLog : true, branchName: logData.branchName , logData: logData });
+
+    },
+
     onLoadBranchLogs = function(branchList, callback) {
         console.log('onLoadBranchLogs', branchList)
-        // TODO: Iterate on the branchList, fetch remote logs,
-        //  fire event for each branchLog returned ?
-        //  build result set ?
+
+        var getRandomInt = function(min, max) {
+          return Math.floor(Math.random() * (max - min + 1)) + min;
+        };
+        $(branchList).each(function(i, n) {
+
+          setTimeout(function() {
+            callback({
+              branchName: n,
+              stuff: 'such', when: 'then', why: 'just because'
+            });
+          }, getRandomInt(250, 1250));
+
+          /*var url = _urls.remote + 'other stuff...';
+
+          $.get(url, function(response, moar, xhr) {
+
+            console.log(response)
+
+            callback(response)
+
+          }, dataType: 'json');*/
+        });
     },
 
     onLoadConfig = function(callback) {
@@ -99,4 +125,5 @@ var service = (function () {
     console.log('bound to: ', _urls.site)
 
     return { init: init };
+
 }());

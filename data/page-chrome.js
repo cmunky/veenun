@@ -18,9 +18,14 @@ var veeNone = (function ($, $app) {
                 // The ui library relies on config for colors
                 ui.createElements();
 
-                $app.sendMessage({ loadBranchLogs: true , branchNames: stories.names() });
             });
 
+
+        } else if (msg.branchLog) {
+            
+            console.log( msg.logData)
+
+            stories.storyLogs(msg.logData.branchName, msg.logData)
 
         } else if (msg.initComplete) {
 
@@ -30,6 +35,8 @@ var veeNone = (function ($, $app) {
 
             stories.load();
 
+            $app.sendMessage({ loadBranchLogs: true , branchNames: stories.names() });
+
             // ui.createElements();
 
         } else if (msg.loadStories) {
@@ -37,6 +44,7 @@ var veeNone = (function ($, $app) {
             stories.load();
 
             // ui.createElements()
+
 
         } else { // unknown messages
             console.log("page-listener: " + JSON.stringify(msg), _, sendResponse);

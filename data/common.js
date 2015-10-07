@@ -135,6 +135,22 @@ var stories = (function () {
         return (_selected.length == 0) ? null : _selected;
     },
 
+    addBranchLogs = function(branch, logs, callback) { 
+        $(_stories).each(function() {
+            if (callback(this, branch)) {
+                this['branch'] = logs
+            }
+        });
+    },
+
+    addStoryLogs = function(branch, logs) {
+        addBranchLogs(branch, logs, byStory)
+    },
+
+    addFeatureLogs = function(branch, logs) {
+        addBranchLogs(branch, logs, byFeature)
+    },
+
     getTags = function() { 
         return getFilteredTags()
     },
@@ -154,6 +170,8 @@ var stories = (function () {
         load: loadStories,
         names: getStoryNames,
         features: getFeatureNames,
+        storyLogs: addStoryLogs,
+        featureLogs: addFeatureLogs,
         init: init
 };
 }());
@@ -261,14 +279,14 @@ var config = (function () {
                 console.log('config.apply: no local storage config found')
             } else {
                 var local = result.config
-                console.log('config.found', local)
+                // console.log('config.found', local)
                 
                 for (var attribute in local) {
                     if (local[attribute])
                     that[attribute] = local[attribute];
                 }
             }
-            console.log('config.apply', that);
+            // console.log('config.apply', that);
             if (callback) { callback(); }
         });
     },
@@ -292,7 +310,7 @@ var config = (function () {
     init = function(jq) {
         $ = jq
         platform.storage.get('config', function(result) {
-            console.log('config.init', result.config)
+            // console.log('config.init', result.config)
             if (Object.keys(result).length === 0) {
                 platform.storage.set({ config: _default });
             }
