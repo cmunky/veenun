@@ -1,5 +1,6 @@
 {
-    "remote": "http://wintermute:23232",
+    "remote": "http://localhost:23232",
+    "template": "./data/template.html",
     "branchUrl": "./data/branch-32.png",
     "gearUrl": "./data/gear-32.png",
     "plusUrl": "./data/plus-24.png",

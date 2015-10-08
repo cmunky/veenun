@@ -15,6 +15,7 @@ var veeNone = (function ($, $app) {
 
             config.apply(msg.config, function() {
                 console.log('config applied!')
+
                 // The ui library relies on config for colors
                 ui.createElements();
 
@@ -28,8 +29,6 @@ var veeNone = (function ($, $app) {
             stories.storyLogs(msg.logData.branchName, msg.logData)
 
         } else if (msg.initComplete) {
-
-            $app.sendMessage({ loadConfig: true });
 
             $app.sendMessage({ setAlarm: true, timeout: 0.2 }); // 20 seconds (debug only)
 

@@ -1,14 +1,11 @@
 
 var service = (function () {
 
-    var _private,
-        _lastTabId,
-        _config,
-        _urls = {
-          site: chrome.runtime.getManifest().content_scripts[0]["matches"][0],
-          template: chrome.extension.getURL("./data/template.html"),
-          config: chrome.extension.getURL("./data/config-webkit.json")
+    var _config = {
+          file: "./data/config-webkit.json",
+          include: chrome.runtime.getManifest().content_scripts[0]["matches"][0]
         },
+        _lastTabId,
 
     alarmListener = function(msg) {
         console.log("alarm-listener : timer expired!", msg);
@@ -24,10 +21,6 @@ var service = (function () {
       if (msg.setAlarm) {
           timeout = msg.timeout || 10; // minutes
           chrome.alarms.create( { delayInMinutes: timeout } );
-
-      } else if (msg.loadConfig) {
-
-          onLoadConfig()
 
       } else if (msg.loadBranchLogs) {
 
@@ -49,7 +42,7 @@ var service = (function () {
     },
 
     onLoadBranchLogs = function(branchList, callback) {
-        console.log('onLoadBranchLogs', branchList)
+        // console.log('onLoadBranchLogs', branchList)
 
         var getRandomInt = function(min, max) {
           return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -63,7 +56,7 @@ var service = (function () {
             });
           }, getRandomInt(250, 1250));
 
-          /*var url = _urls.remote + 'other stuff...';
+          /*var url = _config.remote + 'other stuff...';
 
           $.get(url, function(response, moar, xhr) {
 
@@ -75,15 +68,20 @@ var service = (function () {
         });
     },
 
-    onLoadConfig = function(callback) {
-        $.get(_urls.config, function(response) {
-              _config = JSON.parse(response);
-              sendMessage({ configLoaded: true, config: _config });
-        })
+    loadConfig = function(callback) {
+        var include = _config.include
+        var file = _config.file
+        $.get(chrome.extension.getURL(_config.file), function(data, status, xhr) {
+            _config = data;
+            _config['include'] = include
+            _config['file'] = file
+            sendMessage({ configLoaded: true, config: _config });
+        }, "json")
     },
 
     loadTemplates = function() {
-        $.get(_urls.template, function(response) {
+        $.get(_config.template, function(response) {
+        // $.get(_urls.template, function(response) {
 
             console.log(response)
 
@@ -94,7 +92,8 @@ var service = (function () {
         chrome.tabs.query( { active: true, currentWindow: true}, function(tabs) {
           if (tabs.length) {
             _lastTabId = tabs[0].id;
-            sendMessage({ initComplete: true, config: _config});
+            loadConfig()
+            sendMessage({ initComplete: true});
           }
         });
     },
@@ -122,7 +121,7 @@ var service = (function () {
 
     chrome.runtime.onMessage.addListener(backgroundListener);
     chrome.alarms.onAlarm.addListener(alarmListener);
-    console.log('bound to: ', _urls.site)
+    console.log('bound to: ', _config.include)
 
     return { init: init };
 
