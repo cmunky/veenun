@@ -1,5 +1,5 @@
 {
-  "name": "veenun git-log-proxy",
+  "name": "git-log-proxy",
   "description": "Local git proxy providing json formatted output",
   "author": "cmunky <cmunky@uk2.net>",
   "version": "0.2.3",
