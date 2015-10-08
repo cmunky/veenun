@@ -1,0 +1,1157 @@
+[
+    {
+        "branch": "E-07890/B-128780",
+        "commits": [
+            {
+                "commit": "3861f5e17c6798c01a4d3aa22dc4b073fdda632e",
+                "author": "Robert Fewster <robert.fewster@gettyimages.com>",
+                "date": "Wed Sep 30 10:01:02 2015 -0600",
+                "message": "B-128780-Changes-to-comply-with-jshint-rules"
+            },
+            {
+                "commit": "0eca8fee48f94d29a7eeec736ac3f2f62b3576d8",
+                "author": "Ronald Domes <ronald.domes@gettyimages.com>",
+                "date": "Thu Sep 24 08:59:28 2015 -0600",
+                "message": "Removed-_setBrowserTitle-function-completely-as-it-is-not-longer-doing-anything"
+            },
+            {
+                "commit": "7001cdf4d04284045d58f421b0841a6ab4069ebf",
+                "author": "Ronald Domes <ronald.domes@gettyimages.com>",
+                "date": "Tue Sep 22 11:02:53 2015 -0600",
+                "message": "Move-the-injection-of-the-title-from-PHP-to-javascript"
+            },
+            {
+                "commit": "d53c18a07626a34561c7879404d7350c4c19aff5",
+                "author": "Ronald Domes <ronald.domes@gettyimages.com>",
+                "date": "Tue Sep 15 10:41:12 2015 -0600",
+                "message": "Programmatically-add-overwrite-the-title-and-description-meta-tags-in-JS-rather-than-PHP.-It-was-decided-that-the-legacy-title-should-remain-and-be-dealt-with-in-QA"
+            },
+            {
+                "commit": "2b3d6d9e724c82627752dd856093925c246faa53",
+                "author": "Ronald Domes <ronald.domes@gettyimages.com>",
+                "date": "Fri Sep 11 07:55:17 2015 -0600",
+                "message": "B-128780-Clean-version-of-logic-to-translate-meta-SEO-title-related-text-for-the-ADP"
+            }
+        ]
+    },
+    {
+        "branch": "E-08177/B-128483",
+        "commits": [
+            {
+                "commit": "c9f954ac21881fd5bd668487825b7b4042c17dbf",
+                "author": "Wilson Leong <wilson.leong@gettyimages.com>",
+                "date": "Mon Aug 31 06:22:17 2015 -0700",
+                "message": "E-08177-B-128483-Moving-URL-to-promo-code"
+            },
+            {
+                "commit": "f751470828d1d89f307167723ba234167bf8c46f",
+                "author": "Leina Leung <leina.leung@gettyimages.com>",
+                "date": "Thu Aug 27 10:46:05 2015 -0600",
+                "message": "B-128483-Created-Promo-Code-landing-page"
+            },
+            {
+                "commit": "a8575e0e493ec2f72609ed65a0fbe6eb16d217d2",
+                "author": "istock <istock@gettyimages.com>",
+                "date": "Thu Aug 27 12:28:08 2015 -0600",
+                "message": "Merge-branch-releases-RFC0018996C"
+            },
+            {
+                "commit": "b6aeb0c492a90b43bbbd31ffe97e0e78e8512d3e",
+                "author": "istock <istock@gettyimages.com>",
+                "date": "Thu Aug 27 12:16:40 2015 -0600",
+                "message": "Merge-branch-QA-regression-of-https-gitlab.amer.gettywan.com-istock-istock-into-releases-RFC0018996C"
+            },
+            {
+                "commit": "9e9de06019786793e148d04250b249882658b4b3",
+                "author": "eric lin <eric.lin@gettyimages.com>",
+                "date": "Thu Aug 27 12:11:57 2015 -0600",
+                "message": "erge-branch-OS-B-128502-of-gitlab.amer.gettywan.com-istock-istock-into-QA-regression"
+            }
+        ]
+    },
+    {
+        "branch": "E-08177/B-128499",
+        "commits": [
+            {
+                "commit": "ef77c1f17f84ccdb6a07755734fd87f3bf1cebb9",
+                "author": "Ronald Domes <ronald.domes@gettyimages.com>",
+                "date": "Wed Sep 2 09:52:00 2015 -0600",
+                "message": "Changed-the-with-promo-code-string-per-the-translation-team-s-request"
+            },
+            {
+                "commit": "05560327714d02fe50c2e4d8ed720bfb7e15100f",
+                "author": "Wilson Leong <wilson.leong@gettyimages.com>",
+                "date": "Wed Sep 2 07:15:17 2015 -0700",
+                "message": "E-08177-B-128499-Fixed-some-styling"
+            },
+            {
+                "commit": "a8b33c5a74a44e3d0d0bac63bd1fd3d52a8f6834",
+                "author": "Ronald Domes <ronald.domes@gettyimages.com>",
+                "date": "Tue Sep 1 12:10:42 2015 -0600",
+                "message": "Changed-offer-percentage-to-17-in-the-text.-Fixed-case-of-the-word-Off"
+            },
+            {
+                "commit": "5e8ab58add8ef3de43bd6f74168d612a04b6db71",
+                "author": "Ronald Domes <ronald.domes@gettyimages.com>",
+                "date": "Mon Aug 31 13:01:36 2015 -0600",
+                "message": "Added-translation-logic"
+            },
+            {
+                "commit": "e1378c4725ed57673f9f02b60b2e256a1cb2a2a2",
+                "author": "Robert Fewster <robert.fewster@gettyimages.com>",
+                "date": "Mon Aug 31 10:13:34 2015 -0600",
+                "message": "Merge-branch-E-08177-B-128483-into-seo-release"
+            }
+        ]
+    },
+    {
+        "branch": "E-08177/main",
+        "commits": [
+            {
+                "commit": "691bfc49d4677a55d276112e51122b10d174d55d",
+                "author": "Wilson Leong <wilson.leong@gettyimages.com>",
+                "date": "Tue Sep 8 05:57:59 2015 -0700",
+                "message": "Merge-remote-tracking-branch-origin-E-08177-B-128486-into-E-08177-main"
+            },
+            {
+                "commit": "abdfd160759d3f8657b2861fe6640b3b456da835",
+                "author": "Ronald Domes <ronald.domes@gettyimages.com>",
+                "date": "Fri Sep 4 11:49:26 2015 -0600",
+                "message": "Merge-branch-E-08177-B-128499-into-E-08177-main"
+            },
+            {
+                "commit": "523bdce637941d349da7b4014d2b99ffc5a88421",
+                "author": "Ronald Domes <ronald.domes@gettyimages.com>",
+                "date": "Fri Sep 4 11:45:12 2015 -0600",
+                "message": "Merge-branch-E-08177-B-128484-into-E-08177-main"
+            },
+            {
+                "commit": "1005635de8d0277094ddd262cffa6e1d2370b36d",
+                "author": "Ronald Domes <ronald.domes@gettyimages.com>",
+                "date": "Fri Sep 4 11:44:59 2015 -0600",
+                "message": "Merge-branch-E-08177-B-128483-into-E-08177-main"
+            },
+            {
+                "commit": "5930f7aacfc239e05264a5068ab9dd03a328068d",
+                "author": "Wilson Leong <wilson.leong@gettyimages.com>",
+                "date": "Thu Sep 3 14:08:50 2015 -0700",
+                "message": "E-08177-B-128486-Set-omniture-event-id"
+            }
+        ]
+    },
+    {
+        "branch": "MS/B-128140",
+        "commits": [
+            {
+                "commit": "4759b2a64298e3fc6cb6ac6035db97cc8bc094a6",
+                "author": "Robert Fewster <robert.fewster@gettyimages.com>",
+                "date": "Wed Aug 26 11:00:46 2015 -0600",
+                "message": "Merge-branch-master-into-MS-B-128140"
+            },
+            {
+                "commit": "647d0d7116b51b982e20947ab6c911172abacdf2",
+                "author": "Robert Fewster <robert.fewster@gettyimages.com>",
+                "date": "Tue Aug 25 09:43:06 2015 -0600",
+                "message": "MS-B-128140-Correct-Config.php-to-pass-all-the-unit-tests"
+            },
+            {
+                "commit": "74a3b630a435165dca03e5a35f3dcaec465f0eef",
+                "author": "istock <istock@gettyimages.com>",
+                "date": "Tue Aug 25 09:22:47 2015 -0600",
+                "message": "Merge-branch-releases-RFC0019199"
+            },
+            {
+                "commit": "1a43f32cded7ec9030bf1ae1dd90ec0a1bade8b0",
+                "author": "istock <istock@gettyimages.com>",
+                "date": "Mon Aug 24 15:25:10 2015 -0600",
+                "message": "Merge-branch-MVF-B-125904-of-https-gitlab.amer.gettywan.com-istock-istock-into-releases-RFC0019199"
+            },
+            {
+                "commit": "34206598e0ee2c78e134cb7330ca46d306989347",
+                "author": "istock <istock@gettyimages.com>",
+                "date": "Mon Aug 24 15:24:31 2015 -0600",
+                "message": "Merge-branch-MVF-B-124847-of-https-gitlab.amer.gettywan.com-istock-istock-into-releases-RFC0019199"
+            }
+        ]
+    },
+    {
+        "branch": "MVF/E-07636/B-125788",
+        "commits": [
+            {
+                "commit": "76ad4c6aabb8a672d5537603d25afb9794db03c5",
+                "author": "Paul Wolak <paul.wolak@gettyimages.com>",
+                "date": "Fri Oct 2 10:54:59 2015 -0600",
+                "message": "MVF-E-07636-B-125788-Adds-a-function-to-build-out-urls-to-redirect-to-based-on-the-current-country-and-language"
+            },
+            {
+                "commit": "a911517354bc668ad2065ea3aa2879178284a2d6",
+                "author": "Paul Wolak <paul.wolak@gettyimages.com>",
+                "date": "Thu Oct 1 15:08:57 2015 -0600",
+                "message": "MVF-E-07636-B-125788-Removes-redirects-when-bootstrapping-CountryUrl"
+            },
+            {
+                "commit": "35e739728f79fcd64a257cbf3d21bee4b24656c8",
+                "author": "Paul Wolak <paul.wolak@gettyimages.com>",
+                "date": "Thu Oct 1 13:31:28 2015 -0600",
+                "message": "Merge-branch-master-into-MVF-E-07636-main-no-nginx"
+            },
+            {
+                "commit": "4aa4cf41d78eca8fc2ba7d8f32e1a7ab58a55347",
+                "author": "istock <istock@gettyimages.com>",
+                "date": "Wed Sep 30 15:43:01 2015 -0600",
+                "message": "Merge-branch-releases-RFC0020512"
+            },
+            {
+                "commit": "7b2e11a2c8569e2b37a7d3bcbcc68f17c562e172",
+                "author": "istock <istock@gettyimages.com>",
+                "date": "Wed Sep 30 15:14:21 2015 -0600",
+                "message": "Merge-branch-master-of-https-gitlab.amer.gettywan.com-istock-istock-into-releases-RFC0020512"
+            }
+        ]
+    },
+    {
+        "branch": "MVF/E-07636/main-no-nginx",
+        "commits": [
+            {
+                "commit": "f2959fcc1ca1a0f5cc31647780308fa1801f1c60",
+                "author": "Paul Wolak <paul.wolak@gettyimages.com>",
+                "date": "Tue Sep 29 08:28:36 2015 -0600",
+                "message": "MVF-E-07636-B-130117-Updates-default-country-and-language"
+            },
+            {
+                "commit": "139a778465de36069fb18df81ad6fee05f359495",
+                "author": "Paul Wolak <paul.wolak@gettyimages.com>",
+                "date": "Mon Sep 28 15:16:50 2015 -0600",
+                "message": "MVF-E-07636-B-130117-Redirects-default-languages"
+            },
+            {
+                "commit": "0ca6c94adf35cac6f97dd0d85d845b3007343bd0",
+                "author": "Paul Wolak <paul.wolak@gettyimages.com>",
+                "date": "Mon Sep 28 10:51:30 2015 -0600",
+                "message": "MVF-E-07636-B-130078-Fixes-all-the-unit-test-for-the-CSU-branch"
+            },
+            {
+                "commit": "90f60a7aa1f613433cbd1a40c1df4cd78d638d7d",
+                "author": "Paul Wolak <paul.wolak@gettyimages.com>",
+                "date": "Mon Sep 28 08:23:01 2015 -0600",
+                "message": "Merge-remote-tracking-branch-origin-master-into-MVF-E-07636-B-130078"
+            },
+            {
+                "commit": "d997deb4c3d96982d702b266f2d39a47b7d6af76",
+                "author": "istock <istock@gettyimages.com>",
+                "date": "Fri Sep 25 16:51:48 2015 -0600",
+                "message": "Merge-branch-releases-RFC0020385"
+            }
+        ]
+    },
+    {
+        "branch": "MVF/E-07636/main-with-nginx",
+        "commits": [
+            {
+                "commit": "82208e7e448b7906e6e31f5d3b37336b5b70d51b",
+                "author": "Adam Noon <adam.noon@gettyimages.com>",
+                "date": "Mon Sep 21 11:11:54 2015 -0700",
+                "message": "Merge-remote-tracking-branch-origin-MVF-E-07636-main-no-nginx-into-nginx-compatbility-fixes"
+            },
+            {
+                "commit": "5ace0d0c0ff081c1c4f0ff5c012b861fa71e9598",
+                "author": "Adam Noon <adam.noon@gettyimages.com>",
+                "date": "Mon Sep 21 09:41:19 2015 -0700",
+                "message": "Merge-remote-tracking-branch-origin-master-into-nginx-compatbility-fixes"
+            },
+            {
+                "commit": "d3c45300c564e4547b75e435b910e4d36c84b68a",
+                "author": "istock <istock@gettyimages.com>",
+                "date": "Sun Sep 20 08:58:57 2015 -0600",
+                "message": "Merge-branch-releases-RFC0020118B"
+            },
+            {
+                "commit": "4a1af7246fa52980e6c2f38d1ce883b633b4271a",
+                "author": "istock <istock@gettyimages.com>",
+                "date": "Sun Sep 20 08:43:04 2015 -0600",
+                "message": "Merge-branch-PS-B-129144-of-https-gitlab.amer.gettywan.com-istock-istock-into-releases-RFC0020118B"
+            },
+            {
+                "commit": "bdefef537472b8c847eef2b77307cc7127d2c632",
+                "author": "istock <istock@gettyimages.com>",
+                "date": "Sat Sep 19 09:54:05 2015 -0600",
+                "message": "Merge-branch-PS-B-129144B-of-https-gitlab.amer.gettywan.com-istock-istock-into-releases-RFC0020118B"
+            }
+        ]
+    },
+    {
+        "branch": "OS/B-127507",
+        "commits": [
+            {
+                "commit": "f72b24ca49fc875a934e1802a47f23e01eaf8a12",
+                "author": "Robert Fewster <robert.fewster@gettyimages.com>",
+                "date": "Wed Aug 12 10:17:11 2015 -0600",
+                "message": "B-127507-Correct-parsing-of-SRP-request-arguments"
+            },
+            {
+                "commit": "15aedbe31ab615e627744ef99b0c71029b0976cb",
+                "author": "istock <istock@gettyimages.com>",
+                "date": "Tue Aug 11 17:46:33 2015 -0600",
+                "message": "Merge-branch-releases-RFC0018759"
+            },
+            {
+                "commit": "187ab7b1f64bd8e90e5781fc82d552189f086317",
+                "author": "istock <istock@gettyimages.com>",
+                "date": "Tue Aug 11 17:25:39 2015 -0600",
+                "message": "Merge-branch-PERF-B-127539-of-https-gitlab.amer.gettywan.com-istock-istock-into-releases-RFC0018759"
+            },
+            {
+                "commit": "93c119d50f876d85d65beaa1b09d01d0aa4e104b",
+                "author": "lotaviano <leonardo.otaviano@gettyimages.com>",
+                "date": "Tue Aug 11 16:12:54 2015 -0700",
+                "message": "B-127539-ESP-ingestion-bug-fix"
+            },
+            {
+                "commit": "16edb5947f24f2b08af6e10e4c513dff14bca69e",
+                "author": "istock <istock@gettyimages.com>",
+                "date": "Tue Aug 11 15:10:21 2015 -0600",
+                "message": "Merge-branch-releases-RFC0018740C"
+            }
+        ]
+    },
+    {
+        "branch": "OS/B-127569",
+        "commits": [
+            {
+                "commit": "3f5a5a6123d25e6dd5ce1687682a70416f837105",
+                "author": "Wilson Leong <wilson.leong@gettyimages.com>",
+                "date": "Mon Aug 17 07:48:40 2015 -0700",
+                "message": "OS-B-127569-Updating-test"
+            },
+            {
+                "commit": "822ab1994aa581f5bd327730f2aec723a9e11b53",
+                "author": "Wilson Leong <wilson.leong@gettyimages.com>",
+                "date": "Mon Aug 17 07:15:51 2015 -0700",
+                "message": "OS-B-127569-Use-user-s-perPage-preference-instead-of-response"
+            },
+            {
+                "commit": "89c3c85339650bb3216e3588044b398f60d7fd55",
+                "author": "Wilson Leong <wilson.leong@gettyimages.com>",
+                "date": "Fri Aug 14 10:14:58 2015 -0700",
+                "message": "OS-B-127569-accounting-for-different-types"
+            },
+            {
+                "commit": "10b562c1f7facaec5886a03849dd7b33de404c66",
+                "author": "Wilson Leong <wilson.leong@gettyimages.com>",
+                "date": "Thu Aug 13 10:05:55 2015 -0700",
+                "message": "OS-B-127569-and-another"
+            },
+            {
+                "commit": "cb89da6864dd2810d6dc6742c3cd05172d2a382e",
+                "author": "Wilson Leong <wilson.leong@gettyimages.com>",
+                "date": "Thu Aug 13 09:36:28 2015 -0700",
+                "message": "OS-B-127569-undo-title-change-to-move-to-another-story"
+            }
+        ]
+    },
+    {
+        "branch": "PS/B-124891",
+        "commits": [
+            {
+                "commit": "ff37497c89569b0eb94f39d4a7b214c322cdc4f1",
+                "author": "Ronald Domes <ronald.domes@gettyimages.com>",
+                "date": "Thu Jul 23 14:38:15 2015 -0600",
+                "message": "Added-logic-to-only-run-the-SEO-test-on-photos-that-are-English.-We-also-bypass-the-translation-table-so-it-doesn-t-conflict-with-other-languages"
+            },
+            {
+                "commit": "57a0e802e868f5293c3c1f3b56d4617c0fcb1964",
+                "author": "Ronald Domes <ronald.domes@gettyimages.com>",
+                "date": "Wed Jul 22 13:59:27 2015 -0600",
+                "message": "Changed-the-required-text-as-per-the-story.-No-Code-Changes"
+            },
+            {
+                "commit": "1a01c1ece9e4cda757d938401710ae13eec2e65e",
+                "author": "istock <istock@gettyimages.com>",
+                "date": "Tue Jul 21 09:53:22 2015 -0600",
+                "message": "Merge-branch-releases-RFC0017918"
+            },
+            {
+                "commit": "ab1c38a4f848bc48245518a40d7d2756b8b77e88",
+                "author": "istock <istock@gettyimages.com>",
+                "date": "Tue Jul 21 08:50:17 2015 -0600",
+                "message": "Merge-branch-PS-B-62619-of-https-gitlab.amer.gettywan.com-istock-istock-into-releases-RFC0017918"
+            },
+            {
+                "commit": "b42b0de4709622c6977648f1d1fb0b38562264f3",
+                "author": "istock <istock@gettyimages.com>",
+                "date": "Mon Jul 20 14:51:05 2015 -0600",
+                "message": "Merge-branch-Dev3TableCreator"
+            }
+        ]
+    },
+    {
+        "branch": "PS/B-125187",
+        "commits": [
+            {
+                "commit": "a4e8bc545fc6159865069ec8d627807b8c4f5cbf",
+                "author": "Robert Fewster <robert.fewster@gettyimages.com>",
+                "date": "Wed Sep 9 10:57:29 2015 -0600",
+                "message": "PS-B-125187-Fixed-up-failing-unit-tests"
+            },
+            {
+                "commit": "e302baea3007278318d0d773cd96fbed3c23d322",
+                "author": "Robert Fewster <robert.fewster@gettyimages.com>",
+                "date": "Wed Aug 12 14:51:29 2015 -0600",
+                "message": "B-125187-Added-isPrerender-method-to-adpController.js-per-code-review-updated-relevant-unit-tests"
+            },
+            {
+                "commit": "1e9448da6c528a19682388c76a5b79f2ffe327ab",
+                "author": "Robert Fewster <robert.fewster@gettyimages.com>",
+                "date": "Wed Aug 12 13:10:50 2015 -0600",
+                "message": "B-125187-Corrected-issues-identified-in-code-review"
+            },
+            {
+                "commit": "9913a8ca12f9d2998e1f2f5e3133686966fbdb1c",
+                "author": "Robert Fewster <robert.fewster@gettyimages.com>",
+                "date": "Wed Aug 12 10:20:13 2015 -0600",
+                "message": "Merge-branch-master-into-PS-B-125187"
+            },
+            {
+                "commit": "15aedbe31ab615e627744ef99b0c71029b0976cb",
+                "author": "istock <istock@gettyimages.com>",
+                "date": "Tue Aug 11 17:46:33 2015 -0600",
+                "message": "Merge-branch-releases-RFC0018759"
+            }
+        ]
+    },
+    {
+        "branch": "PS/B-125262",
+        "commits": [
+            {
+                "commit": "bce5a6939eb103b2f916fc2a242460ab5b762afa",
+                "author": "Robert Fewster <robert.fewster@gettyimages.com>",
+                "date": "Wed Sep 2 16:35:25 2015 -0600",
+                "message": "B-125262-Reverted-canonical-tag-for-search-lightbox-URLs"
+            },
+            {
+                "commit": "0cdae82757040fe57190d7cf619ef4cce3685366",
+                "author": "Ronald Domes <ronald.domes@gettyimages.com>",
+                "date": "Fri Jul 24 10:27:47 2015 -0600",
+                "message": "Removed-erroneous-commented-out-debug-code"
+            },
+            {
+                "commit": "50a77b1d0f422a4bbd50dcc2257f67bbb4a31e29",
+                "author": "Ronald Domes <ronald.domes@gettyimages.com>",
+                "date": "Thu Jul 23 13:08:04 2015 -0600",
+                "message": "Added-test-code-to-rewrite-the-URL-in-place-of-the-generic-search-keyword"
+            },
+            {
+                "commit": "1a01c1ece9e4cda757d938401710ae13eec2e65e",
+                "author": "istock <istock@gettyimages.com>",
+                "date": "Tue Jul 21 09:53:22 2015 -0600",
+                "message": "Merge-branch-releases-RFC0017918"
+            },
+            {
+                "commit": "ab1c38a4f848bc48245518a40d7d2756b8b77e88",
+                "author": "istock <istock@gettyimages.com>",
+                "date": "Tue Jul 21 08:50:17 2015 -0600",
+                "message": "Merge-branch-PS-B-62619-of-https-gitlab.amer.gettywan.com-istock-istock-into-releases-RFC0017918"
+            }
+        ]
+    },
+    {
+        "branch": "PS/B-127196",
+        "commits": [
+            {
+                "commit": "54e0c059fbc5c8c192d157268b822a4201f7b03e",
+                "author": "Wilson Leong <wilson.leong@gettyimages.com>",
+                "date": "Mon Sep 21 17:00:15 2015 -0700",
+                "message": "PS-B-127196-Filetype-detecting-correctly-on-SRP"
+            },
+            {
+                "commit": "575f09a9f530f2f527c8506c8b40e138c14fbbaf",
+                "author": "Wilson Leong <wilson.leong@gettyimages.com>",
+                "date": "Mon Sep 21 12:20:14 2015 -0700",
+                "message": "Merge-remote-tracking-branch-origin-seo-master-into-PS-B-127196"
+            },
+            {
+                "commit": "abe66c436bc11b325a8524c84ec9f3f5e67550fa",
+                "author": "Wilson Leong <wilson.leong@gettyimages.com>",
+                "date": "Mon Sep 21 12:00:43 2015 -0700",
+                "message": "PS-B-127196-Correcting-adp-title"
+            },
+            {
+                "commit": "438f7b3ef9981a1f088a9352f5050baeb8b02efc",
+                "author": "Robert Fewster <robert.fewster@gettyimages.com>",
+                "date": "Mon Sep 21 12:30:20 2015 -0600",
+                "message": "Merge-branch-PS-D-01710-into-seo-master"
+            },
+            {
+                "commit": "8e4170823ba6de0a0c61ac22f0bb7fe0a58868fe",
+                "author": "Robert Fewster <robert.fewster@gettyimages.com>",
+                "date": "Mon Sep 21 12:20:52 2015 -0600",
+                "message": "D-01710-Add-feature-flag-to-passthrough.ini-to-correct-broken-thumbnails"
+            }
+        ]
+    },
+    {
+        "branch": "PS/B-128391",
+        "commits": [
+            {
+                "commit": "182b068dd1945c716cf3e7fc2c35cef6a4bf739a",
+                "author": "Wilson Leong <wilson.leong@gettyimages.com>",
+                "date": "Wed Aug 26 14:50:07 2015 -0700",
+                "message": "B-128391-Prerender-works-100-for-bots"
+            },
+            {
+                "commit": "1282f8b2f347c6d539620fb53648ef479ed1320e",
+                "author": "istock <istock@gettyimages.com>",
+                "date": "Wed Aug 26 14:38:20 2015 -0600",
+                "message": "Merge-branch-releases-RFC0019272B"
+            },
+            {
+                "commit": "a2f38dd5c47b7b607dc0a04beb1867cf0121e862",
+                "author": "istock <istock@gettyimages.com>",
+                "date": "Wed Aug 26 13:53:55 2015 -0600",
+                "message": "Merge-branch-PS-B-128360-of-https-gitlab.amer.gettywan.com-istock-istock-into-releases-RFC0019272B"
+            },
+            {
+                "commit": "5596b65af45b8abdd64f228e99d5cded527f3444",
+                "author": "dszeto <dszeto@gettyimages.com>",
+                "date": "Wed Aug 26 10:17:22 2015 -0600",
+                "message": "d-rex-linkconnector-pri2-Strip-slashes-from-the-url-for-php-and-angular"
+            },
+            {
+                "commit": "ec021e6e651ab66af684042de2d485372dec9ed9",
+                "author": "dszeto <dszeto@gettyimages.com>",
+                "date": "Wed Aug 26 10:03:10 2015 -0600",
+                "message": "Revert-MS-B-128140-SearchController-checks-for-prerender-split-test-no-longer-special-casing-for-environment"
+            }
+        ]
+    },
+    {
+        "branch": "PS/B-130360",
+        "commits": [
+            {
+                "commit": "4dda9dfa221fdcdb040c09daa94475cca7294db4",
+                "author": "Robert Fewster <robert.fewster@gettyimages.com>",
+                "date": "Wed Oct 7 14:38:45 2015 -0600",
+                "message": "Merge-branch-personal-rfewster-search-canonical-into-PS-B-130360"
+            },
+            {
+                "commit": "e3dc2521d4f4bd02ad3b271734274a398b644a79",
+                "author": "istock <istock@gettyimages.com>",
+                "date": "Wed Oct 7 14:22:05 2015 -0600",
+                "message": "Merge-branch-releases-RFC0020772B"
+            },
+            {
+                "commit": "78221bb905cfc97d96639de1a59d3b03b83f4925",
+                "author": "Robert Fewster <robert.fewster@gettyimages.com>",
+                "date": "Wed Oct 7 13:59:03 2015 -0600",
+                "message": "Comment-out-remaining-logging"
+            },
+            {
+                "commit": "19da69b3cefe4fbf1b3cc170d0f2953241922251",
+                "author": "Robert Fewster <robert.fewster@gettyimages.com>",
+                "date": "Wed Oct 7 13:58:40 2015 -0600",
+                "message": "Comment-out-remaining-logging-correct-minor-defect"
+            },
+            {
+                "commit": "abb51e2117057f1de52206ea91e13520bf9650d3",
+                "author": "istock <istock@gettyimages.com>",
+                "date": "Wed Oct 7 12:38:13 2015 -0600",
+                "message": "Merge-branch-MVF-WTF-main-of-https-gitlab.amer.gettywan.com-istock-istock-into-releases-RFC0020772B"
+            }
+        ]
+    },
+    {
+        "branch": "PS/D-01710",
+        "commits": [
+            {
+                "commit": "7e87fdce9b20e6faa9d14c22c5f9871fbaaa49c0",
+                "author": "Robert Fewster <robert.fewster@gettyimages.com>",
+                "date": "Tue Sep 22 11:46:14 2015 -0600",
+                "message": "PS-D-01710-Corrected-failing-unit-tests"
+            },
+            {
+                "commit": "8e4170823ba6de0a0c61ac22f0bb7fe0a58868fe",
+                "author": "Robert Fewster <robert.fewster@gettyimages.com>",
+                "date": "Mon Sep 21 12:20:52 2015 -0600",
+                "message": "D-01710-Add-feature-flag-to-passthrough.ini-to-correct-broken-thumbnails"
+            },
+            {
+                "commit": "39fa11a939a34f57e059c6f34fc59030025de85c",
+                "author": "Robert Fewster <robert.fewster@gettyimages.com>",
+                "date": "Wed Sep 16 10:46:28 2015 -0600",
+                "message": "D-01710-Correct-truncation-of-SEO-name-for-URL"
+            },
+            {
+                "commit": "d23598ab4a5136f9f8f0684e7ecdc2142bf2818b",
+                "author": "Robert Fewster <robert.fewster@gettyimages.com>",
+                "date": "Tue Sep 15 12:02:41 2015 -0600",
+                "message": "PS-D-01710-Refacored-unit-test-for-URI-builder-for-use-with-GMID"
+            },
+            {
+                "commit": "219ae8225270df74ae68cc089114501dbf9d81e9",
+                "author": "Robert Fewster <robert.fewster@gettyimages.com>",
+                "date": "Tue Sep 15 10:24:15 2015 -0600",
+                "message": "Merge-branch-seo-release-into-PS-D-01710"
+            }
+        ]
+    },
+    {
+        "branch": "PS/D-01713",
+        "commits": [
+            {
+                "commit": "9354cebdc8b88510834f87acb3dbbff88fce53d0",
+                "author": "Robert Fewster <robert.fewster@gettyimages.com>",
+                "date": "Wed Sep 9 10:54:17 2015 -0600",
+                "message": "D-01713-Adding-new-google-webmaster-identity-file-for-non-english-languages"
+            },
+            {
+                "commit": "17301f20a2a7d2ebd97f837979272a0250270c00",
+                "author": "istock <istock@gettyimages.com>",
+                "date": "Thu Sep 3 16:27:54 2015 -0600",
+                "message": "Merge-branch-releases-RFC0019586"
+            },
+            {
+                "commit": "6ea0681ccfea9edf4f69f5aedbaa2c6f412759a1",
+                "author": "istock <istock@gettyimages.com>",
+                "date": "Thu Sep 3 15:10:26 2015 -0600",
+                "message": "Merge-branch-PS-B-129002-of-https-gitlab.amer.gettywan.com-istock-istock-into-releases-RFC0019586"
+            },
+            {
+                "commit": "7e1649bb975b2cc34f45d8187d45f2793d7929b9",
+                "author": "Tim Chang-Miller <tim.chang-miller@gettyimages.com>",
+                "date": "Thu Sep 3 12:43:41 2015 -0700",
+                "message": "B-129002-Fixed-Company-Name-error-bug"
+            },
+            {
+                "commit": "751c51576608bafeb6afdc88ddfea4c2b3a38027",
+                "author": "Robert Fewster <robert.fewster@gettyimages.com>",
+                "date": "Thu Sep 3 13:27:28 2015 -0600",
+                "message": "Merge-branch-MS-B-128140-into-seo-release"
+            }
+        ]
+    },
+    {
+        "branch": "PS/D-01714",
+        "commits": [
+            {
+                "commit": "6a9b7fe39fb7c2f9d086fab9b56e61f50c47a022",
+                "author": "Wilson Leong <wilson.leong@gettyimages.com>",
+                "date": "Thu Sep 10 07:15:04 2015 -0700",
+                "message": "PS-D-01714-Style-changes"
+            },
+            {
+                "commit": "303967337a869d853a9d0e9c0bfc096a0f394664",
+                "author": "istock <istock@gettyimages.com>",
+                "date": "Tue Sep 8 14:46:15 2015 -0600",
+                "message": "Merge-branch-releases-RFC0019687"
+            },
+            {
+                "commit": "f0c8842300d8c8e8d5bc90fca4770db646feaaeb",
+                "author": "istock <istock@gettyimages.com>",
+                "date": "Tue Sep 8 14:22:20 2015 -0600",
+                "message": "Merge-branch-QA-regression-of-https-gitlab.amer.gettywan.com-istock-istock-into-releases-RFC0019687"
+            },
+            {
+                "commit": "508d45ee827bdaad25f4cb25693dd615c446f301",
+                "author": "eric lin <eric.lin@gettyimages.com>",
+                "date": "Tue Sep 8 13:37:58 2015 -0600",
+                "message": "regression-fixed-email-pass-rate-format"
+            },
+            {
+                "commit": "2dff571a23e4d04ae76f805ffcbfdc373979d420",
+                "author": "eric lin <eric.lin@gettyimages.com>",
+                "date": "Tue Sep 8 13:35:09 2015 -0600",
+                "message": "Merge-branch-QA-B-129070-of-gitlab.amer.gettywan.com-istock-istock-into-QA-regression"
+            }
+        ]
+    },
+    {
+        "branch": "PS/D-01716",
+        "commits": [
+            {
+                "commit": "33f7baca776578042471d73eead4d4b07ca373bb",
+                "author": "Wilson Leong <wilson.leong@gettyimages.com>",
+                "date": "Fri Sep 18 09:20:53 2015 -0700",
+                "message": "PS-D-01716-portuguese-fix"
+            },
+            {
+                "commit": "0b75fdee8736fe19ba7579501653910195386323",
+                "author": "Wilson Leong <wilson.leong@gettyimages.com>",
+                "date": "Fri Sep 18 08:26:01 2015 -0700",
+                "message": "PS-D-01716-translated-language-canonicals"
+            },
+            {
+                "commit": "d699defc673cc9d262bebd81920a241de13acae7",
+                "author": "Wilson Leong <wilson.leong@gettyimages.com>",
+                "date": "Mon Sep 14 08:37:18 2015 -0700",
+                "message": "PS-D-01716-Promo-code-translated-routes"
+            },
+            {
+                "commit": "e911d17474e646d98660d8eabe52ea53de853955",
+                "author": "istock <istock@gettyimages.com>",
+                "date": "Wed Sep 9 16:56:51 2015 -0600",
+                "message": "Merge-branch-releases-RFC0019698B"
+            },
+            {
+                "commit": "04cded1e8104b62a941e7ab3a192663ae0ae1c0c",
+                "author": "istock <istock@gettyimages.com>",
+                "date": "Wed Sep 9 13:39:19 2015 -0600",
+                "message": "Merge-branch-d-rex-PS-20150908-of-https-gitlab.amer.gettywan.com-istock-istock-into-releases-RFC0019698B"
+            }
+        ]
+    },
+    {
+        "branch": "PS/D-01718",
+        "commits": [
+            {
+                "commit": "4eb115e6baeb2740a1cf918f9d3a9ecc40415a5c",
+                "author": "Wilson Leong <wilson.leong@gettyimages.com>",
+                "date": "Wed Sep 9 09:22:52 2015 -0700",
+                "message": "PS-D-01718-promo-link-in-old-footer-translated-in-new-and-old"
+            },
+            {
+                "commit": "303967337a869d853a9d0e9c0bfc096a0f394664",
+                "author": "istock <istock@gettyimages.com>",
+                "date": "Tue Sep 8 14:46:15 2015 -0600",
+                "message": "Merge-branch-releases-RFC0019687"
+            },
+            {
+                "commit": "f0c8842300d8c8e8d5bc90fca4770db646feaaeb",
+                "author": "istock <istock@gettyimages.com>",
+                "date": "Tue Sep 8 14:22:20 2015 -0600",
+                "message": "Merge-branch-QA-regression-of-https-gitlab.amer.gettywan.com-istock-istock-into-releases-RFC0019687"
+            },
+            {
+                "commit": "508d45ee827bdaad25f4cb25693dd615c446f301",
+                "author": "eric lin <eric.lin@gettyimages.com>",
+                "date": "Tue Sep 8 13:37:58 2015 -0600",
+                "message": "regression-fixed-email-pass-rate-format"
+            },
+            {
+                "commit": "2dff571a23e4d04ae76f805ffcbfdc373979d420",
+                "author": "eric lin <eric.lin@gettyimages.com>",
+                "date": "Tue Sep 8 13:35:09 2015 -0600",
+                "message": "Merge-branch-QA-B-129070-of-gitlab.amer.gettywan.com-istock-istock-into-QA-regression"
+            }
+        ]
+    },
+    {
+        "branch": "PS/D-01854",
+        "commits": [
+            {
+                "commit": "cf7c2542b8db19575fa5d80161485beaf32c0ae5",
+                "author": "Robert Fewster <robert.fewster@gettyimages.com>",
+                "date": "Mon Sep 28 16:58:52 2015 -0600",
+                "message": "Merge-branch-master-into-seo-master"
+            },
+            {
+                "commit": "78cff0923d8d88b395812f00e3f52757e504fcd2",
+                "author": "istock <istock@gettyimages.com>",
+                "date": "Mon Sep 28 15:23:09 2015 -0600",
+                "message": "Merge-branch-releases-RFC0020413"
+            },
+            {
+                "commit": "33845af99f31f6965df59c5baed962ff3a5fa9bb",
+                "author": "istock <istock@gettyimages.com>",
+                "date": "Mon Sep 28 14:21:43 2015 -0600",
+                "message": "Merge-branch-MVF-SHAREME-main-of-https-gitlab.amer.gettywan.com-istock-istock-into-releases-RFC0020413"
+            },
+            {
+                "commit": "f6b5447cc9eea4e8132928045054f28ffb4a303e",
+                "author": "dszeto <dszeto@gettyimages.com>",
+                "date": "Mon Sep 28 14:14:41 2015 -0600",
+                "message": "Merge-branch-MVF-SHAREME-D-01857-into-MVF-SHAREME-main"
+            },
+            {
+                "commit": "4170c416162420f6d16c402e7f73e5be99ef89f1",
+                "author": "dszeto <dszeto@gettyimages.com>",
+                "date": "Mon Sep 28 14:14:24 2015 -0600",
+                "message": "Merge-branch-MVF-SHAREME-main-of-gitlab.amer.gettywan.com-istock-istock-into-MVF-SHAREME-D-01857"
+            }
+        ]
+    },
+    {
+        "branch": "RKF/paratest_refactor",
+        "commits": [
+            {
+                "commit": "94bf4d640274d207b5fb40c95062b169f63c2a32",
+                "author": "Robert Fewster <robert.fewster@gettyimages.com>",
+                "date": "Fri Aug 21 10:37:24 2015 -0600",
+                "message": "Changes-to-FileProcessing-unit-tests-to-work-with-paratest"
+            },
+            {
+                "commit": "741d76f04033c1879819af9b7f587dab75b8cbd0",
+                "author": "istock <istock@gettyimages.com>",
+                "date": "Thu Aug 20 14:38:05 2015 -0600",
+                "message": "Merge-branch-releases-RFC0019062"
+            },
+            {
+                "commit": "66d062adbcfd55908cff2a15c5deb3c8b7f5e757",
+                "author": "istock <istock@gettyimages.com>",
+                "date": "Thu Aug 20 11:47:57 2015 -0600",
+                "message": "Merge-branch-PS-B-125648-of-https-gitlab.amer.gettywan.com-istock-istock-into-releases-RFC0019062"
+            },
+            {
+                "commit": "7ffd2ee5dbd8d36f72a3ca0219fd5e27b042a089",
+                "author": "istock <istock@gettyimages.com>",
+                "date": "Thu Aug 20 11:44:16 2015 -0600",
+                "message": "Merge-branch-twofour-release-of-https-gitlab.amer.gettywan.com-istock-istock-into-releases-RFC0019062"
+            },
+            {
+                "commit": "bc6f2d5aa3f27b90f389f277e413ee1528d80e03",
+                "author": "istock <istock@gettyimages.com>",
+                "date": "Thu Aug 20 11:38:28 2015 -0600",
+                "message": "Merge-branch-releases-RFC0019042B"
+            }
+        ]
+    },
+    {
+        "branch": "master",
+        "commits": [
+            {
+                "commit": "e3dc2521d4f4bd02ad3b271734274a398b644a79",
+                "author": "istock <istock@gettyimages.com>",
+                "date": "Wed Oct 7 14:22:05 2015 -0600",
+                "message": "Merge-branch-releases-RFC0020772B"
+            },
+            {
+                "commit": "abb51e2117057f1de52206ea91e13520bf9650d3",
+                "author": "istock <istock@gettyimages.com>",
+                "date": "Wed Oct 7 12:38:13 2015 -0600",
+                "message": "Merge-branch-MVF-WTF-main-of-https-gitlab.amer.gettywan.com-istock-istock-into-releases-RFC0020772B"
+            },
+            {
+                "commit": "7ad4657a073e7fa8854ff9ff711d222828e7eda0",
+                "author": "agamboa <alba.gamboa@gettyimages.com>",
+                "date": "Wed Oct 7 12:33:06 2015 -0600",
+                "message": "MVF-WTF-main-Hiding-WeTransfer-faq"
+            },
+            {
+                "commit": "20be85b246ad22e956d626d3ccb09fa9332b0809",
+                "author": "istock <istock@gettyimages.com>",
+                "date": "Wed Oct 7 12:04:36 2015 -0600",
+                "message": "Merge-branch-releases-RFC0020354B-of-https-gitlab.amer.gettywan.com-istock-istock-into-releases-RFC0020772B"
+            },
+            {
+                "commit": "d97c9ce383c6436cf16097c13ab79862001c3e69",
+                "author": "istock <istock@gettyimages.com>",
+                "date": "Wed Oct 7 12:02:04 2015 -0600",
+                "message": "Merge-branch-releases-RFC0020765-of-https-gitlab.amer.gettywan.com-istock-istock-into-releases-RFC0020354B"
+            }
+        ]
+    },
+    {
+        "branch": "personal/rfewster/search-canonical",
+        "commits": [
+            {
+                "commit": "78221bb905cfc97d96639de1a59d3b03b83f4925",
+                "author": "Robert Fewster <robert.fewster@gettyimages.com>",
+                "date": "Wed Oct 7 13:59:03 2015 -0600",
+                "message": "Comment-out-remaining-logging"
+            },
+            {
+                "commit": "19da69b3cefe4fbf1b3cc170d0f2953241922251",
+                "author": "Robert Fewster <robert.fewster@gettyimages.com>",
+                "date": "Wed Oct 7 13:58:40 2015 -0600",
+                "message": "Comment-out-remaining-logging-correct-minor-defect"
+            },
+            {
+                "commit": "b5965e22bd049745c2e420e131bc9c9416b0f69d",
+                "author": "Robert Fewster <robert.fewster@gettyimages.com>",
+                "date": "Tue Oct 6 17:41:21 2015 -0600",
+                "message": "Refactor-to-remove-duplication-remove-most-logging"
+            },
+            {
+                "commit": "735797a2e6c3f7f0a943ff66e4219e7946db872e",
+                "author": "Robert Fewster <robert.fewster@gettyimages.com>",
+                "date": "Fri Oct 2 11:31:07 2015 -0600",
+                "message": "More-refactoring-revised-canonical-outputs"
+            },
+            {
+                "commit": "37e74b1722606e0d6d324ea6b6c7ae0e65c3483d",
+                "author": "Robert Fewster <robert.fewster@gettyimages.com>",
+                "date": "Fri Oct 2 09:13:19 2015 -0600",
+                "message": "Refactor-debugging-added-ZRP-404"
+            }
+        ]
+    },
+    {
+        "branch": "seo/automation",
+        "commits": [
+            {
+                "commit": "d3ffa0788537ce94f43922072084e906977d77b8",
+                "author": "coldroyd <claire.nielsen@gettyimages.com>",
+                "date": "Tue Sep 15 11:48:37 2015 -0600",
+                "message": "seo-automation-Fix-for-failing-seo-test-added-name-to-email-list"
+            },
+            {
+                "commit": "e047742257011519d1bdd37b3e65a00f0f16d3ac",
+                "author": "coldroyd <claire.nielsen@gettyimages.com>",
+                "date": "Tue Sep 15 09:10:35 2015 -0600",
+                "message": "Merge-branch-PS-B-127397-of-gitlab.amer.gettywan.com-istock-istock"
+            },
+            {
+                "commit": "221d52f47e8d3dee74d4a000409f2119d5e28271",
+                "author": "coldroyd <claire.nielsen@gettyimages.com>",
+                "date": "Tue Sep 15 09:08:32 2015 -0600",
+                "message": "Merge-branch-E-08177-B-128488-of-gitlab.amer.gettywan.com-istock-istock"
+            },
+            {
+                "commit": "e4f28fca6f540a7bb10050da9a02c5055d92705c",
+                "author": "coldroyd <claire.nielsen@gettyimages.com>",
+                "date": "Tue Sep 15 09:07:49 2015 -0600",
+                "message": "Merge-branch-PS-B-86293-of-gitlab.amer.gettywan.com-istock-istock"
+            },
+            {
+                "commit": "7379bcb838cd4b81e108fbbff9bd9932d9618b93",
+                "author": "coldroyd <claire.nielsen@gettyimages.com>",
+                "date": "Tue Sep 15 09:05:41 2015 -0600",
+                "message": "Merge-branch-master-of-gitlab.amer.gettywan.com-istock-istock"
+            }
+        ]
+    },
+    {
+        "branch": "seo/master",
+        "commits": [
+            {
+                "commit": "ffc9cee649f0ae6fab8d651ad135d7261c51cf7f",
+                "author": "Robert Fewster <robert.fewster@gettyimages.com>",
+                "date": "Tue Oct 6 18:10:17 2015 -0600",
+                "message": "Merge-branch-seo-releases-B-128780-into-seo-master"
+            },
+            {
+                "commit": "b3346c134ee21578689609ff87313423c24f6ab8",
+                "author": "Robert Fewster <robert.fewster@gettyimages.com>",
+                "date": "Tue Oct 6 18:08:28 2015 -0600",
+                "message": "Merge-branch-seo-releases-B-124891b-into-seo-master"
+            },
+            {
+                "commit": "d4c0518113d60ef8ca1f0e037dae1ad49b3c0583",
+                "author": "Robert Fewster <robert.fewster@gettyimages.com>",
+                "date": "Tue Oct 6 18:07:36 2015 -0600",
+                "message": "Merge-branch-seo-releases-B-127196-into-seo-master"
+            },
+            {
+                "commit": "eab0743219ab3ae1cf7a8f7e96305ec851b59735",
+                "author": "istock <istock@gettyimages.com>",
+                "date": "Mon Oct 5 11:24:29 2015 -0600",
+                "message": "Merge-branch-OS-B-130713-of-https-gitlab.amer.gettywan.com-istock-istock"
+            },
+            {
+                "commit": "b213bbc969d678048922742accbb7359e0429379",
+                "author": "istock <istock@gettyimages.com>",
+                "date": "Mon Oct 5 11:18:16 2015 -0600",
+                "message": "Merge-branch-releases-RFC0020639"
+            }
+        ]
+    },
+    {
+        "branch": "seo/releases/B-124891",
+        "commits": [
+            {
+                "commit": "b07d4a5622eeeea40b8a2fb86ac8849fcafe9cd8",
+                "author": "Robert Fewster <robert.fewster@gettyimages.com>",
+                "date": "Tue Sep 22 15:57:45 2015 -0600",
+                "message": "Correct-failing-unit-test"
+            },
+            {
+                "commit": "0b1cf8d9a915a23084a1467b6d8d70d4186edaac",
+                "author": "Robert Fewster <robert.fewster@gettyimages.com>",
+                "date": "Tue Sep 22 14:44:31 2015 -0600",
+                "message": "Merge-branch-PS-B-124891-into-seo-releases-B-124891"
+            },
+            {
+                "commit": "7e6ea966f129ed3f48dee85c6f58e0702efb2f66",
+                "author": "Robert Fewster <robert.fewster@gettyimages.com>",
+                "date": "Tue Sep 22 11:50:17 2015 -0600",
+                "message": "Corrected-failing-unit-tests"
+            },
+            {
+                "commit": "7e87fdce9b20e6faa9d14c22c5f9871fbaaa49c0",
+                "author": "Robert Fewster <robert.fewster@gettyimages.com>",
+                "date": "Tue Sep 22 11:46:14 2015 -0600",
+                "message": "PS-D-01710-Corrected-failing-unit-tests"
+            },
+            {
+                "commit": "ec4cd35f9cc1905064e68a4d3385c57f36eae59d",
+                "author": "Robert Fewster <robert.fewster@gettyimages.com>",
+                "date": "Tue Sep 22 10:00:16 2015 -0600",
+                "message": "Merge-branch-master-into-seo-master"
+            }
+        ]
+    },
+    {
+        "branch": "seo/releases/B-124891b",
+        "commits": [
+            {
+                "commit": "ce3a1612e260f1ccc9a0fd9dfc57c0ba879cddf7",
+                "author": "Wilson Leong <wilson.leong@gettyimages.com>",
+                "date": "Wed Sep 30 14:17:29 2015 -0700",
+                "message": "seo-releases-B-124891b-move-english-test-titles-into-test-conditional-restore-original-titles-for-photos"
+            },
+            {
+                "commit": "d11dec1373e5f783bf7b16c8f2f6ab85142f8af2",
+                "author": "Robert Fewster <robert.fewster@gettyimages.com>",
+                "date": "Mon Sep 28 10:20:14 2015 -0600",
+                "message": "Merge-branch-master-into-seo-master"
+            },
+            {
+                "commit": "d997deb4c3d96982d702b266f2d39a47b7d6af76",
+                "author": "istock <istock@gettyimages.com>",
+                "date": "Fri Sep 25 16:51:48 2015 -0600",
+                "message": "Merge-branch-releases-RFC0020385"
+            },
+            {
+                "commit": "9ba61775f04e02cdd1a6005f483073270f90acbe",
+                "author": "istock <istock@gettyimages.com>",
+                "date": "Fri Sep 25 16:01:47 2015 -0600",
+                "message": "Merge-branch-PS-B-130144-of-https-gitlab.amer.gettywan.com-istock-istock-into-releases-RFC0020385"
+            },
+            {
+                "commit": "d2c8ce9b68f97440feb0f8ed16bde50a95e398f4",
+                "author": "Robert Fewster <robert.fewster@gettyimages.com>",
+                "date": "Fri Sep 25 13:48:48 2015 -0600",
+                "message": "Merge-branch-seo-releases-B-124891b-into-seo-master"
+            }
+        ]
+    },
+    {
+        "branch": "seo/releases/B-127196",
+        "commits": [
+            {
+                "commit": "935eb1fa5b877c5900c3cfe17f54523130d7639c",
+                "author": "Robert Fewster <robert.fewster@gettyimages.com>",
+                "date": "Mon Sep 28 12:57:51 2015 -0600",
+                "message": "Merge-branch-seo-master-into-seo-releases-B-127196"
+            },
+            {
+                "commit": "d11dec1373e5f783bf7b16c8f2f6ab85142f8af2",
+                "author": "Robert Fewster <robert.fewster@gettyimages.com>",
+                "date": "Mon Sep 28 10:20:14 2015 -0600",
+                "message": "Merge-branch-master-into-seo-master"
+            },
+            {
+                "commit": "d997deb4c3d96982d702b266f2d39a47b7d6af76",
+                "author": "istock <istock@gettyimages.com>",
+                "date": "Fri Sep 25 16:51:48 2015 -0600",
+                "message": "Merge-branch-releases-RFC0020385"
+            },
+            {
+                "commit": "9ba61775f04e02cdd1a6005f483073270f90acbe",
+                "author": "istock <istock@gettyimages.com>",
+                "date": "Fri Sep 25 16:01:47 2015 -0600",
+                "message": "Merge-branch-PS-B-130144-of-https-gitlab.amer.gettywan.com-istock-istock-into-releases-RFC0020385"
+            },
+            {
+                "commit": "d2c8ce9b68f97440feb0f8ed16bde50a95e398f4",
+                "author": "Robert Fewster <robert.fewster@gettyimages.com>",
+                "date": "Fri Sep 25 13:48:48 2015 -0600",
+                "message": "Merge-branch-seo-releases-B-124891b-into-seo-master"
+            }
+        ]
+    },
+    {
+        "branch": "seo/releases/B-128780",
+        "commits": [
+            {
+                "commit": "1a9749e91a10f59724400adc35f517b914274cfb",
+                "author": "Robert Fewster <robert.fewster@gettyimages.com>",
+                "date": "Wed Sep 30 10:01:41 2015 -0600",
+                "message": "Merge-branch-E-07890-B-128780-into-seo-releases-B-128780"
+            },
+            {
+                "commit": "3861f5e17c6798c01a4d3aa22dc4b073fdda632e",
+                "author": "Robert Fewster <robert.fewster@gettyimages.com>",
+                "date": "Wed Sep 30 10:01:02 2015 -0600",
+                "message": "B-128780-Changes-to-comply-with-jshint-rules"
+            },
+            {
+                "commit": "28f18d3f2d1b64fb5dd23bec03af6751a9f63a03",
+                "author": "Robert Fewster <robert.fewster@gettyimages.com>",
+                "date": "Wed Sep 30 09:25:04 2015 -0600",
+                "message": "Merge-branch-E-07890-B-128780-into-seo-releases-B-128780"
+            },
+            {
+                "commit": "0f74c77a30033a60e73afbb4a37a770becf7e067",
+                "author": "Robert Fewster <robert.fewster@gettyimages.com>",
+                "date": "Tue Sep 29 17:29:46 2015 -0600",
+                "message": "Merge-branch-master-into-seo-master"
+            },
+            {
+                "commit": "1dd676c8cbceb837c226b1973db8d489dfb85bd4",
+                "author": "istock <istock@gettyimages.com>",
+                "date": "Tue Sep 29 16:42:03 2015 -0600",
+                "message": "Merge-branch-releases-RFC0020352B"
+            }
+        ]
+    },
+    {
+        "branch": "seo/releases/D-01854",
+        "commits": [
+            {
+                "commit": "a81cf4e53d0b97c12ac92a3197eb28f441cc5a1c",
+                "author": "Robert Fewster <robert.fewster@gettyimages.com>",
+                "date": "Fri Oct 2 14:27:09 2015 -0600",
+                "message": "Merge-branch-PS-D-01854-into-seo-releases-D-01854"
+            },
+            {
+                "commit": "86e9883b6ceab76c53ed10ff3dcbfbdfb813f1a5",
+                "author": "istock <istock@gettyimages.com>",
+                "date": "Fri Oct 2 09:22:45 2015 -0600",
+                "message": "Fixed-corrupt-folder-ZF-application-views-scripts"
+            },
+            {
+                "commit": "97ec34bc9d8a1a2c1ce754f94418e8fd6b218786",
+                "author": "istock <istock@gettyimages.com>",
+                "date": "Thu Oct 1 15:32:44 2015 -0600",
+                "message": "Merge-branch-releases-RFC0020531"
+            },
+            {
+                "commit": "bae7d3fd058ba499b7b94f728c3b5d5835c96264",
+                "author": "istock <istock@gettyimages.com>",
+                "date": "Thu Oct 1 11:15:29 2015 -0600",
+                "message": "Merge-branch-QA-regression-of-https-gitlab.amer.gettywan.com-istock-istock-into-releases-RFC0020531"
+            },
+            {
+                "commit": "de81519f9af90447ac980c2a8c9b71a40bfeda34",
+                "author": "istock <istock@gettyimages.com>",
+                "date": "Thu Oct 1 10:59:48 2015 -0600",
+                "message": "Merge-branch-MVF-F4336-B80247-AT01167-of-https-gitlab.amer.gettywan.com-istock-istock-into-QA-regression"
+            }
+        ]
+    },
+    {
+        "branch": "",
+        "commits": [
+            {
+                "commit": "4dda9dfa221fdcdb040c09daa94475cca7294db4",
+                "author": "Robert Fewster <robert.fewster@gettyimages.com>",
+                "date": "Wed Oct 7 14:38:45 2015 -0600",
+                "message": "Merge-branch-personal-rfewster-search-canonical-into-PS-B-130360"
+            },
+            {
+                "commit": "e3dc2521d4f4bd02ad3b271734274a398b644a79",
+                "author": "istock <istock@gettyimages.com>",
+                "date": "Wed Oct 7 14:22:05 2015 -0600",
+                "message": "Merge-branch-releases-RFC0020772B"
+            },
+            {
+                "commit": "78221bb905cfc97d96639de1a59d3b03b83f4925",
+                "author": "Robert Fewster <robert.fewster@gettyimages.com>",
+                "date": "Wed Oct 7 13:59:03 2015 -0600",
+                "message": "Comment-out-remaining-logging"
+            },
+            {
+                "commit": "19da69b3cefe4fbf1b3cc170d0f2953241922251",
+                "author": "Robert Fewster <robert.fewster@gettyimages.com>",
+                "date": "Wed Oct 7 13:58:40 2015 -0600",
+                "message": "Comment-out-remaining-logging-correct-minor-defect"
+            },
+            {
+                "commit": "abb51e2117057f1de52206ea91e13520bf9650d3",
+                "author": "istock <istock@gettyimages.com>",
+                "date": "Wed Oct 7 12:38:13 2015 -0600",
+                "message": "Merge-branch-MVF-WTF-main-of-https-gitlab.amer.gettywan.com-istock-istock-into-releases-RFC0020772B"
+            }
+        ]
+    }
+]

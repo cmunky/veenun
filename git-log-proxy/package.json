@@ -1,0 +1,12 @@
+{
+  "name": "veenun git-log-proxy",
+  "description": "Local git proxy providing json output",
+  "author": "cmunky <cmunky@uk2.net>",
+  "version": "0.2.3",
+  "private": true,
+  "scripts": { "start": "node server.js" },
+  "main": "server.js",
+  "dependencies": {
+    "express": "^4.13.3"
+  }
+}
