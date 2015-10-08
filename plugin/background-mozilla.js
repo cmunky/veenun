@@ -2,13 +2,11 @@
 var service = (function () {
 
     var events = require("./data/events.js"),
+        config = require("./data/config-mozilla.json"),
+        options = config.contentScriptOptions,
         pageMod = require("sdk/page-mod"),
         Request = require("sdk/request").Request,
         resource = require("sdk/self").data,
-        options = {
-            remote: "http://wintermute:23230",
-            site:  "https://www13.v1host.com/GettyImagesEnterprise/*"
-        },
 
     loadTemplates = function() {
         var file = resource.load(resource.url("template.html"))
@@ -54,21 +52,13 @@ var service = (function () {
 
     init = function() { /* no-op */ };
 
-    pageMod.PageMod({
-        include: options.site,
-        contentStyleFile: ["./bootstrap-scoped.min.css", "./spectrum.css", "./style.css"],
-        contentScriptFile: ["./jquery.min.js", "./bootstrap.min.js", "./spectrum.js", "./events.js", "./common.js", "./page-firefox.js" ],
-        contentScriptOptions: {
-            branchUrl: resource.url("branch-32.png"),
-            gearUrl: resource.url("gear-32.png"),
-            plusUrl: resource.url("plus-24.png"),
-            // http://www.tayloredmktg.com/rgb/
-            // colors: [ "#fffacd", "#fff5ee", "#eee5de", "#cdc5bf", "#f0fff0", "#e0eee0", "#c1cdc1", "#f5fffa" ]
-            colors: [ "#ee82ee", "#f08080", "#f4a460", "#cd5c5c", "#eedd82", "#9acd32", "#40e0d0", "#d3d3d3", "#00bfff", "#fffacd" ],
-        },
-        onAttach: startListening
-    });
-    console.log('bound to: ', options.site);
+    config['onAttach'] = startListening;
+    options.branchUrl = resource.url(options.branchUrl);
+    options.gearUrl = resource.url(options.gearUrl);
+    options.plusUrl = resource.url(options.plusUrl);
+
+    pageMod.PageMod(config);
+    console.log('bound to: ', config.include);
 
     return { init: init };
 }());
