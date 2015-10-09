@@ -21,7 +21,6 @@ var veeNone = (function ($, $app) {
 
             });
 
-
         } else if (msg.branchLog) {
             
             console.log( msg.logData)
@@ -43,7 +42,6 @@ var veeNone = (function ($, $app) {
             stories.load();
 
             // ui.createElements()
-
 
         } else { // unknown messages
             console.log("page-listener: " + JSON.stringify(msg), _, sendResponse);

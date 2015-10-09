@@ -4,6 +4,7 @@
     "contentScriptFile": ["./jquery.min.js", "./bootstrap.min.js", "./spectrum.js", "./events.js", "./common.js", "./page-firefox.js" ],
     "contentScriptOptions": {
         "remote": "http://wintermute:23232",
+        "template": "./data/template.html",
         "branchUrl": "branch-32.png",
         "gearUrl": "gear-32.png",
         "plusUrl": "plus-24.png",

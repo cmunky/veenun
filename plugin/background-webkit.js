@@ -43,29 +43,18 @@ var service = (function () {
 
     onLoadBranchLogs = function(branchList, callback) {
         // console.log('onLoadBranchLogs', branchList)
+        if (branchList) {
+            $(branchList).each(function(i, n) {
+                var url = _config.remote.concat('/git/branch/', n);
+                console.log(url)
+                $.get(url, function(data, status, xhr) {
 
-        var getRandomInt = function(min, max) {
-          return Math.floor(Math.random() * (max - min + 1)) + min;
-        };
-        $(branchList).each(function(i, n) {
+                    console.log(data)
 
-          setTimeout(function() {
-            callback({
-              branchName: n,
-              stuff: 'such', when: 'then', why: 'just because'
+                    callback(data)
+                }, 'json');
             });
-          }, getRandomInt(250, 1250));
-
-          /*var url = _config.remote + 'other stuff...';
-
-          $.get(url, function(response, moar, xhr) {
-
-            console.log(response)
-
-            callback(response)
-
-          }, dataType: 'json');*/
-        });
+        }
     },
 
     loadConfig = function(callback) {
@@ -81,7 +70,6 @@ var service = (function () {
 
     loadTemplates = function() {
         $.get(_config.template, function(response) {
-        // $.get(_urls.template, function(response) {
 
             console.log(response)
 

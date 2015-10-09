@@ -9,7 +9,7 @@ var service = (function () {
         resource = require("sdk/self").data,
 
     loadTemplates = function() {
-        var file = resource.load(resource.url("template.html"))
+        var file = resource.load(resource.url(options.template))
         console.log('template: ', file)
     },
 
