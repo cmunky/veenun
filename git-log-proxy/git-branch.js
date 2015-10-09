@@ -8,7 +8,7 @@ var execSync = require('child_process').execSync;
 
 function getAllBranches(res) {
 
-    var onBranchListCallback = function(error, stdout, stderr) {
+    var allBranchLogs = function(error, stdout, stderr) {
         // command output is in stdout
         var list = stdout.split("\n")
         var result = '['
@@ -17,25 +17,25 @@ function getAllBranches(res) {
             active = s.length != 1 && s[0] == '*',
             branch = (active) ? s[1] : s[0];
             // console.log(branch, (active ? ' [active]': ' -'))
-            result += internalGetLogs(branch);
+            result += gitBranchLogs(branch);
         }
         result = result.slice(0, - 1)
         result += ']'
         // console.log(result)
         if (res) { res.type('json'); res.send(result); }
     };    
-    internalGetBranchList(onBranchListCallback)
+    gitBranchList(allBranchLogs)
 }
 
 function getBranchList(res) {
-    var onBranchListCallback = function(error, stdout, stderr) {
+    var branchList = function(error, stdout, stderr) {
         // command output is in stdout
         var result = stdout.split("\n").slice(0, -1);
         // console.log(result)
         if (res) { res.type('json'); res.send(result); }
     };
 
-    internalGetBranchList(onBranchListCallback)
+    gitBranchList(branchList)
 }
 
 function getLogs(fragment, res) {
@@ -51,26 +51,28 @@ function getLogs(fragment, res) {
         };
         return result
     };
-    var onBranchListCallback = function(error, stdout, stderr) {
+    var branchLogs = function(error, stdout, stderr) {
         var list = stdout.split("\n").slice(0, -1);
         var branch = findBranch(fragment, list);
         if (branch) {
-            var result = internalGetLogs(branch)
+            var result = gitBranchLogs(branch)
             res.send(result.trim());
         } else {
             res.send({ error: 'branch name not found...' });
         }
     }   
     res.type('json');
-    internalGetBranchList(onBranchListCallback)
+    gitBranchList(branchLogs)
 }
 
-function internalGetBranchList(callback, remote) {
+function gitBranchList(callback, remote) {
     if (callback) {
-        remote = remote || false;
-        var flag = remote ? ' -a' : '';
-        var cmd = 'git branch';
-        exec(cmd + flag, { 
+        // var cmd = 'git branch' + ((remote || false) ? ' -a' : '')
+        // remote = remote || false;
+        // var flag = remote ? ' -a' : '';
+        // var cmd = 'git branch';
+        // exec(cmd + flag, { 
+        exec('git branch' + ((remote || false) ? ' -a' : ''), { 
             cwd: gitPath, timeout: 0, encoding: 'utf8', 
             maxBuffer: 200*1024, killSignal: 'SIGTERM' }, 
             callback
@@ -78,7 +80,7 @@ function internalGetBranchList(callback, remote) {
     }
 }
 
-function internalGetLogs(branch) {
+function gitBranchLogs(branch) {
     // git log -n 10 --pretty=format:
     // -- short format JSON
     // {%n  "commit": "%H",%n  "author": "%an <%ae>",%n  "date": "%ad",%n  "message": "%f"%n},'
