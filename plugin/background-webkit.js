@@ -37,7 +37,9 @@ var service = (function () {
 
     onBranchLogLoaded = function(logData) {
 
-        sendMessage({ branchLog : true, branchName: logData.branchName , logData: logData });
+        if (!logData.error) {
+            sendMessage({ branchLog : true, branchName: logData.branchName , logData: logData });
+        }
 
     },
 
@@ -46,11 +48,7 @@ var service = (function () {
         if (branchList) {
             $(branchList).each(function(i, n) {
                 var url = _config.remote.concat('/git/branch/', n);
-                console.log(url)
                 $.get(url, function(data, status, xhr) {
-
-                    console.log(data)
-
                     callback(data)
                 }, 'json');
             });

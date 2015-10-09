@@ -15,21 +15,16 @@ app.get('/', function(req, res) {
 
 app.get('/git/branch/:name', function(req, res) {
     var git = require('./git-branch.js')
-
-    console.log(req.params.name)
-
     git.logs(req.params.name, res)
 });
 
 app.get('/git/dump', function(req, res) {
     var git = require('./git-branch.js')
-
     git.all(res)
 });
 
 app.get('/git', function(req, res) {
     var git = require('./git-branch.js')
-
     git.branches(res)
 });
 
