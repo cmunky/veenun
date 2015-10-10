@@ -342,10 +342,9 @@ var ui = (function () {
     addCardIcons = function (stories, url) {
         url = url || '';
         $(stories).each(function() {
-            var node = $(this.node), 
-            tab = ($('.bottom-card-tab', node).length < 1) ? '<div class="bottom-card-tab">!</div>' : '';
-            // TODO: Check if this story / feature has a branch (local/remote/???)
-            node.append(tab.concat('<img class="branch" src="', url, '" alt="branch">'))            
+            var node = $(this.node),
+            html = '<div class="bottom-card-tab customized-tab-value" title="Active Branch Details">';
+            node.append(html.concat('<img src="', url, '" class="branch" alt="branch" /></div>'));
         });
     },
 
@@ -532,6 +531,10 @@ var ui = (function () {
         _pickerOpen = true;
     },
 
+    onShowAllTags = function (e) {
+        // addStoryBranches()
+    },
+
     onConfigClick = function (e) {
         console.log('onConfigClick', e.target)
         // select on arbitrary string
@@ -591,6 +594,8 @@ var ui = (function () {
         $ = jq
     };
     return {
+        // onShowAllTags: onShowAllTags,
+
         showColorSelect: showColorSelect,
         clearCustomColors: clearCustomColors,
         clearCustomTags: clearCustomTags,
