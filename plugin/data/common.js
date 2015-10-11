@@ -4,6 +4,7 @@ var stories = (function () {
     var _stories = [],
         _selected = [], 
         _tags = [],
+        _branches = [],
         $ = undefined,
 
     filterTags = function() {
@@ -135,20 +136,12 @@ var stories = (function () {
         return (_selected.length == 0) ? null : _selected;
     },
 
-    addBranchLogs = function(branch, logs, callback) { 
-        $(_stories).each(function() {
-            if (callback(this, branch)) {
-                this['branch'] = logs
-            }
-        });
-    },
-
     addStoryLogs = function(branch, logs) {
-        addBranchLogs(branch, logs, byStory)
+        _branches.push( { name: branch, data: logs } );
     },
 
     addFeatureLogs = function(branch, logs) {
-        addBranchLogs(branch, logs, byFeature)
+        _branches.push( { name: branch, data: logs } );
     },
 
     getTags = function() { 
@@ -172,6 +165,7 @@ var stories = (function () {
         features: getFeatureNames,
         storyLogs: addStoryLogs,
         featureLogs: addFeatureLogs,
+        branchList: _branches,
         init: init
 };
 }());
@@ -339,11 +333,15 @@ var ui = (function () {
         });
     },
 
-    addCardIcons = function (stories, url) {
-        url = url || '';
-        $(stories).each(function() {
-            var node = $(this.node),
+    addCardIcons = function (list, url) {
+        url = url || platform.urls.branch();
+        $(list).each(function(i, branch) {
+            var story = stories.find(branch.name)[0], 
+            node = $(story.node),
+            commits = branch.data.commits,
+            branchName = branch.data.branch,
             html = '<div class="bottom-card-tab customized-tab-value" title="Active Branch Details">';
+            // console.log(branch.name, branchName, commits, node);
             node.append(html.concat('<img src="', url, '" class="branch" alt="branch" /></div>'));
         });
     },
@@ -532,7 +530,9 @@ var ui = (function () {
     },
 
     onShowAllTags = function (e) {
-        // addStoryBranches()
+
+        ui.cardIcons(stories.branchList);
+
     },
 
     onConfigClick = function (e) {
@@ -550,11 +550,6 @@ var ui = (function () {
             }
         }
         // return false; // -- false causes dropdown to stay open !!
-    },
-
-    addStoryBranches = function (e) {
-        ui.cardIcons(stories.list(),
-            platform.urls.branch());
     },
 
     onTagClick = function (e) {
@@ -594,7 +589,7 @@ var ui = (function () {
         $ = jq
     };
     return {
-        // onShowAllTags: onShowAllTags,
+        onShowAllTags: onShowAllTags,
 
         showColorSelect: showColorSelect,
         clearCustomColors: clearCustomColors,

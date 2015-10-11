@@ -23,9 +23,9 @@ var veeNone = (function ($, $app) {
 
         } else if (msg.branchLog) {
             
-            console.log( msg.logData)
+            console.log('event', msg.logData)
 
-            stories.storyLogs(msg.logData.branchName, msg.logData)
+            stories.storyLogs(msg.branchName, msg.logData)
 
         } else if (msg.initComplete) {
 
