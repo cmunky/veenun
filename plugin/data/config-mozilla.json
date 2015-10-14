@@ -1,13 +1,13 @@
 {
     "include": "https://www13.v1host.com/GettyImagesEnterprise/*",
-    "contentStyleFile": ["./bootstrap-scoped.min.css", "./spectrum.css", "./style.css"],
-    "contentScriptFile": ["./jquery.min.js", "./bootstrap.min.js", "./spectrum.js", "./events.js", "./common.js", "./page-firefox.js" ],
+    "contentStyleFile": ["./../css/bootstrap-scoped.min.css", "./../css/spectrum.css", "./../css/style.css"],
+    "contentScriptFile": ["./../js/jquery.min.js", "./../js/bootstrap.min.js", "./../js/spectrum.js", "./../js/events.js", "./../js/common.js", "./../js/page-firefox.js" ],
     "contentScriptOptions": {
         "remote": "http://wintermute:23232",
         "template": "./data/template.html",
-        "branchUrl": "branch-32.png",
-        "gearUrl": "gear-32.png",
-        "plusUrl": "plus-24.png",
+        "branchUrl": "../img/branch-32.png",
+        "gearUrl": "../img/gear-32.png",
+        "plusUrl": "../img/plus-24.png",
         "colors": [ "#ee82ee", "#f08080", "#f4a460", "#cd5c5c", "#eedd82", "#9acd32", "#40e0d0", "#d3d3d3", "#00bfff", "#fffacd" ]
     }
 }

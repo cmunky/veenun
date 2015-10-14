@@ -1,7 +1,7 @@
 
 var service = (function () {
 
-    var events = require("./data/events.js"),
+    var events = require("./js/events.js"),
         config = require("./data/config-mozilla.json"),
         options = config.contentScriptOptions,
         pageMod = require("sdk/page-mod"),
@@ -30,6 +30,12 @@ var service = (function () {
 
     },
 
+    onLoadBranchLogs = function(data, moar) {
+
+        console.log('[onLoadBranchLogs] ', data, moar);
+
+    },
+
     onTimeoutExpired = function() {
         console.log('[background] timeoutExpired handler: ');
         
@@ -47,6 +53,7 @@ var service = (function () {
     startListening = function(worker) {
         events.initialize(worker.port);
         events.addListener('timeoutExpired', onTimeoutExpired);
+        events.addListener('loadBranchLogs', onLoadBranchLogs);
         events.addListener('init', onInitialized);
     },
 

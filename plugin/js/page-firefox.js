@@ -29,6 +29,8 @@ var veeNone = (function ($, $events) {
 
         config.apply({colors: self.options.colors})
 
+        sendMessage('loadBranchLogs', { branchNames: stories.names() });
+
         ui.createElements()
     },
 
