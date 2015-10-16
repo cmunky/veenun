@@ -8,6 +8,6 @@
         "branchUrl": "../img/branch-32.png",
         "gearUrl": "../img/gear-32.png",
         "plusUrl": "../img/plus-24.png",
-        "colors": [ "#ee82ee", "#f08080", "#f4a460", "#cd5c5c", "#eedd82", "#9acd32", "#40e0d0", "#d3d3d3", "#00bfff", "#fffacd" ]
+        "colors": ["#C1BEE6", "#DDDF60", "#60E2BD", "#F0A487", "#BBDD99", "#59E0EB", "#EBB85B", "#82E695", "#EAAECE", "#B0E175", "#9ACEE2", "#9CD7C0", "#D0C679"]
     }
 }
