@@ -54,6 +54,9 @@ function getLogs(fragment, res) {
         var branch = findBranch(fragment, list);
         if (branch) {
             var result = gitBranchLogs(branch)
+
+            result['q'] = fragment // ??? test this !!!
+
             res.send(result.slice(0, -1))
         } else {
             res.send({ error: 'branch name not found : ' + branch });

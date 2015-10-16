@@ -3,6 +3,9 @@ var express = require('express');
 var app = express();
 var path = require('path');
 
+var git = require('./git-branch-static.js')
+// var git = require('./git-branch.js')
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
@@ -14,17 +17,14 @@ app.get('/', function(req, res) {
 });
 
 app.get('/git/branch/:name', function(req, res) {
-    var git = require('./git-branch.js')
     git.logs(req.params.name, res)
 });
 
 app.get('/git/dump', function(req, res) {
-    var git = require('./git-branch.js')
     git.all(res)
 });
 
 app.get('/git', function(req, res) {
-    var git = require('./git-branch.js')
     git.branches(res)
 });
 
