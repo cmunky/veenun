@@ -341,7 +341,7 @@ var ui = (function () {
             commits = branch.data.commits,
             branchName = branch.data.branch,
             html = '<div class="bottom-card-tab customized-tab-value" title="Active Branch Details">';
-            // console.log(branch.name, branchName, commits, node);
+            // console.log(branch.name, branchName, story);
             node.append(html.concat('<img src="', url, '" class="branch" alt="branch" /></div>'));
         });
     },

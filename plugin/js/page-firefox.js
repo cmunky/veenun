@@ -19,6 +19,11 @@ var veeNone = (function ($, $events) {
         //window.location.reload(); 
     },
 
+    onBranchLog = function(msg) {
+
+        stories.storyLogs(msg.branchName, msg.logData)
+    },
+
     onInitComplete = function() {
 
         setAlarm((20 * 1000)) // 20 seconds (debug only)
@@ -29,7 +34,7 @@ var veeNone = (function ($, $events) {
 
         config.apply({colors: self.options.colors})
 
-        sendMessage('loadBranchLogs', { branchNames: stories.names() });
+        sendMessage('loadBranchLogs', stories.names());
 
         ui.createElements()
     },
@@ -45,6 +50,7 @@ var veeNone = (function ($, $events) {
 
     addListener("remoteResponse", onRemoteResponse);
     addListener("loadStories", onLoadStories);
+    addListener("branchLog", onBranchLog);
     addListener("initComplete", onInitComplete);
 
     return {

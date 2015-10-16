@@ -30,10 +30,23 @@ var service = (function () {
 
     },
 
-    onLoadBranchLogs = function(data, moar) {
+    onBranchLogLoaded = function(response) {
+        var logData = response.json
+        if (!logData.error) {
+            events.sendMessage("branchLog", { branchName: logData.q , logData: logData });
+        }
+    },
 
-        console.log('[onLoadBranchLogs] ', data, moar);
-
+    onLoadBranchLogs = function(branchList) {
+        // console.log('[onLoadBranchLogs] ', branchList);
+       if (branchList) {
+            for (var i in branchList) {
+                var n = branchList[i],
+                url = options.remote.concat('/git/branch/', n);
+                // console.log(url)
+                requestRemote(url, onBranchLogLoaded);
+            }
+        }
     },
 
     onTimeoutExpired = function() {
