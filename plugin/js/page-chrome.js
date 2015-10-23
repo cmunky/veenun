@@ -23,8 +23,6 @@ var veeNone = (function ($, $app) {
 
         } else if (msg.branchLog) {
             
-            console.log('event', msg.logData)
-
             stories.storyLogs(msg.branchName, msg.logData)
 
         } else if (msg.initComplete) {
