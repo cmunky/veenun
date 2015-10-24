@@ -4,21 +4,6 @@ $events = self.port
 var veeNone = (function ($, $events) {
     var _private, 
 
-    onLoadStories = function() {
-
-        // stories.load()
-
-        // ui.createElements()
-
-    },
-
-    onRemoteResponse = function(response) {
-        console.log("remoteResponse: " + JSON.stringify(response));
-
-        // *** RELOAD PAGE ***
-        //window.location.reload(); 
-    },
-
     onBranchLog = function(msg) {
 
         stories.storyLogs(msg.branchName, msg.logData)
@@ -30,13 +15,28 @@ var veeNone = (function ($, $events) {
 
         stories.load()
 
-        config.defaultColors = self.options.colors;
+        config.apply({colors: self.options.colors}, function() {
+            console.log('config applied!')
 
-        config.apply({colors: self.options.colors})
+            sendMessage('loadBranchLogs', stories.names());
 
-        sendMessage('loadBranchLogs', stories.names());
+            // The ui library relies on config for colors
+            ui.createElements()
+        });
+    },
 
-        ui.createElements()
+    onLoadStories = function() {
+
+        stories.load()
+
+        // ui.createElements()
+    },
+
+    onRemoteResponse = function(response) {
+        console.log("remoteResponse: " + response);
+
+        // *** RELOAD PAGE ***
+        //window.location.reload();
     },
 
     init = function() {
@@ -53,9 +53,6 @@ var veeNone = (function ($, $events) {
     addListener("branchLog", onBranchLog);
     addListener("initComplete", onInitComplete);
 
-    return {
-        init: init
-};
+    return { init: init };
 }($, self.port));
-
 $(function() { veeNone.init(); });

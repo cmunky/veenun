@@ -2,8 +2,8 @@
 var service = (function () {
 
     var _config = {
-          file: "./data/config-webkit.json",
-          include: chrome.runtime.getManifest().content_scripts[0]["matches"][0]
+            file: "./data/config-webkit.json",
+            include: chrome.runtime.getManifest().content_scripts[0]["matches"][0]
         },
         _lastTabId,
 
@@ -12,46 +12,24 @@ var service = (function () {
 
         sendMessage({ loadStories: true });
 
-        // loadTemplates()
-
         requestRemote(_config.remote, onRemoteResponse)
     },
 
     backgroundListener = function(msg, _, sendResponse) {
-      if (msg.setAlarm) {
-          timeout = msg.timeout || 10; // minutes
-          chrome.alarms.create( { delayInMinutes: timeout } );
+        if (msg.setAlarm) {
+            timeout = msg.timeout || 10; // minutes
+            chrome.alarms.create( { delayInMinutes: timeout } );
 
-      } else if (msg.loadBranchLogs) {
+        } else if (msg.loadBranchLogs) {
 
-          onLoadBranchLogs(msg.branchNames, onBranchLogLoaded)
+            onLoadBranchLogs(msg.branchNames, onBranchLogLoaded)
 
-      } else if (msg.init) {
+        } else if (msg.init) {
 
-          onInitialize()
+            onInitialize()
 
-      } else { // unknown messages
-          console.log('background-listener: ', JSON.stringify(msg), _, sendResponse);
-      }
-    },
-
-    onBranchLogLoaded = function(branch, logData) {
-
-        if (!logData.error) {
-            sendMessage({ branchLog : true, branchName: branch , logData: logData });
-        }
-
-    },
-
-    onLoadBranchLogs = function(branchList, callback) {
-        // console.log('onLoadBranchLogs', branchList)
-        if (branchList) {
-            $(branchList).each(function(i, n) {
-                var url = _config.remote.concat('/git/branch/', n);
-                $.get(url, function(data, status, xhr) {
-                    callback(n, data)
-                }, 'json');
-            });
+        } else { // unknown messages
+            console.log('background-listener: ', JSON.stringify(msg), _, sendResponse);
         }
     },
 
@@ -66,28 +44,38 @@ var service = (function () {
         }, "json")
     },
 
-    loadTemplates = function() {
-        $.get(_config.template, function(response) {
+    onBranchLogLoaded = function(branch, logData) {
 
-            console.log(response)
-
-        })
+        if (!logData.error) {
+            sendMessage({ branchLog : true, branchName: branch , logData: logData });
+        }
     },
 
     onInitialize = function() {
         chrome.tabs.query( { active: true, currentWindow: true}, function(tabs) {
-          if (tabs.length) {
-            _lastTabId = tabs[0].id;
-            loadConfig()
-            sendMessage({ initComplete: true});
-          }
+            if (tabs.length) {
+                _lastTabId = tabs[0].id;
+                loadConfig()
+                sendMessage({ initComplete: true});
+            }
         });
     },
 
+    onLoadBranchLogs = function(branchList, callback) {
+        // console.log('[background] onLoadBranchLogs', branchList)
+        if (branchList) {
+            $(branchList).each(function(i, n) {
+                var url = _config.remote.concat('/git/branch/', n);
+                $.get(url, function(data, status, xhr) {
+                    callback(n, data)
+                }, 'json');
+            });
+        }
+    },
+
     onRemoteResponse = function(dat, res, xhr) {
-        console.log('request: ' + xhr.responseText);
-        // console.log(JSON.stringify(xhr.getAllResponseHeaders()));
-        // console.log(dat, res, xhr);
+
+        console.log('[background] onRemoteResponse: ' + xhr.responseText);
 
         sendMessage({ remoteResponse: true, data: xhr.responseText });
     },
@@ -97,10 +85,10 @@ var service = (function () {
     },
 
     sendMessage = function(msg) {
-      if (_lastTabId < 0)
-          initialize()
-      else
-          chrome.tabs.sendMessage(_lastTabId, msg );
+        if (_lastTabId < 0)
+            initialize()
+        else
+            chrome.tabs.sendMessage(_lastTabId, msg );
     },
 
     init = function() { /* no-op*/ };

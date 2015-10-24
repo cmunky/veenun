@@ -8,28 +8,6 @@ var service = (function () {
         Request = require("sdk/request").Request,
         resource = require("sdk/self").data,
 
-    loadTemplates = function() {
-        var file = resource.load(resource.url(options.template))
-        console.log('template: ', file)
-    },
-
-    onInitialized = function() {
-        console.log('[background] init handler: ');
-
-        events.sendMessage("initComplete")
-    },
-
-    onRemoteResponse = function(response) {
-        console.log('[background] request: ' + response.text)
-         
-        for (var headerName in response.headers) {
-            console.log(headerName + " : " + response.headers[headerName]);
-        }
-
-        events.sendMessage("remoteResponse", { data: response.text } )
-
-    },
-
     onBranchLogLoaded = function(response) {
         var logData = response.json
         if (!logData.error) {
@@ -37,25 +15,35 @@ var service = (function () {
         }
     },
 
+    onInitialized = function() {
+        console.log('[background] onInitialized: ');
+
+        events.sendMessage("initComplete")
+    },
+
     onLoadBranchLogs = function(branchList) {
-        // console.log('[onLoadBranchLogs] ', branchList);
+        // console.log('[background] onLoadBranchLogs: ', branchList);
        if (branchList) {
             for (var i in branchList) {
-                var n = branchList[i],
-                url = options.remote.concat('/git/branch/', n);
-                // console.log(url)
-                requestRemote(url, onBranchLogLoaded);
+                requestRemote(
+                    options.remote.concat('/git/branch/', branchList[i]),
+                    onBranchLogLoaded);
             }
         }
     },
 
+    onRemoteResponse = function(response) {
+
+        console.log('[background] onRemoteResponse: ' + response.text)
+
+        events.sendMessage("remoteResponse", { data: response.text } )
+    },
+
     onTimeoutExpired = function() {
-        console.log('[background] timeoutExpired handler: ');
+        console.log('[background] onTimeoutExpired: ');
         
         events.sendMessage("loadStories" )
         
-        // loadTemplates()
-
         requestRemote(options.remote, onRemoteResponse)
     },
 

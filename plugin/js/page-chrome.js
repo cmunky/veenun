@@ -3,15 +3,11 @@ var veeNone = (function ($, $app) {
     var _private,
 
     pageListener = function (msg, _, sendResponse) {
-        if (msg.remoteResponse) {
-            console.log("remoteResponse: " + msg.data);
+        if (msg.branchLog) {
 
-            // *** RELOAD PAGE ***
-            //location.reload()
+            stories.storyLogs(msg.branchName, msg.logData)
 
         } else if (msg.configLoaded) {
-
-            config.defaultColors = msg.config.colors;
 
             config.apply(msg.config, function() {
                 console.log('config applied!')
@@ -21,10 +17,6 @@ var veeNone = (function ($, $app) {
 
             });
 
-        } else if (msg.branchLog) {
-            
-            stories.storyLogs(msg.branchName, msg.logData)
-
         } else if (msg.initComplete) {
 
             $app.sendMessage({ setAlarm: true, timeout: 0.2 }); // 20 seconds (debug only)
@@ -33,13 +25,17 @@ var veeNone = (function ($, $app) {
 
             $app.sendMessage({ loadBranchLogs: true , branchNames: stories.names() });
 
-            // ui.createElements();
-
         } else if (msg.loadStories) {
 
             stories.load();
 
             // ui.createElements()
+
+        } else if (msg.remoteResponse) {
+            console.log("remoteResponse: " + msg.data);
+
+            // *** RELOAD PAGE ***
+            //location.reload()
 
         } else { // unknown messages
             console.log("page-listener: " + JSON.stringify(msg), _, sendResponse);
@@ -57,9 +53,6 @@ var veeNone = (function ($, $app) {
 
     $app.onMessage.addListener(pageListener);
 
-    return {
-        init: init
-    };
-
+    return { init: init };
 }($, chrome.runtime));
 $(function() { veeNone.init(); });

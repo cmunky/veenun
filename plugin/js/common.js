@@ -179,7 +179,7 @@ var platform = (function () {
         if (_webkit) {
             return chrome.extension.getURL(config.branchUrl)
         } else {
-            return self.options.branchUrl
+            return self.options.branchUrl;
         }
     },
 
@@ -264,6 +264,7 @@ var config = (function () {
 
     apply = function (config, callback) {
         config = config || {}
+        if (config.colors) { _defaultColors = config.colors; }
         for (var attribute in config) { this[attribute] = config[attribute]; }
         var that = this
 
