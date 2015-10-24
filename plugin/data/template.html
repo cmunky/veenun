@@ -1,1 +1,66 @@
+
 <div id="foo" class="tag-filter" >
+
+<div id="main">
+    <div id="veenun" class="bootstrap-scoped container" > #buttons #menu #color</div>
+</div>
+
+<div id="color">
+    <div id="color-select">
+        <input type="text" id="color-input" />
+        <div class='button-container'>
+            <button type='button' class='color-cancel'>Cancel</button>"
+            <button type='button' class='color-select'>Select</button>
+        </div>
+    </div>
+</div>
+
+<div id="taglist">
+    <i class="tag" data-bg="#color"></i>
+</div>
+
+<div id="menu">
+    <div class="config-menu">
+        <div class="dropdown">
+            <span id="dropdown-target" class="dropdown-toggle" 
+                aria-haspopup="true" aria-expanded="false" data-toggle="dropdown" 
+                style="background-image: #gear "></span>
+                <!-- chrome-extension://__MSG_@@extension_id__/ -->
+                 <!-- <span class="caret"></span> -->
+            <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdown-target">
+                <li><div class="menu-item" style="padding-right: 7px;">Add: 
+                    <input type="text" id="tag-name" name="tag-name" class="inline" size="8" maxlength="8"/>
+                    <span id="add-tag" style="background-image: #plus"></span>
+                </div></li>
+                <li><a data-handler="showStoryBranches" href="#">Show Story Branches</a>
+                    <span class="toggle off"></span></li>
+                <li><a data-handler="showColorSelect"  href="#">Select Colors</a></li>
+                <li><a data-handler="clearCustomColors" href="#">Clear Custom Colors</a></li>
+                <li><a data-handler="clearCustomTags" href="#">Clear Custom Tags</a></li>
+
+                <!-- <li><a data-handler="exposedFunctionName" href="#">Action</a></li> -->
+                <!-- <li><div class="menu-item">Menu Choice</div></li> -->
+                <!-- <li><a href="#">Something else here</a></li> -->
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div id="commit">
+    <p><a href="#giturl" class="linkname"></a> <span class="days"></span> days ago by <span class="author"></span></p>
+</div>
+
+<div id="popover">
+    <div class="bottom-card-tab customized-tab-value" 
+        data-toggle="popover" data-html="true" 
+        data-placement="bottom" data-container="body" 
+        style="padding: 2px 6px"
+        data-markup="#id" 
+        title="#title" data-title="#title" >
+        <img src="#url" class="branch" alt="branch" />
+        <div class="commits" style="display: none;" id="">
+            <div><b>Commits</b><br/>#commits</div>
+        </div>
+    </div>
+</div>
+

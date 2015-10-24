@@ -183,19 +183,19 @@ var platform = (function () {
         }
     },
 
-    storageSet = function (value, callback) {
+    gearUrl = function () {
         if (_webkit) {
-            chrome.storage.local.set(value, function(result) {
-                // console.log(result)
-                if (callback) { callback(result) }
-            });
+            return chrome.extension.getURL(config.gearUrl)
         } else {
-            var keys = Object.keys(value), len = keys.length,
-                key = keys[len - 1], json = JSON.stringify(value[key]);
-            // console.log(value, keys, len, key, json)
-            var result = localStorage.setItem(key, json),
-            response = (result === null) ? { config: {} } : { config: result };
-            if (callback) { callback(response) }
+            return self.options.gearUrl
+        }
+    },
+
+    plusUrl = function () {
+        if (_webkit) {
+            return chrome.extension.getURL(config.plusUrl)
+        } else {
+            return self.options.plusUrl
         }
     },
 
@@ -220,22 +220,21 @@ var platform = (function () {
         }
     },
 
-    gearUrl = function () {
+    storageSet = function (value, callback) {
         if (_webkit) {
-            return chrome.extension.getURL(config.gearUrl)
+            chrome.storage.local.set(value, function(result) {
+                // console.log(result)
+                if (callback) { callback(result) }
+            });
         } else {
-            return self.options.gearUrl
+            var keys = Object.keys(value), len = keys.length,
+                key = keys[len - 1], json = JSON.stringify(value[key]);
+            // console.log(value, keys, len, key, json)
+            var result = localStorage.setItem(key, json),
+            response = (result === null) ? { config: {} } : { config: result };
+            if (callback) { callback(response) }
         }
     },
-
-    plusUrl = function () {
-        if (_webkit) {
-            return chrome.extension.getURL(config.plusUrl)
-        } else {
-            return self.options.plusUrl
-        }
-    },
-
 
     init = function(platform) {
         _webkit = platform.hasOwnProperty('sendMessage');
@@ -322,8 +321,10 @@ var config = (function () {
 
 var ui = (function () {
     var _private,
+        _map = null,
         _nextColor,
         _tagColor,
+        _template = '',
         _pickerOpen = false,
         $ = undefined,
 
@@ -335,28 +336,59 @@ var ui = (function () {
 
     addCardIcons = function (list, url) {
         url = url || platform.urls.branch();
+
+        var commitDetails = function(commits) {
+
+            var gitLabBaseUrl = 'https://gitlab.amer.gettywan.com/istock/istock/commits/'; // !!! From config!!!
+
+            var result = [], now = Date.parse(new Date());
+            for (var i = 0; i < commits.length; i++) {
+                var c = commits[i],
+                then = Date.parse(c.date),
+                data = {
+                    giturl: gitLabBaseUrl+ c.commit,
+                    linkname: c.commit.substr(0, 8),
+                    days: Math.floor((now - then) / 1000 / 60 / 60 / 24),
+                    author: c.author.split(' ', 1)[0]
+                };
+                result.push(data)
+            };
+            return result;            
+        }
+
         $(list).each(function(i, branch) {
             var story = stories.find(branch.name)[0], 
             node = $(story.node),
-            commits = branch.data.commits,
-            branchName = branch.data.branch,
-            html = '<div class="bottom-card-tab customized-tab-value" title="Active Branch Details">';
-            // console.log(branch.name, branchName, story);
-            node.append(html.concat('<img src="', url, '" class="branch" alt="branch" /></div>'));
+            data = {
+                title: branch.data.branch,
+                id: branch.data.branch.replace(/\//g , "-").toLowerCase(),
+                url: url,
+                commits: renderMarkup('#commit', commitDetails(branch.data.commits))
+            };
+            node.append(renderMarkup('#popover', data));
+        });
+
+        $("[data-toggle=popover]").popover( {
+            html: true,
+            content: function() {
+                var id = $(this).attr('data-markup')
+                return $('#'.concat(id)).html()
+            },
         });
     },
 
-    generateButtons = function(tags) {
-        var result = '', x = 0;
-        for (var i = 0; i < tags.length; i++) {
-            var trim = tags[i].id.trim();
-            tagName = trim.indexOf(' ') > -1 ? trim.substr(0, trim.indexOf(' ')) : trim;
-            result += '<i '.concat('class="tag" data-bg="', config.colors[x], '">', tagName, '</i>');
-            x++
-        };
-        _nextColor = x;
+    getTagList = function(tags) {
+        var result = [],
+        list = tags || getAllTags();
+        $(list).each(function(i, item) {
+            var tag = item.id.trim(), spaceAt = tag.indexOf(' '),
+            tagName = (spaceAt > -1) ? tag.substr(0, spaceAt) : tag;
+            result.push({ color: config.colors[i], tag: tagName });
+        });
+        _nextColor = list.length;
         return result;
     },
+
     getAllTags = function () {
         var result = []
         $(config.tags).each(function() {
@@ -364,31 +396,88 @@ var ui = (function () {
         })
         return stories.tags().concat(result);
     },
+
+    templateMap = function () {
+        var aggregator = function (d, v, t) {
+            return [d.buttons, d.menu, d.color].join(' ');
+        };
+        if (!_map) {
+            _map = Plates.Map();
+            _map.where('style').has('#gear').insert('gear');
+            _map.where('style').has('#plus').insert('plus');
+            _map.where('data-bg').has('#color').insert('color');
+            _map.where('class').is('tag').use('tag');
+            _map.where('id').is('veenun').use(aggregator);
+
+            _map.where('title').has('#title').insert('title');
+            _map.where('data-title').has('#title').insert('title');
+            _map.where('data-content').has('#commits').insert('commits');
+            _map.where('data-content').has('#id').insert('id');
+            _map.where('src').has('#url').insert('url');
+            _map.class('commits').use('id').as('id');
+            _map.class('commits').use('commits');
+
+            _map.where('href').has('#giturl').insert('giturl');
+            _map.class('linkname').use('linkname');
+            _map.class('days').use('days');
+            _map.class('author').use('author');
+        }
+        return _map
+    },
+
+    renderMarkup = function (selector, content) {
+        var markup = $(selector, _template).html()
+        // console.log(content, templateMap(), markup);
+        return Plates.bind(markup, content, templateMap());
+    },
+
+    loadTemplate = function (callback) {
+        var done = callback || function(response) { _template = response; }
+        $.get(chrome.extension.getURL(config.template), done)
+    },
+
     createElements = function () {
-        var html = '<div id="veenun" class="bootstrap-scoped container" >'.
-            concat(ui.tagButtons(getAllTags()), getConfigMenu(), getColorPicker(), '</div>');
+        loadTemplate(function (response) {
+            _template = response
+            var html = renderMarkup("#main", {
+                buttons: renderMarkup('#taglist', getTagList()),
+                menu: renderMarkup('#menu', {
+                    plus: 'url('.concat(platform.urls.plus(), ');'),
+                    gear: 'url('.concat(platform.urls.gear(), ');')
+                }),
+                color: renderMarkup('#color', {})
+            });
 
-        $('.project-bar').append(html);
+            $('.project-bar').append(html);
 
+            bindHandlers();
+        });
+    },
+
+    bindHandlers = function () {
+        // bind handlers to 'tag' clicks
         $('#veenun .tag').on('click', onTagClick);
 
         // bind handlers to 'menu' events
         $('.dropdown-menu .menu-item').on('click', onConfigClick);
         $('.dropdown-menu li a').on('click', onConfigClick);
         $('#add-tag').on('click', onAddTag);
+
         // key handlers for embedded input
         $('#tag-name').on('keyup', function(e) {
             if (e.keyCode === 27) { $('.dropdown-toggle').dropdown('toggle'); }
             if (e.keyCode === 13) { onAddTag(e) }
         });
 
+        // initialize color picker
         $("#color-input").spectrum({
             flat: true, showButtons: false,
             move: onColorChanged
         });
+
         // bind handlers to 'color-picker' events
-        $('.color-cancel').on('click', onColorPickerCancel);
         $('.color-select').on('click', onColorPickerSelect);
+        $('.color-cancel').on('click', onColorPickerCancel);
         $(document).bind("keydown.spectrum", function(e) {
             if (_pickerOpen && e.keyCode === 27) {
                 onColorPickerCancel()
@@ -396,60 +485,11 @@ var ui = (function () {
         });
     },
 
-    getColorPicker = function (e) {
-        return '<div id="color-select">'.concat(
-
-            '<input type="text" id="color-input" />',
-                "<div class='button-container'>",
-                    "<button type='button' class='color-cancel'>Cancel</button>",
-                    "<button type='button' class='color-select'>Select</button>",
-                "</div>",
-            '</div>');
-    },
-
-    getConfigMenu = function (e) {
-        // show the drop down menu...
-        var dropdown = '<div class="dropdown">'.concat(
-                '<span id="dropdown-target" class="dropdown-toggle" ',
-                    'aria-haspopup="true" aria-expanded="false" data-toggle="dropdown" ',
-                    'style="background-image: url(', platform.urls.gear(), ');"></span>',
-                    //chrome-extension://__MSG_@@extension_id__/
-                    // '<span class="caret"></span>',
-                '<ul class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdown-target">',
-                    '<li><div class="menu-item" style="padding-right: 7px;">Add: ',
-                        '<input type="text" id="tag-name" name="tag-name" class="inline" size="8" maxlength="8"/>',
-                        '<span id="add-tag" style="background-image: url(', platform.urls.plus(), ');"></span>',
-                    '</div></li>',
-                    '<li><a data-handler="onShowAllTags" href="#">Show All Tags</a>',
-                        '<span class="toggle off"></span></li>',
-                    '<li><a data-handler="showColorSelect"  href="#">Select Colors</a></li>',
-                    '<li><a data-handler="clearCustomColors" href="#">Clear Custom Colors</a></li>',
-                    '<li><a data-handler="clearCustomTags" href="#">Clear Custom Tags</a></li>',
-
-                    // '<li><a data-handler="exposedFunctionName" href="#">Action</a></li>',
-                    // '<li><div class="menu-item">Menu Choice</div></li>',
-                    // '<li><a href="#">Something else here</a></li>',
-                '</ul>',
-            '</div>');
-        var result = '<div class="config-menu">'.concat(dropdown, '</div>')
-
-        return result;
-    },
-
-    hasAttr = function (e, name) {
-        var attr = $(e).attr(name);
-        // For some browsers, `attr` is undefined; for others,
-        // `attr` is false.  Check for both.
-        return (typeof attr !== typeof undefined && attr !== false);
-    },
-
     onAddTag = function (e) {
         var tagName = $('#tag-name').val(),
-        lastTag = function () { return $("#veenun i.tag").siblings(".config-menu").prev(); }, 
-        tag = '<i '.concat('class="tag" data-bg="', config.colors[_nextColor], '">',  tagName, '</i>');
+        lastTag = function () { return $("#veenun i.tag").siblings(".config-menu").prev(); }; 
         if (tagName != ''){
-            console.log('onAddTag', e.target, tagName)
-            lastTag().after(tag);
+            lastTag().after(renderMarkup('#tag', { color: config.colors[_nextColor], tag: tagName }));
             lastTag().on('click', onTagClick);
             if (!config.tags) {config.tags = []}
             config.tags.push(tagName)
@@ -479,7 +519,6 @@ var ui = (function () {
             onColorPickerCancel();
             console.log('saved!')
         });
-
     },
 
     onColorChanged = function (color) {
@@ -497,49 +536,15 @@ var ui = (function () {
         $('#color-select').css('display', 'none');
     },
 
-    clearCustomColors = function (e) {
-        config.colors = config.defaultColors
-        config.save()
-    },
-
-    clearCustomAll = function (e) {
-        config.clear();
-        config.apply(); // ??
-    },
-
-    clearCustomTags = function (e) {
-        config.tags = []
-        config.save()
-    },
-
-    showColorSelect = function (e) {
-        var firstTag = $($('#veenun i.tag')[0]);
-        _tagColor = firstTag.attr('data-bg');
-
-        $("#veenun i.tag[data-selected='true']").each(function() {
-            $(this).removeAttr('data-selected');
-            $(this).css('background-color', 'inherit');
-            ui.cardColor('white', stories.find($(this).text()));
-        })
-
-        firstTag.css('background-color', _tagColor);
-        $("#color-input").spectrum("set", _tagColor);
-        $('#color-select').css('display', 'block');
-
-        _pickerOpen = true;
-    },
-
-    onShowAllTags = function (e) {
-
-        ui.cardIcons(stories.branchList);
-
-    },
-
     onConfigClick = function (e) {
         console.log('onConfigClick', e.target)
-        // select on arbitrary string
-        // ui.cardColor('blueviolet', stories.find('SRP'));
-        
+        var hasAttr = function (e, name) {
+            var attr = $(e).attr(name);
+            // For some browsers, `attr` is undefined; for others,
+            // `attr` is false.  Check for both.
+            return (typeof attr !== typeof undefined && attr !== false);
+        };
+
         // maps markup attribute value to object method name
         if (hasAttr(e.target, 'data-handler')) {
             var handler = $(e.target).attr('data-handler'),
@@ -575,7 +580,7 @@ var ui = (function () {
             color = (selected) ? 'white' : t.attr('data-bg');
 
             t.css('background-color', (!selected) ? color : 'inherit')
-            ui.cardColor(color, stories.find(txt));
+            setCardColor(color, stories.find(txt));
 
             if (selected) {
                 t.removeAttr('data-selected')
@@ -585,18 +590,54 @@ var ui = (function () {
         }
     },
 
+    // ========== // ========== // ==========
+
+    clearCustomAll = function (e) {
+        config.clear();
+        config.apply(); // ??
+    },
+
+    clearCustomColors = function (e) {
+        config.colors = config.defaultColors
+        config.save()
+    },
+
+    clearCustomTags = function (e) {
+        config.tags = []
+        config.save()
+    },
+
+    showStoryBranches = function (e) {
+
+        addCardIcons(stories.branchList);
+    },
+
+    showColorSelect = function (e) {
+        var firstTag = $($('#veenun i.tag')[0]);
+        _tagColor = firstTag.attr('data-bg');
+
+        $("#veenun i.tag[data-selected='true']").each(function() {
+            $(this).removeAttr('data-selected');
+            $(this).css('background-color', 'inherit');
+            setCardColor('white', stories.find($(this).text()));
+        })
+
+        firstTag.css('background-color', _tagColor);
+        $("#color-input").spectrum("set", _tagColor);
+        $('#color-select').css('display', 'block');
+
+        _pickerOpen = true;
+    },
+
     init = function(jq) {
         $ = jq
     };
     return {
-        onShowAllTags: onShowAllTags,
-
-        showColorSelect: showColorSelect,
         clearCustomColors: clearCustomColors,
         clearCustomTags: clearCustomTags,
-        cardColor: setCardColor,
-        tagButtons: generateButtons,
-        cardIcons: addCardIcons,
+        showStoryBranches: showStoryBranches,
+        showColorSelect: showColorSelect,
+
         createElements: createElements,
         init: init
     };
