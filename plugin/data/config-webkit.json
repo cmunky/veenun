@@ -1,8 +1,0 @@
-{
-    "colors": ["#C1BEE6", "#DDDF60", "#60E2BD", "#F0A487", "#BBDD99", "#59E0EB", "#EBB85B", "#82E695", "#EAAECE", "#B0E175", "#9ACEE2", "#9CD7C0", "#D0C679"],
-    "branchUrl": "./img/branch-32.png",
-    "gearUrl": "./img/gear-32.png",
-    "plusUrl": "./img/plus-24.png",
-    "remote": "http://wintermute:23232",
-    "template": "./data/template.html"
-}
