@@ -62,6 +62,8 @@
                 "bootstrap.min.js",
                 "plates.js",
                 "spectrum.js",
+                "system.js",
+                "stories.js",
                 "common.js"
             ],
             "options": {
