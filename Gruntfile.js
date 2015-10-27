@@ -80,11 +80,11 @@ module.exports = function(grunt) {
         });
 
         var manifestJs = extract(options.webkit);
-        manifestJs.content_scripts = {
+        manifestJs.content_scripts = [{
             matches: options.shared.target,
             css: prefix(options.shared.style, './css/'),
             js: prefix(options.shared.script.concat(options.webkit.script), './js/'),
-        }
+        }]
         save(cfg.webkit.package.file, manifestJs)
 
         save(cfg.webkit.config.file, prefixOptions('./img/', './data/'));
