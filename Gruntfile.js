@@ -4,6 +4,10 @@ module.exports = function(grunt) {
         pkg: grunt.file.readJSON('package.json'),  
         buildConfig: {
             path: "./plugin/",
+            exclusions: ['pkg', 'script'],
+            libFiles:  ['bootstrap.min.js', 'jquery.min.js', 'plates.js', 'spectrum.js'],
+            imageKeys: ['branchUrl', 'gearUrl', 'plusUrl'],
+            dataKeys:  ['template'],
             mozilla: { 
                 config: { file: "data/config-mozilla.json" },
                 package: { file: "package.json" }
@@ -32,16 +36,17 @@ module.exports = function(grunt) {
         var prefix = function(list, prefix) {
             result = [];
             for (var i = 0; i < list.length; i++) {
-                result.push(prefix.concat(list[i]))
+                var infix = (cfg.libFiles.indexOf(list[i]) != -1) ? 'lib/' : ''
+                result.push(prefix.concat(infix, list[i]))
             };
             return result
         }
         var prefixOptions = function(img, dat) {
             var result = {}
             Object.keys(options.shared.options).forEach(function(key) {
-                if (['branchUrl', 'gearUrl', 'plusUrl'].indexOf(key) != -1) {
+                if (cfg.imageKeys.indexOf(key) != -1) {
                     result[key] = img + options.shared.options[key]
-                } else if (['template'].indexOf(key) != -1) {
+                } else if (cfg.dataKeys.indexOf(key) != -1) {
                     result[key] = dat + options.shared.options[key]
                 } else { 
                     result[key] = options.shared.options[key]
@@ -50,7 +55,7 @@ module.exports = function(grunt) {
             return result;
         }
         var extract = function (browserOpt, exclude) {
-            exclude = exclude || ['pkg', 'script']
+            exclude = exclude || cfg.exclusions
             var result = {}
             for (var i = 0; i < browserOpt.pkg.length; i++) {
                 var n = browserOpt.pkg[i]

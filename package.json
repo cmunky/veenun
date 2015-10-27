@@ -38,7 +38,7 @@
             ],
             "background": {
                 "scripts": [
-                    "./js/jquery.min.js",
+                    "./js/lib/jquery.min.js",
                     "background-webkit.js"
                 ]
             },
