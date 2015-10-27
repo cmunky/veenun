@@ -87,13 +87,13 @@ module.exports = function(grunt) {
             grunt.file.write(cfg.path.concat(file), JSON.stringify(content) );
         }
 
-        var mozilla = options.mozilla, webkit = options.webkit, shared = options.shared;
-        Object.keys(cfg.mozilla).forEach(function(key) { mozilla[key] = cfg.mozilla[key] });
-        Object.keys(cfg.webkit).forEach(function(key) { webkit[key] = cfg.webkit[key] });
-        console.log(mozilla);
-        console.log(webkit);
-        console.log(shared);
-        console.log('============================================');
+        // var mozilla = options.mozilla, webkit = options.webkit, shared = options.shared;
+        // Object.keys(cfg.mozilla).forEach(function(key) { mozilla[key] = cfg.mozilla[key] });
+        // Object.keys(cfg.webkit).forEach(function(key) { webkit[key] = cfg.webkit[key] });
+        // console.log(mozilla);
+        // console.log(webkit);
+        // console.log(shared);
+        // console.log('============================================');
 
         var packageJs = extract(options.mozilla);
         packageJs.title = packageJs.name
