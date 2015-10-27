@@ -202,8 +202,8 @@ var ui = (function () {
     onColorPickerSelect = function() {
         var color = $("#color-input").spectrum("get"),
         selected = color.toHexString(),
-        index = config.colors.indexOf(_tagColor),
-        bgAttribute = $($('#veenun i.tag')[index]).attr('data-bg');
+        index = config.colors.indexOf(_tagColor);
+
         if (index === -1) {
             // assumes the current tag is one past the end of the color array
             config.colors.push(selected);
@@ -212,7 +212,7 @@ var ui = (function () {
             config.colors[index] = selected;
             $($('#veenun i.tag')[index]).attr('data-bg', selected);
         }
-        console.log('onColorPickerSelect', selected, _tagColor, config.colors, index, bgAttribute);
+        // console.log('onColorPickerSelect', selected, _tagColor, config.colors, index);
 
         config.save(function() {
             onColorPickerCancel();
@@ -236,7 +236,7 @@ var ui = (function () {
     },
 
     onConfigClick = function (e) {
-        console.log('onConfigClick', e.target)
+        // console.log('onConfigClick', e.target)
         var hasAttr = function (e, name) {
             var attr = $(e).attr(name);
             // For some browsers, `attr` is undefined; for others,
@@ -267,11 +267,13 @@ var ui = (function () {
                     tagPos.left + t.width() + borderMargin - pickerWidth :
                     tagPos.left;
             };
+
             _tagColor = t.attr('data-bg');
-            $("i.tag").css('background-color', 'inherit');
+            t.css('background-color', _tagColor )
+
+            $("#veenun i.tag").css('background-color', 'inherit');
             $("#color-input").spectrum("set", _tagColor );
             $("#color-select").css("left", pickerLeft(t));
-            t.css('background-color', _tagColor )
         } else {
             // TODO This should be refactored to a method...
             var txt = t.text(),

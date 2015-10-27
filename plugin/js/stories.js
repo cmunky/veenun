@@ -99,22 +99,22 @@ var stories = (function () {
         $('.story-card-container').each(function() {
             var 
             // split on colon :
-            title = $.map($('.title', this).text().trim().split(':'), $.trim),
+            data = $.map($('.title', this).text().trim().split(':'), $.trim),
             // extract fields by class name
             story = $('.identity .number', this).text().trim(),
             status = $('.status', this).text().trim(),
             // extract feature from title
             // TODO: This logic only works for SEO, other teams are different !?!
-            feature = (title[0].startsWith('E-')) ? title[0] : undefined,
+            feature = (data[0].startsWith('E-')) ? data[0] : undefined,
             // extract text from inside brackets []
             tags = extractBracketedTags($('.title', this).text().trim());
             if (tags.length) {
                 $(tags).each(function(i, v) {
-                    title.unshift(v) // insert the bracket tags are the start of the array
+                    data.unshift(v) // insert the bracket tags are the start of the array
                 });
             }
 
-            _stories.push({ 'node': this, 'feature': feature, 'story': story, 'status': status, data: title })
+            _stories.push({ 'node': this, 'feature': feature, 'story': story, 'status': status, data: data })
 
         });
 
