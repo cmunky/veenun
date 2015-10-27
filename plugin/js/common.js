@@ -285,6 +285,18 @@ var config = (function () {
         });
     },
 
+    hasTags = function() {
+        return this.tags.length > 0
+    },
+
+    hasColors = function() {
+        for (var i = 0; i < this.colors.length; i++) {
+            if (_defaultColors.indexOf(this.colors[i]) < 0) { break; };
+        };
+        var result = !((this.colors.length === _defaultColors.length) && ( i == this.colors.length));
+        return result;
+    },
+
     clear = function() {
         platform.storage.clear()
     },
@@ -315,6 +327,8 @@ var config = (function () {
         apply: apply,
         defaultColors: _defaultColors,
         save: save,
+        hasTags: hasTags,
+        hasColors: hasColors,
         clear: clear,
         init: init
     };
@@ -455,6 +469,22 @@ var ui = (function () {
         });
     },
 
+    enableConfigMenus = function () {
+        var enabledMenus = {
+            'clearCustomColors' : config.hasColors(),
+            'clearCustomTags':    config.hasTags(),
+            'showStoryBranches' : stories.branchList.length > 0
+        }
+        $('.dropdown-menu li').each(function(i, n) {
+            var name = $('a', n).attr('data-handler');
+            if (typeof enabledMenus[name] === 'boolean') {
+                if (enabledMenus[name]) {
+                    $(n).removeClass('disabled');
+                }
+            }
+        })
+    },
+
     bindHandlers = function () {
         // bind handlers to 'tag' clicks
         $('#veenun .tag').on('click', onTagClick);
@@ -463,6 +493,9 @@ var ui = (function () {
         $('.dropdown-menu .menu-item').on('click', onConfigClick);
         $('.dropdown-menu li a').on('click', onConfigClick);
         $('#add-tag').on('click', onAddTag);
+
+        // enable menu items as appropriate
+        $('.config-menu .dropdown').on('show.bs.dropdown', enableConfigMenus);
 
         // key handlers for embedded input
         $('#tag-name').on('keyup', function(e) {
