@@ -17,6 +17,11 @@ module.exports = function(grunt) {
                 package: { file: "manifest.json" } 
             }
         },
+        shell : {
+            noop:  { command: 'echo ""' },
+            build: { command: './dist/build.sh' },
+            clean: { command: 'rm ./dist/veenun.crx ./dist/@veenun-*.xpi' }
+        },
         "jsbeautifier" : {
             files : ["plugin/**/*.json", "./package.json"],
             options : {}
@@ -24,8 +29,17 @@ module.exports = function(grunt) {
     });
 
     grunt.loadNpmTasks("grunt-jsbeautifier");
+    grunt.loadNpmTasks('grunt-shell');
 
-    grunt.registerTask('default', ['buildConfig', 'jsbeautifier']);
+    grunt.registerTask('packagePlugins', ['shell:noop']);
+    // grunt.registerTask('packagePlugins', ['shell:clean', 'shell:build']);
+
+    grunt.registerTask('default', ['buildConfig', 'jsbeautifier', 'packagePlugins']);
+
+    grunt.registerTask('clean', ['shell:clean']);
+    grunt.registerTask('build', ['shell:build']);
+    grunt.registerTask('config', ['buildConfig']);
+    grunt.registerTask('tidy', ['jsbeautifier']);
 
     grunt.registerTask('buildConfig', 'Build veenun plugin configuration for Chrome and Webkit ', function() {
         var 
@@ -72,6 +86,14 @@ module.exports = function(grunt) {
         var save = function(file, content) {
             grunt.file.write(cfg.path.concat(file), JSON.stringify(content) );
         }
+
+        var mozilla = options.mozilla, webkit = options.webkit, shared = options.shared;
+        Object.keys(cfg.mozilla).forEach(function(key) { mozilla[key] = cfg.mozilla[key] });
+        Object.keys(cfg.webkit).forEach(function(key) { webkit[key] = cfg.webkit[key] });
+        console.log(mozilla);
+        console.log(webkit);
+        console.log(shared);
+        console.log('============================================');
 
         var packageJs = extract(options.mozilla);
         packageJs.title = packageJs.name

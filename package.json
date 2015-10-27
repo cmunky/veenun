@@ -18,23 +18,42 @@
     "homepage": "https://github.com/cmunky/veenun#readme",
     "devDependencies": {
         "grunt": "^0.4.5",
-        "grunt-jsbeautifier": "^0.2.10"
+        "grunt-jsbeautifier": "^0.2.10",
+        "grunt-shell": "^1.1.2"
     },
     "buildConfig": {
         "mozilla": {
-            "pkg": ["title", "name", "version", "description", "license", "author"],
+            "pkg": [
+                "title",
+                "name",
+                "version",
+                "description",
+                "license",
+                "author"
+            ],
             "main": "background-mozilla.js",
             "engines": {
                 "firefox": ">=38.0a1",
                 "fennec": ">=38.0a1"
             },
-            "script": ["events.js", "page-firefox.js"]
+            "script": [
+                "events.js",
+                "page-firefox.js"
+            ]
         },
         "webkit": {
-            "pkg": ["name", "version", "description"],
+            "pkg": [
+                "name",
+                "version",
+                "description"
+            ],
             "manifest_version": 2,
-            "permissions": ["tabs", "alarms", "storage",
-                "http://localhost/", "http://wintermute/"
+            "permissions": [
+                "tabs",
+                "alarms",
+                "storage",
+                "http://localhost/",
+                "http://wintermute/"
             ],
             "background": {
                 "scripts": [
@@ -48,10 +67,14 @@
                 "img/*.png",
                 "css/*.css"
             ],
-            "script": ["page-chrome.js"]
+            "script": [
+                "page-chrome.js"
+            ]
         },
         "shared": {
-            "target": ["https://www13.v1host.com/GettyImagesEnterprise/*"],
+            "target": [
+                "https://www13.v1host.com/GettyImagesEnterprise/*"
+            ],
             "style": [
                 "bootstrap-scoped.min.css",
                 "spectrum.css",
@@ -73,8 +96,19 @@
                 "gearUrl": "gear-32.png",
                 "plusUrl": "plus-24.png",
                 "colors": [
-                    "#C1BEE6", "#DDDF60", "#60E2BD", "#F0A487", "#BBDD99", "#59E0EB", "#EBB85B",
-                    "#82E695", "#EAAECE", "#B0E175", "#9ACEE2", "#9CD7C0", "#D0C679"
+                    "#C1BEE6",
+                    "#DDDF60",
+                    "#60E2BD",
+                    "#F0A487",
+                    "#BBDD99",
+                    "#59E0EB",
+                    "#EBB85B",
+                    "#82E695",
+                    "#EAAECE",
+                    "#B0E175",
+                    "#9ACEE2",
+                    "#9CD7C0",
+                    "#D0C679"
                 ]
             }
         }
