@@ -14,7 +14,7 @@ var veeNone = (function ($, $app) {
                 console.log('config applied!')
 
                 $app.sendMessage({ setAlarm: true, timeout: platform.timeout() });
-                console.log('refresh timeout:'. platform.timeout())
+                console.log('refresh timeout:', platform.timeout())
 
             });
 
