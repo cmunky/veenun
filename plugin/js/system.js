@@ -65,6 +65,22 @@ var platform = (function () {
         }
     },
 
+    timeout = function () {
+        var value = _webkit ? config.timeout : self.options.timeout
+        if (value) {
+            var rx = /(\d+)(m|h|s)/g,
+            match = rx.exec(value),
+            val = match[1], uom = match[2],
+            factor = { 's' : 1, 'm': 60, 'h': (60 * 60)};
+            if (_webkit) {
+                return (val * factor[uom]) / 60 ;
+            } else {
+                return (val * factor[uom]) * 1000;
+            }
+        }
+        // TODO: Should there be a default if config doesn't exist / isn't loaded ???
+    },
+
     init = function(platform) {
         _webkit = platform.hasOwnProperty('sendMessage');
         _mozilla = platform.hasOwnProperty('postMessage');
@@ -73,6 +89,7 @@ var platform = (function () {
 
     return {
         localStorage: localStorage,
+        timeout: timeout,
         storage: { set: storageSet,
                    get: storageGet,
                    clear: storageClear },
@@ -115,7 +132,7 @@ var config = (function () {
     },
 
     hasTags = function() {
-        return this.tags.length > 0
+        return (this.tags != undefined) && (this.tags.length > 0);
     },
 
     hasColors = function() {

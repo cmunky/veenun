@@ -2,7 +2,8 @@
 $events = self.port
 
 var veeNone = (function ($, $events) {
-    var _private, 
+    var _private,
+        _template,
 
     onBranchLog = function(msg) {
 
@@ -11,25 +12,32 @@ var veeNone = (function ($, $events) {
 
     onInitComplete = function() {
 
-        setAlarm((20 * 1000)) // 20 seconds (debug only)
-
         stories.load()
 
         config.apply({colors: self.options.colors}, function() {
             console.log('config applied!')
 
+            setAlarm(platform.timeout()) 
+            console.log('refresh timeout:', platform.timeout())
+
             sendMessage('loadBranchLogs', stories.names());
 
             // The ui library relies on config for colors
-            ui.createElements()
+            ui.createElements(_template)
         });
+    },
+
+    onTemplateLoaded = function(template) {
+
+        _template = template;
+
     },
 
     onLoadStories = function() {
 
         stories.load()
 
-        // ui.createElements()
+        // ui.createElements(_template)
     },
 
     onRemoteResponse = function(response) {
@@ -52,6 +60,7 @@ var veeNone = (function ($, $events) {
     addListener("loadStories", onLoadStories);
     addListener("branchLog", onBranchLog);
     addListener("initComplete", onInitComplete);
+    addListener("templateLoaded", onTemplateLoaded);
 
     return { init: init };
 }($, self.port));

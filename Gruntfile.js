@@ -101,7 +101,7 @@ module.exports = function(grunt) {
             include: shared.target[0],
             contentStyleFile: prefix(shared.style, './../css/'),
             contentScriptFile: prefix(shared.script.concat(moz.script), './../js/'),
-            contentScriptOptions: prefixOptions('../img/', './data/')
+            contentScriptOptions: prefixOptions('../img/', './')
         });
 
         var manifestJs = extract(options.webkit);

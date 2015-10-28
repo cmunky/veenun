@@ -18,15 +18,12 @@ var ui = (function () {
         url = url || platform.urls.branch();
 
         var commitDetails = function(commits) {
-
-            var gitLabBaseUrl = 'https://gitlab.amer.gettywan.com/istock/istock/commits/'; // !!! From config!!!
-
             var result = [], now = Date.parse(new Date());
             for (var i = 0; i < commits.length; i++) {
                 var c = commits[i],
                 then = Date.parse(c.date),
                 data = {
-                    giturl: gitLabBaseUrl+ c.commit,
+                    giturl: config.gitlabUrl + c.commit,
                     linkname: c.commit.substr(0, 8),
                     days: Math.floor((now - then) / 1000 / 60 / 60 / 24),
                     author: c.author.split(' ', 1)[0]
@@ -34,7 +31,7 @@ var ui = (function () {
                 result.push(data)
             };
             return result;            
-        }
+        };
 
         $(list).each(function(i, branch) {
             var story = stories.find(branch.name)[0], 
@@ -111,27 +108,20 @@ var ui = (function () {
         return Plates.bind(markup, content, templateMap());
     },
 
-    loadTemplate = function (callback) {
-        var done = callback || function(response) { _template = response; }
-        $.get(chrome.extension.getURL(config.template), done)
-    },
-
-    createElements = function () {
-        loadTemplate(function (response) {
-            _template = response
-            var html = renderMarkup("#main", {
-                buttons: renderMarkup('#taglist', getTagList()),
-                menu: renderMarkup('#menu', {
-                    plus: 'url('.concat(platform.urls.plus(), ');'),
-                    gear: 'url('.concat(platform.urls.gear(), ');')
-                }),
-                color: renderMarkup('#color', {})
-            });
-
-            $('.project-bar').append(html);
-
-            bindHandlers();
+    createElements = function (resource) {
+        _template = resource
+        var html = renderMarkup("#main", {
+            buttons: renderMarkup('#taglist', getTagList()),
+            menu: renderMarkup('#menu', {
+                plus: 'url('.concat(platform.urls.plus(), ');'),
+                gear: 'url('.concat(platform.urls.gear(), ');')
+            }),
+            color: renderMarkup('#color', {})
         });
+
+        $('.project-bar').append(html);
+
+        bindHandlers();
     },
 
     enableConfigMenus = function () {

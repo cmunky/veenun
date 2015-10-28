@@ -33,6 +33,12 @@ var service = (function () {
         }
     },
 
+    loadTemplate = function(callback) {
+        $.get(chrome.extension.getURL(_config.template), function(response) {
+            sendMessage({ templateLoaded: true, template: response });
+        });
+    },
+
     loadConfig = function(callback) {
         var include = _config.include
         var file = _config.file
@@ -40,6 +46,7 @@ var service = (function () {
             _config = data;
             _config['include'] = include
             _config['file'] = file
+            loadTemplate()
             sendMessage({ configLoaded: true, config: _config });
         }, "json")
     },

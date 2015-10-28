@@ -7,6 +7,7 @@ var service = (function () {
         pageMod = require("sdk/page-mod"),
         Request = require("sdk/request").Request,
         resource = require("sdk/self").data,
+        template = resource.load(options.template),
 
     onBranchLogLoaded = function(response) {
         var logData = response.json
@@ -17,6 +18,8 @@ var service = (function () {
 
     onInitialized = function() {
         console.log('[background] onInitialized: ');
+
+        events.sendMessage("templateLoaded", template);
 
         events.sendMessage("initComplete")
     },

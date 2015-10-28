@@ -1,6 +1,7 @@
 
 var veeNone = (function ($, $app) {
     var _private,
+        _template,
 
     pageListener = function (msg, _, sendResponse) {
         if (msg.branchLog) {
@@ -12,14 +13,19 @@ var veeNone = (function ($, $app) {
             config.apply(msg.config, function() {
                 console.log('config applied!')
 
-                // The ui library relies on config for colors
-                ui.createElements();
+                $app.sendMessage({ setAlarm: true, timeout: platform.timeout() });
+                console.log('refresh timeout:'. platform.timeout())
 
             });
 
-        } else if (msg.initComplete) {
+        } else if (msg.templateLoaded) {
 
-            $app.sendMessage({ setAlarm: true, timeout: 0.2 }); // 20 seconds (debug only)
+            _template = msg.template;
+
+            // The ui library relies on config for colors
+            ui.createElements(_template);
+
+        } else if (msg.initComplete) {
 
             stories.load();
 
@@ -29,7 +35,7 @@ var veeNone = (function ($, $app) {
 
             stories.load();
 
-            // ui.createElements()
+            // ui.createElements(_template)
 
         } else if (msg.remoteResponse) {
             console.log("remoteResponse: " + msg.data);
