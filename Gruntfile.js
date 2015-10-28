@@ -45,7 +45,8 @@ module.exports = function(grunt) {
         var 
             cfg = grunt.config(this.name),
             pkg = grunt.config('pkg'),
-            options = pkg[this.name];
+            options = pkg[this.name],
+            shared = options.shared;
 
         var prefix = function(list, prefix) {
             result = [];
@@ -83,37 +84,35 @@ module.exports = function(grunt) {
             });
             return result
         }
+        var merge = function(target, source) {
+            Object.keys(source).forEach(function(key) { target[key] = source[key] });
+            return target
+        }
         var save = function(file, content) {
             grunt.file.write(cfg.path.concat(file), JSON.stringify(content) );
         }
 
-        // var mozilla = options.mozilla, webkit = options.webkit, shared = options.shared;
-        // Object.keys(cfg.mozilla).forEach(function(key) { mozilla[key] = cfg.mozilla[key] });
-        // Object.keys(cfg.webkit).forEach(function(key) { webkit[key] = cfg.webkit[key] });
-        // console.log(mozilla);
-        // console.log(webkit);
-        // console.log(shared);
-        // console.log('============================================');
-
         var packageJs = extract(options.mozilla);
         packageJs.title = packageJs.name
-        save(cfg.mozilla.package.file, packageJs)
+        var moz = merge(options.mozilla, cfg.mozilla)
+        save(moz.package.file, packageJs)
 
-        save(cfg.mozilla.config.file, {
-            include: options.shared.target[0],
-            contentStyleFile: prefix(options.shared.style, './../css/'),
-            contentScriptFile: prefix(options.shared.script.concat(options.mozilla.script), './../js/'),
+        save(moz.config.file, {
+            include: shared.target[0],
+            contentStyleFile: prefix(shared.style, './../css/'),
+            contentScriptFile: prefix(shared.script.concat(moz.script), './../js/'),
             contentScriptOptions: prefixOptions('../img/', './data/')
         });
 
         var manifestJs = extract(options.webkit);
+        var webkit = merge(options.webkit, cfg.webkit);
         manifestJs.content_scripts = [{
-            matches: options.shared.target,
-            css: prefix(options.shared.style, './css/'),
-            js: prefix(options.shared.script.concat(options.webkit.script), './js/'),
+            matches: shared.target,
+            css: prefix(shared.style, './css/'),
+            js: prefix(shared.script.concat(webkit.script), './js/'),
         }]
-        save(cfg.webkit.package.file, manifestJs)
+        save(webkit.package.file, manifestJs)
 
-        save(cfg.webkit.config.file, prefixOptions('./img/', './data/'));
+        save(webkit.config.file, prefixOptions('./img/', './data/'));
     });
 };
