@@ -1,60 +1,58 @@
 
 var veeNone = (function ($, $app) {
-    var _private,
-        _template,
+    var _template,
+        _handlers = {
+
+        onBranchLog:  function (data) {
+            stories.storyLogs(data.branchName, data.logData)
+        },
+
+        onConfigLoaded:  function (data) {
+            config.apply(data, function() {
+                console.log('config applied!')
+                sendMessage('setAlarm', platform.timeout());
+            });
+        },
+
+        onInitComplete:  function (data) {
+            stories.load();
+            sendMessage('loadBranchLogs', stories.names());
+        },
+
+        onIntervalEvent:  function (data) {
+            if (stories.branchList.length === 0) {
+                sendMessage('loadBranchLogs', stories.names());
+            }
+            // TODO: Do interval stuff here...
+            
+            sendMessage('setAlarm', platform.timeout());
+        },
+
+        onTemplateLoaded:  function (data) {
+            _template = data;
+            ui.createElements(_template);
+        },
+    },
 
     pageListener = function (msg, _, sendResponse) {
-        if (msg.branchLog) {
+        var e = msg.event || ' ',
+        name = 'on'.concat(e[0].toUpperCase(), e.slice(1)),
+        handler = _handlers[name];
+        // var handler = _handlers[msg.event];
+        if (handler) { handler(msg.data) }
+    },
 
-            stories.storyLogs(msg.branchName, msg.logData)
-
-        } else if (msg.configLoaded) {
-
-            config.apply(msg.config, function() {
-                console.log('config applied!')
-
-                $app.sendMessage({ setAlarm: true, timeout: platform.timeout() });
-                console.log('refresh timeout:', platform.timeout())
-
-            });
-
-        } else if (msg.templateLoaded) {
-
-            _template = msg.template;
-
-            // The ui library relies on config for colors
-            ui.createElements(_template);
-
-        } else if (msg.initComplete) {
-
-            stories.load();
-
-            $app.sendMessage({ loadBranchLogs: true , branchNames: stories.names() });
-
-        } else if (msg.loadStories) {
-
-            stories.load();
-
-            // ui.createElements(_template)
-
-        } else if (msg.remoteResponse) {
-            console.log("remoteResponse: " + msg.data);
-
-            // *** RELOAD PAGE ***
-            //location.reload()
-
-        } else { // unknown messages
-            console.log("page-listener: " + JSON.stringify(msg), _, sendResponse);
-        }
+    sendMessage = function(event, data) {
+        $app.sendMessage({ event: event, data: data });
     },
 
     init = function() {
-        platform.init($app)
+        platform.init($app)        
         config.init($);
         stories.init($);
         ui.init($);
 
-        $app.sendMessage({ init: true });
+        sendMessage('initialize');
     };
 
     $app.onMessage.addListener(pageListener);

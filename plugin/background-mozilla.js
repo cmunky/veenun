@@ -16,54 +16,41 @@ var service = (function () {
         }
     },
 
-    onInitialized = function() {
-        console.log('[background] onInitialized: ');
-
+    onInitialize = function() {
         events.sendMessage("templateLoaded", template);
-
         events.sendMessage("initComplete")
     },
 
     onLoadBranchLogs = function(branchList) {
-        // console.log('[background] onLoadBranchLogs: ', branchList);
-       if (branchList) {
+        if (branchList) {
             for (var i in branchList) {
-                requestRemote(
+                request(
                     options.remote.concat('/git/branch/', branchList[i]),
                     onBranchLogLoaded);
             }
         }
     },
 
-    onRemoteResponse = function(response) {
-
-        console.log('[background] onRemoteResponse: ' + response.text)
-
-        events.sendMessage("remoteResponse", { data: response.text } )
-    },
-
-    onTimeoutExpired = function() {
+    alarmListener = function() {
         console.log('[background] onTimeoutExpired: ');
         
-        events.sendMessage("loadStories" )
-        
-        requestRemote(options.remote, onRemoteResponse)
+        events.sendMessage("intervalEvent");
     },
 
-    requestRemote = function(url, callback) {
-        Request({ url: url, onComplete: callback }).get()
-    },
-
-    startListening = function(worker) {
+    backgroundListener = function(worker) {
         events.initialize(worker.port);
-        events.addListener('timeoutExpired', onTimeoutExpired);
+        events.addListener('timeoutExpired', alarmListener);
         events.addListener('loadBranchLogs', onLoadBranchLogs);
-        events.addListener('init', onInitialized);
+        events.addListener('initialize', onInitialize);
+    },
+
+    request = function(url, callback) {
+        Request({ url: url, onComplete: callback }).get()
     },
 
     init = function() { /* no-op */ };
 
-    config['onAttach'] = startListening;
+    config['onAttach'] = backgroundListener;
     options.branchUrl = resource.url(options.branchUrl);
     options.gearUrl = resource.url(options.gearUrl);
     options.plusUrl = resource.url(options.plusUrl);

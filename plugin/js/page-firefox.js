@@ -6,45 +6,37 @@ var veeNone = (function ($, $events) {
         _template,
 
     onBranchLog = function(msg) {
-
         stories.storyLogs(msg.branchName, msg.logData)
     },
 
     onInitComplete = function() {
-
         stories.load()
-
         config.apply({colors: self.options.colors}, function() {
             console.log('config applied!')
-
             setAlarm(platform.timeout()) 
-            console.log('refresh timeout:', platform.timeout())
-
             sendMessage('loadBranchLogs', stories.names());
-
-            // The ui library relies on config for colors
             ui.createElements(_template)
         });
     },
 
+    onIntervalEvent = function() {
+        if (stories.branchList.length === 0) {
+                sendMessage('loadBranchLogs', stories.names());
+        }
+        // TODO: Do interval stuff here...
+
+        setAlarm(platform.timeout()) 
+    },
+
     onTemplateLoaded = function(template) {
-
         _template = template;
-
     },
 
-    onLoadStories = function() {
-
-        stories.load()
-
-        // ui.createElements(_template)
-    },
-
-    onRemoteResponse = function(response) {
-        console.log("remoteResponse: " + response);
-
-        // *** RELOAD PAGE ***
-        //window.location.reload();
+    pageListener = function() {
+        addListener("branchLog", onBranchLog);
+        addListener("initComplete", onInitComplete);
+        addListener("templateLoaded", onTemplateLoaded);
+        addListener("intervalEvent", onIntervalEvent);
     },
 
     init = function() {
@@ -53,14 +45,10 @@ var veeNone = (function ($, $events) {
         stories.init($)
         ui.init($)
 
-        sendMessage('init');
+        sendMessage('initialize');
     };
 
-    addListener("remoteResponse", onRemoteResponse);
-    addListener("loadStories", onLoadStories);
-    addListener("branchLog", onBranchLog);
-    addListener("initComplete", onInitComplete);
-    addListener("templateLoaded", onTemplateLoaded);
+    pageListener();
 
     return { init: init };
 }($, self.port));
