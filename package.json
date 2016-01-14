@@ -92,7 +92,7 @@
             "options": {
                 "remote": "http://wintermute:23232",
                 "gitlabUrl": "https://gitlab.amer.gettywan.com/istock/istock/commits/",
-                "timeout": "20s",
+                "timeout": "20m",
                 "template": "template.html",
                 "branchUrl": "branch-32.png",
                 "gearUrl": "gear-32.png",

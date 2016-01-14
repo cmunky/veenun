@@ -72,6 +72,19 @@ var stories = (function () {
         return result
     },
 
+    extractSequencedTags = function(text) {
+        var rx = /^([a-zA-Z]+) [\d]+.*/g, result = [],
+        match = rx.exec(text);
+        while (match != null) {
+            result.push(match[1])
+            // matched text: match[0]
+            // match start: match.index
+            // capturing group n: match[n]
+            match = rx.exec(text);
+        }
+        return result;
+    },
+
     extractBracketedTags = function(text) {
         var rx = /\[([^\]]+)\]/g, result = [],
         match = rx.exec(text);
@@ -108,6 +121,7 @@ var stories = (function () {
             feature = (data[0].startsWith('E-')) ? data[0] : undefined,
             // extract text from inside brackets []
             tags = extractBracketedTags($('.title', this).text().trim());
+            tags = tags.concat(extractSequencedTags(data[0]))
             if (tags.length) {
                 $(tags).each(function(i, v) {
                     data.unshift(v) // insert the bracket tags are the start of the array
